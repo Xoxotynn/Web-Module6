@@ -1,20 +1,20 @@
-.header
+.mainHeader
 {
   width: 100%;
   height: 70px;
   background-color: #40a99ddb;
-  background-image: url("/img/thumb_l_psh_21900386.jpg");
+  background-image: url("img/thumb_l_psh_21900386.jpg");
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
 }
-.bodyF
+.indexBody
 {
 background-color: #cecfdfdb;
 }
-.com 
+.command 
 {
   position: fixed;
   left: 85%;
@@ -32,11 +32,11 @@ background-color: #cecfdfdb;
 .list{
   color: blue;
 }
-.h2Com
+.commandHeader
 {
   padding-left: 8px;
 }
-.listCom
+.commandList
 {
   margin: 10px;
   padding-left: 15px;
