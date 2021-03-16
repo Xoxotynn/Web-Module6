@@ -1,0 +1,46 @@
+.header
+{
+  width: 100%;
+  height: 70px;
+  background-color: #40a99ddb;
+  background-image: url("https://art-holst.com.ua/wp-content/uploads/thumb_l_psh_21900386.jpg");
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+.bodyF
+{
+background-color: #cecfdfdb;
+}
+.com 
+{
+  position: fixed;
+  left: 85%;
+  top: 80px;
+  color: rgba(53, 58, 57, 0.859);
+  border-left: 2px solid blueviolet;
+}
+.nav
+{
+  position: fixed;
+  margin-top: 80px;
+  font-size: 20px;
+  color:  rgb(49, 49, 110);
+}
+.list{
+  color: blue;
+}
+.h2Com
+{
+  padding-left: 8px;
+}
+.listCom
+{
+  margin: 10px;
+  padding-left: 15px;
+}
+h1{
+  color: rgb(255, 255, 255);
+}
