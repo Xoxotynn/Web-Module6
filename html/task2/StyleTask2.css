@@ -1,0 +1,24 @@
+header
+{
+  width: 100%;
+  height: 70px;
+  background-color: #455a64;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+body
+{
+background-color: #eceff1;
+}
+h1
+{
+	color: white;
+	text-align: center;
+}
+.clusterCanvas
+{
+	border: 1px solid #000000;
+}
