@@ -15,10 +15,15 @@ function foo() {
     const Matrix = CreateMatrix(nnum.value);
     Matrix[0][0] = true;
     console.log(Matrix);
-
-    move(nnum.value, Matrix);
     DrawMaze(nnum.value, Matrix);
-    
+}
+function GetRandom() {
+    var y = Math.random();
+    if (y < 0.3)
+        y = 0;
+    else
+        y = 1;
+    return y;
 }
 
 function CreateMatrix(n) {
@@ -26,12 +31,18 @@ function CreateMatrix(n) {
     for (let y = 0; y < n; y++) {
         const row = [];
         for (let x = 0; x < n; x++) {
-            row.push(false);
+            if (GetRandom() == 1) {
+                row.push(true);
+            }
+            else {
+                row.push(false);
+            }
         }
         matrix.push(row);
     }
     return matrix;
 }
+
 
 function DrawMaze(n, matrix) {
     canvas.width = PADDING * 2 + n * cellSize;
@@ -52,38 +63,4 @@ function DrawMaze(n, matrix) {
     }
 }
 
-function move(n, Matrix) {
-    const directionsX = [];
-    const directionsY = [];
-    if (tractor.x > 1) {
-        directionsX.push(-2);
-        directionsY.push(0);
-    }
-    if (tractor.x < n - 1) {
-        directionsX.push(2);
-        directionsY.push(0);
-    }
-    if (tractor.y > 1) {
-        directionsY.push(-2);
-        directionsX.push(0);;
-    }
-    if (tractor.y < n - 1) {
-        directionsY.push(2);
-        directionsX.push(0);
-    }
-    let i =GetRandomI(directionsX);
-    let dx = directionsX[i];
-    let dy = directionsY[i];
-    tractor.x += dx;
-    tractor.y += dy;
 
-    if (Matrix[tractor.y][tractor.x])
-    {
-        Matrix[tractor.y][tractor.x] = true;
-        Matrix[tractor.y - dy/2][tractor.x - dx/2] = true;
-    }
-}
-function GetRandomI(arr) {
-    const index = Math.floor(Math.random() * arr.lenght);
-    return index;
-}
