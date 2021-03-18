@@ -23,19 +23,70 @@ function CreateTab()
             
             element.className = "elem";
             element.name = "em";
-            element.onclick;
-            element.id = i*nnum+j;
+
+            element.setAttribute("row", i);
+            element.setAttribute("column", j);
+            element.addEventListener("click", handle);
             rows.append(element);
         }
         matrix.append(rows);
     }
 }
 
-// То что будет происходить при нажатии на элемент таблицы 
-//(Если была нажата до этого кнопка start, то необходимо покрасить клетку в зелёный. 
-//2 Вариант до этого была нажата кнопка стена, то покрасить в чёрный(по выбору).
-//3 вариант: была прожата кнопка конец, то покрасить в жёлтый(по выбору)).
-function obrabotka()
+// Флаг для режимов
+var mode;
+var buttons = document.querySelectorAll("button.setmode");
+//Проходим все кпопки и присваиваем значения mode при нажатии
+buttons.forEach(function(button) {
+  button.addEventListener("click", function(e) {
+    mode = e.target.getAttribute("mode");
+  });
+});
+
+
+
+// Покраска тем блокам таблицы на которые нажали кнопкой мыши после кнопки "Начало", "Стена", "Конец".
+function handle(e) 
 {
-    
+    let start = document.querySelector(".elem.start");
+    let finish = document.querySelector(".elem.finish");
+
+  if (mode == "start" && e.target != finish && !e.target.classList.contains("wall"))
+  {
+
+    if (start && e.target != start) 
+    {
+      start.classList.remove("start");
+    }
+
+    e.target.classList.add("start");
+  }
+
+
+
+  if (mode == "wall" && e.target != start && e.target != finish) 
+  {
+    if (e.target.classList.contains("wall")) 
+    {
+      e.target.classList.remove("wall");
+    }
+    else
+    {
+        e.target.classList.add("wall");
+    }
+  }
+
+
+
+  if (mode == "finish" && e.target != start && !e.target.classList.contains("wall")) 
+  {
+
+    if (finish && e.target != finish) 
+    {
+      finish.classList.remove("finish");
+    }
+
+    e.target.classList.add("finish");
+  }
 }
+
