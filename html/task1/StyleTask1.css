@@ -2,3 +2,18 @@
 {
     margin: 5px;
 }
+td:hover
+{
+ background-color: rgb(207, 207, 207);
+}
+tr td{
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+}
+table{
+    width: 400px;
+    height: 400px;
+    margin-top: 10px;
+    border-collapse: collapse;
+}

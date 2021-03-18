@@ -1,22 +1,25 @@
-const cellSize = 50;
-const PADDING = 5;
-const wallColor = 'black';
-const freeColor = 'white';
-const backgroundColor = 'gray';
-const tractor = { x: 0, y: 0 };
-const canvas = document.querySelector('canvas');
-const context = canvas.getContext('2d');
 
+
+const matrix = document.getElementById('matrix')
 let btn = document.querySelector('button');
-btn.addEventListener('click', foo);
+btn.addEventListener('click', CreateTab);
 
-function foo() {
-    let nmum = document.getElementById('nnum');
-    const Matrix = CreateMatrix(nnum.value);
-    Matrix[0][0] = true;
-    console.log(Matrix);
-    DrawMaze(nnum.value, Matrix);
+function CreateTab() {
+    matrix.innerHTML='';
+    let nnum = document.getElementById('nnum').value;
+    for (let y = 0; y < nnum; y++) {
+        let rows = document.createElement('tr');
+        rows.setAttribute('id', `row[${y}]`);
+        matrix.appendChild(rows);
+        for (let x = 0; x < nnum; x++) {
+            let col = document.createElement('td');
+            col.innerText = '';
+            col.setAttribute('id', `col[${y}][${x}]`)
+            rows.appendChild(col);
+        }
+    }
 }
+
 function GetRandom() {
     var y = Math.random();
     if (y < 0.3)
@@ -42,7 +45,6 @@ function CreateMatrix(n) {
     }
     return matrix;
 }
-
 
 function DrawMaze(n, matrix) {
     canvas.width = PADDING * 2 + n * cellSize;
