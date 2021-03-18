@@ -1,19 +1,20 @@
-.canvas
-{
-    margin: 5px;
-}
 td:hover
 {
- background-color: rgb(207, 207, 207);
+ background-color: rgb(151, 41, 41);
 }
-tr td{
+tr td
+{
     border-color: black;
     border-style: solid;
     border-width: 2px;
 }
+td
+{
+    background-color: aqua;
+}
 table{
-    width: 400px;
-    height: 400px;
+    width: 650px;
+    height: 650px;
     margin-top: 10px;
     border-collapse: collapse;
 }
