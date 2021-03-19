@@ -11,10 +11,27 @@
     <header>
 		<h1>Кластеризация</h1>
 	</header>
-	<canvas width="1000" height="700"></canvas>
+	<div class="grid">
+		<canvas class="clustersCanvas"></canvas>
+		<div class="inputK">
+			<label for="kNum">Количество кластеров</label>
+			<input name="kNum" type="number" id="kNum">
+		</div>
+		<div class="inputDist">
+			<button id="dropDown" class="distDropBtn">Метрика</button>
+			<div id="distTypesContent" class="dropDownContent">
+				<button class="distType">Евклидово расстояние</button>
+				<button class="distType">Квадрат евклидова расстояния</button>
+				<button class="distType">Манхэттенское расстояние</button>
+				<button class="distType">Расстояние Чебышева</button>
+			</div>
+		</div>
+		<div class="generate">
+			<button id="generateBtn" class="generateBtn" type="button">Найти кластеры</button>
+		</div>
+	</div>
 	
-	<script src="animation.js"></script>
-	<script src="createMouse.js"></script>
+	<script src="utils.js"></script>
 	<script src="appTask2.js"></script>
 </body>
 </html>
