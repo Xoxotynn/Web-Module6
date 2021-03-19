@@ -1,4 +1,85 @@
-.canvas
-{
-    margin: 5px;
+table {
+  width: 650px;
+  height: 650px;
+  margin-top: 10px;
+  border-collapse: collapse;
 }
+
+table tr td {
+  border-color: black;
+  border-style: solid;
+  border-width: 2px;
+  background-color: #295757;
+}
+
+table tr td:hover {
+  background-color: yellow;
+}
+
+table tr td.elem {
+  cursor: pointer;
+}
+
+table tr td.elem .el-grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: min-content auto;
+      grid-template-rows: -webkit-min-content auto;
+      grid-template-rows: min-content auto;
+  min-height: 100%;
+  pointer-events: none;
+}
+
+table tr td.elem .el-grid .el-top {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-flow: column;
+}
+
+table tr td.elem .el-grid .el-bottom {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-row-align: end;
+      align-self: end;
+  grid-auto-flow: column;
+}
+
+table tr td.elem .el-grid .el-top, table tr td.elem .el-grid .el-bottom {
+  pointer-events: none;
+}
+
+table tr td.elem .el-grid .el-top .el-left, table tr td.elem .el-grid .el-top .el-right, table tr td.elem .el-grid .el-bottom .el-left, table tr td.elem .el-grid .el-bottom .el-right {
+  padding: 5px;
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+table tr td.elem .el-grid .el-top .el-left, table tr td.elem .el-grid .el-bottom .el-left {
+  -ms-grid-column-align: start;
+      justify-self: start;
+}
+
+table tr td.elem .el-grid .el-top .el-right, table tr td.elem .el-grid .el-bottom .el-right {
+  -ms-grid-column-align: end;
+      justify-self: end;
+}
+
+table tr td.elem.start {
+  background-color: green;
+}
+
+table tr td.elem.wall {
+  background-color: gray;
+}
+
+table tr td.elem.finish {
+  background-color: hotpink;
+}
+
+p {
+  color: red;
+}
+/*# sourceMappingURL=StyleTask1.css.map */

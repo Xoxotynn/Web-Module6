@@ -7,17 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="StyleTask1.css">
     <title>Document</title>
+    <script src="https://yastatic.net/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
-	
     <div>
         <label for="nnum">Количество строк n =</label>
-        <input name="nnum" type="number" id="nnum"> <br>
+        <input name="nnum" type="number" id="nnum"><br>
         <button type="button">Запуск</button>
+        <p id = 228></p>
     </div>
-    <div class = "canvas">
-        <canvas></canvas>
+    <table>
+        <tbody id ="matrix"></tbody>
+    </table>
+	<br>
+    <div>
+        <button mode="start" class="setmode" type="button">Начало</button>
+		<br>
+        <button mode="wall" class="setmode" type="button">Стена</button>
+		<br>
+        <button mode="finish" class="setmode" type="button">Конец</button>
+		<br>
+        <button class = "hiddenbut" type = "button">Подтвердить выбор</button>
     </div>
     <script src="apptask1.js"></script>
 </body>
