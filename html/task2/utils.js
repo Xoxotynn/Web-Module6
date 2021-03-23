@@ -14,6 +14,22 @@ class Point {
     }
 }
 
+function euqlidDist(p1, p2) {
+    return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+}
+
+function sqrEuqlidDist(p1, p2) {
+    return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
+}
+
+function manhattanDist(p1, p2) {
+    return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
+}
+
+function chebyshevDist(p1, p2) {
+    return Math.max(Math.abs(p1.x - p2.x), Math.abs(p1.y - p2.y));
+}
+
 function addUserPoint() {
     let p = new Point(mouse.x, mouse.y, "blue");
     points.push(p);
@@ -39,8 +55,6 @@ function randomInt(min, max) {
 
 
 //UI
-function deleteUserPoint() {}
-
 function drawPoint(p) {
     context.beginPath();
     context.arc(p.x, p.y, p.radius, 0, Math.PI * 2);

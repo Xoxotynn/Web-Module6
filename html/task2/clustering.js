@@ -1,10 +1,15 @@
 function clustering(centersNum) {
-    let clusters = clusteringStep(centersNum);
-    if (clusters.length <= points.length) {
-        while(haveEmptyCluster(clusters)) {
-            clusters = clusteringStep(centersNum);
+    let centers = generateKCenters(centersNum), minCenters = centers;
+    let WTotal = clusteringStep(centers), WMin = WTotal;
+    for (let i = 0; i < 15; i++) {
+        centers = generateKCenters(centersNum);
+        WTotal = clusteringStep(centers);
+        if (WTotal < WMin) {
+            WMin = WTotal;
+            minCenters = centers;
         }
     }
+    clusteringStep(minCenters);
 
     clearCanvas();
     points.forEach(p => {
@@ -12,18 +17,18 @@ function clustering(centersNum) {
     });
 }
 
-function clusteringStep(centersNum) {
-    let clusters = assignPoints(generateKCenters(centersNum));
-    let centers = clusters.map(cluster => cluster.center);
-    let prevCenters;
-    while(!clustersDontChange(centers, prevCenters)) {
-        prevCenters = [...centers];
-        clusters = calculateCenters(clusters);
-        centers = clusters.map(cluster => cluster.center);
-        clusters = assignPoints(centers);
+function clusteringStep(centers) {
+    let clusters = createClusters(centers);
+    let WPrev;
+    let WTotal = assignPoints(clusters);
+    while(WTotal != WPrev) {
+        console.log(WTotal);
+        WPrev = WTotal;
+        calculateCenters(clusters);
+        WTotal = assignPoints(clusters);
     }
 
-    return clusters;
+    return WTotal;
 }
 
 function haveEmptyCluster(clusters) {
@@ -38,33 +43,10 @@ function haveEmptyCluster(clusters) {
     return empty;
 }
 
-function clustersDontChange(centers1, centers2) {
-    if(centers1 == null || centers2 == null) {
-        return true;
-    }
-
-    let equal = true;
-    for (let i = 0; i < centers1.length; i++) {
-        if (centers1[i] != centers2[i]) {
-            change = false;
-            break;
-        }
-    }
-
-    return change
-}
-
 function calculateCenters(clusters) {
-    let newClusters = [];
     clusters.forEach(cluster => {
-        const newCluster = {
-            center: calculateNewCenter(cluster),
-            points: cluster.points,
-        };
-        newClusters.push(newCluster);
+        cluster.center = calculateNewCenter(cluster);
     });
-
-    return newClusters;
 }
 
 function calculateNewCenter(cluster) {
@@ -83,20 +65,14 @@ function calculateNewCenter(cluster) {
                      cluster.center.color);
 }
 
-function assignPoints(clusterCenters) {
-    let clusters = [];
-    clusterCenters.forEach(center => {
-        const cluster = {
-            center: center,
-            points: [],
-        };
-        clusters.push(cluster);
-    });
+function assignPoints(clusters) {
+    let WTotal = 0;
+    clusters.forEach(cluster => cluster.points = []);
 
     points.forEach(p => {
-        let minDist = null, minCluster;
+        let minDist, minCluster;
         clusters.forEach(cluster => {
-            let dist = distance(p, cluster.center);
+            let dist = euqlidDist(p, cluster.center);
             if (dist < minDist || minDist == null) {
                 minDist = dist;
                 minCluster = cluster;
@@ -105,6 +81,21 @@ function assignPoints(clusterCenters) {
 
         minCluster.points.push(p);
         p.color = minCluster.center.color;
+        WTotal += Math.pow(minDist, 2);
+    });
+
+    return WTotal;
+}
+
+function createClusters(centers) {
+    let clusters = [];
+    
+    centers.forEach(center => {
+        const cluster = {
+            center: center,
+            points: [],
+        };
+        clusters.push(cluster);
     });
 
     return clusters;
@@ -118,8 +109,4 @@ function generateKCenters(k) {
     }
 
     return centers;
-}
-
-function distance(p1, p2) {
-    return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 }

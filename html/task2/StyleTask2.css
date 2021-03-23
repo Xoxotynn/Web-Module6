@@ -3,14 +3,11 @@ header
   width: 100%;
   height: 70px;
   background-color: #455a64;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   overflow: hidden;
 }
 body
 {
+  margin: 0;
   background-color: #eceff1;
 }
 h1
@@ -23,10 +20,9 @@ h1
   display: grid;
   grid-template-columns: max-content max-content max-content;
   grid-template-rows: max-content max-content auto;
-  row-gap: 50px;
-  column-gap: 30px;
-  margin-top: 150px;
-  margin-left: 80px;
+  row-gap: 4%;
+  column-gap: 2%;
+  margin: 4% 6% 2% 6%;
   grid-template-areas: 
     "canvas inputK inputDist"
     "canvas generate generate"
@@ -80,6 +76,10 @@ label
 .generateBtn:hover
 {
   background-color: #364850;
+}
+.generateBtn:focus
+{
+  outline: none;
 }
 .distDropBtn
 {
