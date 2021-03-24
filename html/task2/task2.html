@@ -4,9 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Кластеризация</title>
+	<link rel="stylesheet" href="StyleTask2.css">
 </head>
 <body>
-    
+    <header>
+		<h1>Кластеризация</h1>
+	</header>
+	<div class="grid">
+		<canvas class="clustersCanvas"></canvas>
+		<div class="inputK">
+			<label for="kNum">Количество кластеров</label>
+			<input name="kNum" type="number" id="kNum">
+		</div>
+		<div class="inputDist">
+			<button id="dropDown" class="distDropBtn">Метрика</button>
+			<div id="distTypesContent" class="dropDownContent">
+				<button class="distType">Евклидово расстояние</button>
+				<button class="distType">Квадрат евклидова расстояния</button>
+				<button class="distType">Манхэттенское расстояние</button>
+				<button class="distType">Расстояние Чебышева</button>
+			</div>
+		</div>
+		<div class="generate">
+			<button id="generateBtn" class="generateBtn" type="button">Найти кластеры</button>
+		</div>
+	</div>
+	
+	<script src="utils.js"></script>
+	<script src="appTask2.js"></script>
 </body>
 </html>
