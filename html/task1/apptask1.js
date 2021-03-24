@@ -35,6 +35,11 @@ class strPUSH{
 }
 
 
+//переменная отвечающая за координаты Начала
+var startMatrix = new strPUSH(0,0);
+var finishMatrix = new strPUSH(0,0);
+
+
 var AstMatr = [];
 var OtkSpisok = [];
 var ZakSpisok = [];
@@ -123,10 +128,6 @@ buttons.forEach(function (button) {
 });
 
 
-
-//переменная отвечающая за координаты Начала
-var startMatrix = new strPUSH(0,0);
-var finishMatrix = new strPUSH(0,0);
 
 
 
@@ -283,6 +284,8 @@ function proverkaSosedei(tochka)
 	paaaar = 0;
 	
 	
+	OtkSpisok.splice(index, 1);
+	ZakSpisok.push(new strPUSH(x,y));
 	// Алгоритм всех различных проверок!
 	
 
@@ -495,32 +498,30 @@ function proverkaSosedei(tochka)
 		}
 	}
 
-
-	OtkSpisok.shift();
-	ZakSpisok.push(new strPUSH(x,y));
 	return 0;
 }
 
 
 
-
-
+let px;
+let py;
+let min
+var index;
 //Достаём мининимум из Открытого списка.
-function MINOTK(target) {
-	let px;
-	let py;
-	let min = 999999999; 
-	for (let i=0; i<target.length; i++)
+function MINOTK(OtkSpisok) {
+	min = 999999999; 
+	for (let i=0; i<OtkSpisok.length; i++)
 	{
-		px = target[i].x;
-		py = target[i].y;
-		if (AstMatr[px][py].F <= min)
+		px = OtkSpisok[i].x;
+		py = OtkSpisok[i].y;
+		if (AstMatr[px][py].F < min)
 		{
+			index = i;
 			min = AstMatr[px][py].F;
 			save = new strPUSH(px,py); //Использую этот класс просто потому что там есть x,y
 		}
 	}
-	return (save)
+	return (save);
 }
 
 
@@ -548,13 +549,11 @@ function Astar()
 
 	while(OtkSpisok.length > 0)
 	{
-		console.log(OtkSpisok);
 		//Функция минимума(Возращает переменную с координатами x;y)
-		min = MINOTK(OtkSpisok);
+		save = MINOTK(OtkSpisok);
 		dlina1 = OtkSpisok.length;
-		r = proverkaSosedei(min);
+		r = proverkaSosedei(save);
 		dlina2 = OtkSpisok.length;
-		console.log(OtkSpisok);
 
 		updatevalues(dlina1,dlina2);
 		//Проверка если мы запушили наш финиш oxxxx]====> значит нашли путь
@@ -563,19 +562,39 @@ function Astar()
 			stop();
 			console.log(OtkSpisok);
 			console.log(AstMatr);
+			risovka();
 			return true;
 		}
 		else if (OtkSpisok.length <= 0)
 		{
 			stop();
-			console.log(OtkSpisok);
-			console.log(AstMatr);
 			return true;
 		}
 		
 	}
 
 }
+
+
+let x;
+let y;
+let time;
+function risovka()
+{
+	x = parseInt(finishMatrix.x, 10);
+	y = parseInt(finishMatrix.y, 10);
+	while ((x !== startMatrix.x)  && (y !== startMatrix.y))
+	{
+		console.log(AstMatr);
+		time = x;
+		x = AstMatr[x][y].roditelX;
+		y = AstMatr[time][y].roditelY;
+		console.log(startMatrix.x, startMatrix.y);
+		console.log(x,y);
+		document.querySelector(`td[row = "${x}"][column = "${y}"]`).style.backgroundColor = "#9030b8";
+	}
+}
+
 
 
 function SpacePress() {
