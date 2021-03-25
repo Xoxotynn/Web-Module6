@@ -68,18 +68,21 @@ table tr td.elem .el-grid .el-top .el-right, table tr td.elem .el-grid .el-botto
 }
 
 table tr td.elem.start {
-  background-color: green;
+  background-color: #73ff00;
+  background-image: linear-gradient(45deg, #d17878 25%, transparent 25%), linear-gradient(-45deg, #d17878 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #d17878 75%), linear-gradient(-45deg, transparent 75%, #d17878 75%);
 }
 
 table tr td.elem.wall {
-  background-color: gray;
+  background-color: #cecece;
 }
 
 table tr td.elem.finish {
-  background-color: hotpink;
+  background-color: #9030b8;
+  background-image: linear-gradient(45deg, #d17878 25%, transparent 25%), linear-gradient(-45deg, #d17878 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #d17878 75%), linear-gradient(-45deg, transparent 75%, #d17878 75%);
 }
 
 p {
   color: red;
+  background-color: blueviolet;
 }
 /*# sourceMappingURL=StyleTask1.css.map */
