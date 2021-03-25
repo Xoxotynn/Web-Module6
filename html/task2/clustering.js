@@ -1,8 +1,25 @@
-function clustering(centersNum) {
-    let centers = generateKCenters(centersNum), minCenters = centers;
+function clustering() {
+    let WTotals = [kClustering(1)], 
+        clustersCountMax = 20,
+        maxWRatio, clustersCount;
+
+    for (let i = 2; i < clustersCountMax; i++) {
+        WTotals.push(kClustering(i));
+        let ratio = WTotals[i-2] / WTotals[i-1];
+        if(ratio > maxWRatio || maxWRatio == null) {
+            maxWRatio = ratio;
+            clustersCount = i;
+        }
+    }
+
+    kClustering(clustersCount);
+}
+
+function kClustering(clustersCount) {
+    let centers = generateKCenters(clustersCount), minCenters = centers;
     let WTotal = clusteringStep(centers), WMin = WTotal;
-    for (let i = 0; i < 15; i++) {
-        centers = generateKCenters(centersNum);
+    for (let i = 0; i < 50; i++) {
+        centers = generateKCenters(clustersCount);
         WTotal = clusteringStep(centers);
         if (WTotal < WMin) {
             WMin = WTotal;
@@ -11,10 +28,17 @@ function clustering(centersNum) {
     }
     clusteringStep(minCenters);
 
-    clearCanvas();
-    points.forEach(p => {
-        drawPoint(p);
-    });
+    return WMin;
+}
+
+function generateKCenters(centersCount) {
+    let centers = [];
+    for(let i = 0; i < centersCount; i++) {
+        centers.push(randomPoint());
+        centers[i].color = colors[i];
+    }
+
+    return centers;
 }
 
 function clusteringStep(centers) {
@@ -22,7 +46,6 @@ function clusteringStep(centers) {
     let WPrev;
     let WTotal = assignPoints(clusters);
     while(WTotal != WPrev) {
-        console.log(WTotal);
         WPrev = WTotal;
         calculateCenters(clusters);
         WTotal = assignPoints(clusters);
@@ -31,16 +54,45 @@ function clusteringStep(centers) {
     return WTotal;
 }
 
-function haveEmptyCluster(clusters) {
-    let empty = false;
-    for (let i = 0; i < clusters.length; i++) {
-        if (clusters[i].points.length == 0) {
-            empty = true;
-            break;
-        }
-    }
+function createClusters(centers) {
+    let clusters = [];
+    
+    centers.forEach(center => {
+        const cluster = {
+            center: center,
+            points: [],
+        };
+        clusters.push(cluster);
+    });
 
-    return empty;
+    return clusters;
+}
+
+function assignPoints(clusters) {
+    let WTotal = 0;
+    clusters.forEach(cluster => cluster.points = []);
+
+    points.forEach(p => {
+        WTotal += findBestCluster(p, clusters);
+    });
+
+    return WTotal;
+}
+
+function findBestCluster(point, clusters) {
+    let minDist, minCluster;
+    clusters.forEach(cluster => {
+        let dist = euqlidDist(point, cluster.center);
+        if (dist < minDist || minDist == null) {
+            minDist = dist;
+            minCluster = cluster;
+        }
+    });
+
+    minCluster.points.push(point);
+    point.color = minCluster.center.color;
+
+    return Math.pow(minDist, 2);
 }
 
 function calculateCenters(clusters) {
@@ -63,50 +115,4 @@ function calculateNewCenter(cluster) {
     return new Point(sumX / cluster.points.length,
                      sumY / cluster.points.length,
                      cluster.center.color);
-}
-
-function assignPoints(clusters) {
-    let WTotal = 0;
-    clusters.forEach(cluster => cluster.points = []);
-
-    points.forEach(p => {
-        let minDist, minCluster;
-        clusters.forEach(cluster => {
-            let dist = euqlidDist(p, cluster.center);
-            if (dist < minDist || minDist == null) {
-                minDist = dist;
-                minCluster = cluster;
-            }
-        });
-
-        minCluster.points.push(p);
-        p.color = minCluster.center.color;
-        WTotal += Math.pow(minDist, 2);
-    });
-
-    return WTotal;
-}
-
-function createClusters(centers) {
-    let clusters = [];
-    
-    centers.forEach(center => {
-        const cluster = {
-            center: center,
-            points: [],
-        };
-        clusters.push(cluster);
-    });
-
-    return clusters;
-}
-
-
-function generateKCenters(k) {
-    let centers = [];
-    for(let i = 0; i < k; i++) {
-        centers.push(randomPoint());
-    }
-
-    return centers;
 }

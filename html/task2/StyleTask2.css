@@ -46,12 +46,9 @@ h1
   padding: 8px;
   font-size: 18px;
 }
-label
-{
-  display: block;
-}
 #kNum
 {
+  display: block;
   border: 1px solid #455a64;
   border-radius: 8px;
   padding: 4px;
@@ -60,6 +57,15 @@ label
 #kNum:focus
 {
   outline: none;
+}
+#kNum:disabled 
+{
+  background-color: #b8bcbe;
+}
+.custom-checkbox
+{
+  transform: scale(1.5);
+  margin: 8px 5px;
 }
 .generateBtn
 {

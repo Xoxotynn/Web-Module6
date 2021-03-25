@@ -41,12 +41,7 @@ function randomPoint() {
 }
 
 function randomColor() {
-    let symbols = "0123456789ABCDEF", color = "#";
-    for(let i = 0; i < 6; i++) {
-        color += symbols[randomInt(0, 16)];
-    }
-
-    return color;
+    return colors[randomInt(0, 20)];
 }
 
 function randomInt(min, max) {
@@ -55,6 +50,12 @@ function randomInt(min, max) {
 
 
 //UI
+function drawPoints(pts) {
+    pts.forEach(p => {
+        drawPoint(p);
+    });
+}
+
 function drawPoint(p) {
     context.beginPath();
     context.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -82,3 +83,10 @@ function createMouse(element) {
 
 	return mouse;
 }
+
+const colors = [
+    "#436436", "#FF1A4B", "#9888A5", "#C84C09", "#420217",
+    "#BCAB79", "#5FBB97", "#1C1D21", "#0081A7", "#7067CF",
+    "#F7A072", "#FF9B42", "#37515F", "#66C7F4", "#BDD358",
+    "#BF0603", "#8D9F87", "#54494B", "#C792DF", "#95B2B8",
+];

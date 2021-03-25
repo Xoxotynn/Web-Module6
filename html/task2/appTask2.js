@@ -3,15 +3,18 @@ const dropDownButton = document.getElementById("dropDown");
 
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
-canvas.width = 900;
-canvas.height = 700;
+canvas.width = 700;
+canvas.height = 500;
 
 const mouse = createMouse(canvas);
 const points = [];
 
 generateButton.addEventListener("click", function() {
-    let centersNum = document.getElementById("kNum").value;
-    clustering(centersNum);
+    let clustersCount = document.getElementById("kNum").value;
+    clustersCount > 0 ? kClustering(clustersCount) : clustering();
+
+    clearCanvas();
+    drawPoints(points);
 });
 dropDownButton.addEventListener("click", function() {
     document.getElementById("distTypesContent").classList.toggle("show");
