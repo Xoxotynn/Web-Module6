@@ -78,7 +78,7 @@ function CreateTab() {
 			element.name = "em";
 			element.setAttribute("row", i);
 			element.setAttribute("column", j);
-			element.addEventListener("click", handle);
+			element.addEventListener("mousedown", handle);
 
 			let elGrid = document.createElement("div");
 			elGrid.className = "el-grid";
@@ -122,7 +122,7 @@ var mode;
 var buttons = document.querySelectorAll("button.setmode");
 //Проходим все кпопки и присваиваем значения mode при нажатии
 buttons.forEach(function (button) {
-	button.addEventListener("click", function (e) {
+	button.addEventListener("mousedown", function (e) {
 		mode = e.target.getAttribute("mode");
 	});
 });
@@ -185,6 +185,7 @@ function handle(e) {
 
 	// Показываем кнопку Подтвердить
 	document.querySelector(".hiddenbut").style.display = null;
+	podgotovka();
 }
 
 
@@ -198,14 +199,16 @@ function handle(e) {
 
 
 
-// ------ Здесь можно сказать начинается алгоритм(РЕАЛЬНАЯ ЖОПА) -------
+// ---------------------------------- Здесь можно сказать начинается алгоритм(РЕАЛЬНАЯ ЖОПА) --------------------------------------;
 
 
+//Функция с которой начинается, после кнопки подтвердить производится алгоритм
+function podgotovka() 
+{
+	document.getElementById("228").innerHTML="Нажмите подтвердить чтобы начать выполнение алгоритма !!!";
+	document.querySelector('.hiddenbut').addEventListener('click', Astar);
 
-//Ожидание нажатия кнопки Подтвердить ввод
-let hiddenbut = document.querySelector('.hiddenbut');
-hiddenbut.addEventListener('click', SpacePress);
-
+}
 
 // Эвристика созданная хорошим человек, но теперь я сделаю для неё новое название. 
 function NewYork(pos0, pos1) 
@@ -217,7 +220,7 @@ function NewYork(pos0, pos1)
 }
 
 
-// Проверка закрытого используется для того чтобы не пушить клетки которые уже были обработаны
+// Проверка закрытого списка используется для того чтобы не пушить клетки которые уже были обработаны
 function proverkaZak(prov)
 {
 	for (let i = 0; i<ZakSpisok.length; i++)
@@ -231,7 +234,7 @@ function proverkaZak(prov)
 }
 
 
-
+// Проверка Открытого списка используется для того чтобы не пушить клетки которые уже были обработаны
 function proverkaOtk(prov)
 {
 	for (let i = 0; i<OtkSpisok.length; i++)
@@ -246,7 +249,7 @@ function proverkaOtk(prov)
 
 
 
-// Обновление значений в визуале
+// Обновление значений в визуале FGH
 function updatevalues(dlina1,dlina2)
 {
 	let time;
@@ -257,13 +260,6 @@ function updatevalues(dlina1,dlina2)
 		timex = OtkSpisok[i].x; 
 		timey = OtkSpisok[i].y;
 		time = document.querySelector(`td[row = "${timex}"][column = "${timey}"]`);
-		if (timex == 4 && timey == 1)
-		{
-			console.log(OtkSpisok);
-			console.log(AstMatr[timex][timey].F);
-			console.log(AstMatr[timex][timey].G);
-			console.log(AstMatr[timex][timey].H);
-		}
 		time.querySelector(".el-top .el-left").innerText = AstMatr[timex][timey].F;
 		time.querySelector(".el-bottom .el-left").innerText = AstMatr[timex][timey].G;
 		time.querySelector(".el-bottom .el-right").innerText = AstMatr[timex][timey].H;
@@ -271,10 +267,13 @@ function updatevalues(dlina1,dlina2)
 }
 
 
-let type;
+
+
+
+// Переменная чтобы просто выйти когда запушили финишь
 let paaaar;
 
-// Функция проверки соседй и всё что с ними связано(сердце алгоритма)
+// Функция проверки соседей и всё что с ними связано(сердце алгоритма)
 function proverkaSosedei(tochka)
 {
 	
@@ -301,6 +300,9 @@ function proverkaSosedei(tochka)
 			AstMatr[x - 1][y - 1].H = NewYork(x-1,y-1);
 			AstMatr[x - 1][y - 1].F = AstMatr[x - 1][y - 1].H + AstMatr[x - 1][y - 1].G;
 			OtkSpisok.push(new strPUSH(x-1,y-1));
+			document.querySelector(`td[row = "${x-1}"][column = "${y-1}"]`).style.backgroundColor = "#f6ff00";
+			
+
 			if (x-1 == finishMatrix.x && y-1 == finishMatrix.y)
 			{
 				paaaar = 1;
@@ -327,6 +329,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x - 1][y].H = NewYork(x-1,y);
 			AstMatr[x - 1][y].F = AstMatr[x - 1][y].H + AstMatr[x - 1][y].G;
 			OtkSpisok.push(new strPUSH(x-1,y));
+			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
 			if (x-1 == finishMatrix.x && y == finishMatrix.y)
 			{
 				paaaar = 1;
@@ -353,6 +356,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x - 1][y + 1].H = NewYork(x-1,y+1);
 			AstMatr[x - 1][y + 1].F = AstMatr[x - 1][y + 1].H + AstMatr[x - 1][y + 1].G;
 			OtkSpisok.push(new strPUSH(x-1,y+1));
+			document.querySelector(`td[row = "${x-1}"][column = "${y+1}"]`).style.backgroundColor = "#f6ff00";
 			if (x-1 == finishMatrix.x && y+1 == finishMatrix.y)
 			{
 				paaaar = 1;
@@ -379,6 +383,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x][y + 1].H = NewYork(x,y+1);
 			AstMatr[x][y + 1].F = AstMatr[x][y + 1].H + AstMatr[x][y + 1].G;
 			OtkSpisok.push(new strPUSH(x,y+1));
+			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).style.backgroundColor = "#f6ff00";
 			if (x == finishMatrix.x && y+1 == finishMatrix.y)
 			{
 				paaaar = 1;
@@ -405,6 +410,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x + 1][y + 1].H = NewYork(x+1, y+1);
 			AstMatr[x + 1][y + 1].F = AstMatr[x + 1][y + 1].H + AstMatr[x + 1][y + 1].G;
 			OtkSpisok.push(new strPUSH(x+1, y+1));
+			document.querySelector(`td[row = "${x+1}"][column = "${y+1}"]`).style.backgroundColor = "#f6ff00";
 			if (x+1 == finishMatrix.x && y+1 == finishMatrix.y)
 			{
 				paaaar = 1;
@@ -431,6 +437,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x + 1][y].H = NewYork(x+1, y);
 			AstMatr[x + 1][y].F = AstMatr[x + 1][y].H + AstMatr[x + 1][y].G;
 			OtkSpisok.push(new strPUSH(x+1, y));
+			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
 			if (x+1 == finishMatrix.x && y == finishMatrix.y)
 			{
 				paaaar = 1;
@@ -457,6 +464,8 @@ function proverkaSosedei(tochka)
 			AstMatr[x + 1][y - 1].H = NewYork(x+1, y-1);
 			AstMatr[x + 1][y - 1].F = AstMatr[x + 1][y - 1].H + AstMatr[x + 1][y - 1].G;
 			OtkSpisok.push(new strPUSH(x+1, y-1));
+			document.querySelector(`td[row = "${x+1}"][column = "${y-1}"]`).style.backgroundColor = "#f6ff00";
+
 			if (x+1 == finishMatrix.x && y-1 == finishMatrix.y)
 			{
 				paaaar = 1;
@@ -483,6 +492,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x][y - 1].H = NewYork(x, y-1);
 			AstMatr[x][y - 1].F = AstMatr[x][y - 1].H + AstMatr[x][y - 1].G;
 			OtkSpisok.push(new strPUSH(x, y-1));
+			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).style.backgroundColor = "#f6ff00";
 			if (x == finishMatrix.x && y-1 == finishMatrix.y)
 			{
 				paaaar = 1;
@@ -501,6 +511,134 @@ function proverkaSosedei(tochka)
 	return 0;
 }
 
+
+
+// Функция проверки соседей по вертикали и горизонтали
+function proverkaSoseddei(tochka)
+{
+	
+	// Чтобы JS не творил хуйню с преобразованием типов
+	let x = parseInt(tochka.x, 10);
+	let y = parseInt(tochka.y, 10);
+	paaaar = 0;
+	
+	
+	OtkSpisok.splice(index, 1);
+	ZakSpisok.push(new strPUSH(x,y));
+	// Алгоритм всех различных проверок!
+	
+
+
+	// Вверх
+	if (x - 1 >= 0 && AstMatr[x - 1][y].value !=0 && proverkaZak(new strPUSH(x-1,y)) == 0)
+	{
+		if (proverkaOtk(new strPUSH(x-1,y)) == 0)
+		{
+			AstMatr[x - 1][y].roditelX = x;
+			AstMatr[x - 1][y].roditelY = y;
+			AstMatr[x - 1][y].G = 10 + AstMatr[x][y].G;
+			AstMatr[x - 1][y].H = NewYork(x-1,y);
+			AstMatr[x - 1][y].F = AstMatr[x - 1][y].H + AstMatr[x - 1][y].G;
+			OtkSpisok.push(new strPUSH(x-1,y));
+			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
+			if (x-1 == finishMatrix.x && y == finishMatrix.y)
+			{
+				paaaar = 1;
+				return paaaar;
+			}
+		}
+		else if (AstMatr[x][y].G + 10 < AstMatr[x - 1][y].G)
+		{
+			AstMatr[x - 1][y].roditelX = x;
+			AstMatr[x - 1][y].roditelY = y;
+			AstMatr[x - 1][y].G = AstMatr[x][y] + 10;
+			AstMatr[x - 1][y].F = AstMatr[x - 1][y].H + AstMatr[x - 1][y].G;
+		}
+	}
+
+	//ВПРАВО
+	if (y + 1 < nnum && AstMatr[x][y + 1].value !=0 && proverkaZak(new strPUSH(x,y+1)) == 0)
+	{
+		if (proverkaOtk(new strPUSH(x, y+1)) == 0)
+		{
+			AstMatr[x][y + 1].roditelX = x;
+			AstMatr[x][y + 1].roditelY = y;
+			AstMatr[x][y + 1].G = 10 + AstMatr[x][y].G;
+			AstMatr[x][y + 1].H = NewYork(x,y+1);
+			AstMatr[x][y + 1].F = AstMatr[x][y + 1].H + AstMatr[x][y + 1].G;
+			OtkSpisok.push(new strPUSH(x,y+1));
+			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).style.backgroundColor = "#f6ff00";
+			if (x == finishMatrix.x && y+1 == finishMatrix.y)
+			{
+				paaaar = 1;
+				return paaaar;
+			}
+		}
+		else if (AstMatr[x][y].G + 10 < AstMatr[x][y+1].G)
+		{
+			AstMatr[x][y+1].roditelX = x;
+			AstMatr[x][y+1].roditelY = y;
+			AstMatr[x][y+1].G = AstMatr[x][y] + 10;
+			AstMatr[x][y+1].F = AstMatr[x][y+1].H + AstMatr[x][y+1].G;
+		}
+	}
+
+	// Вниз
+	if (x + 1 < nnum && AstMatr[x+1][y].value !=0 && proverkaZak(new strPUSH(x+1,y)) == 0)
+	{
+		if ((proverkaOtk(new strPUSH(x+1, y)) == 0))
+		{
+			AstMatr[x + 1][y].roditelX = x;
+			AstMatr[x + 1][y].roditelY = y;
+			AstMatr[x + 1][y].G = 10 + AstMatr[x][y].G;
+			AstMatr[x + 1][y].H = NewYork(x+1, y);
+			AstMatr[x + 1][y].F = AstMatr[x + 1][y].H + AstMatr[x + 1][y].G;
+			OtkSpisok.push(new strPUSH(x+1, y));
+			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
+			if (x+1 == finishMatrix.x && y == finishMatrix.y)
+			{
+				paaaar = 1;
+				return paaaar;
+			}
+		}
+		else if (AstMatr[x][y] + 10 < AstMatr[x+1][y])
+		{
+			AstMatr[x+1][y].roditelX = x;
+			AstMatr[x+1][y].roditelY = y;
+			AstMatr[x+1][y].G = AstMatr[x][y] + 10;
+			AstMatr[x+1][y].F = AstMatr[x+1][y].H + AstMatr[x+1][y].G;
+		}
+	}
+
+	//Влево
+	if (y - 1 >= 0 && AstMatr[x][y-1].value !=0 && proverkaZak(new strPUSH(x,y-1)) == 0)
+	{
+		if (proverkaOtk(new strPUSH(x, y-1)) == 0)
+		{
+			AstMatr[x][y - 1].roditelX = x;
+			AstMatr[x][y - 1].roditelY = y;
+			AstMatr[x][y - 1].G = 10 + AstMatr[x][y].G;
+			AstMatr[x][y - 1].H = NewYork(x, y-1);
+			AstMatr[x][y - 1].F = AstMatr[x][y - 1].H + AstMatr[x][y - 1].G;
+			OtkSpisok.push(new strPUSH(x, y-1));
+			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).style.backgroundColor = "#f6ff00";
+			if (x == finishMatrix.x && y-1 == finishMatrix.y)
+			{
+				paaaar = 1;
+				return paaaar;
+			}
+		}
+		else if (AstMatr[x][y] + 10 < AstMatr[x][y-1])
+		{
+			AstMatr[x][y-1].roditelX = x;
+			AstMatr[x][y-1].roditelY = y;
+			AstMatr[x][y-1].G = AstMatr[x][y] + 10;
+			AstMatr[x][y-1].F = AstMatr[x][y-1].H + AstMatr[x][y-1].G;
+		}
+	}
+
+	return 0;
+}
 
 
 let px;
@@ -525,10 +663,10 @@ function MINOTK(OtkSpisok) {
 }
 
 
-// Если нашли то выведем что нибудь другое, это просто тест
+// Если не нашли то выведем что нибудь другое, это просто тест
 function stop()
 {
-	console.log("STOPStOPSTOPSTOPSTOP")
+	document.getElementById("228").innerHTML="Алгоритм выполнился!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 }
 
 
@@ -552,22 +690,23 @@ function Astar()
 		//Функция минимума(Возращает переменную с координатами x;y)
 		save = MINOTK(OtkSpisok);
 		dlina1 = OtkSpisok.length;
+
 		r = proverkaSosedei(save);
 		dlina2 = OtkSpisok.length;
 
 		updatevalues(dlina1,dlina2);
+
+		
 		//Проверка если мы запушили наш финиш oxxxx]====> значит нашли путь
 		if (r == 1)
 		{
 			stop();
-			console.log(OtkSpisok);
-			console.log(AstMatr);
 			risovka();
 			return true;
 		}
 		else if (OtkSpisok.length <= 0)
 		{
-			stop();
+			document.getElementById("228").innerHTML="Путь не найден"
 			return true;
 		}
 		
@@ -583,30 +722,13 @@ function risovka()
 {
 	x = parseInt(finishMatrix.x, 10);
 	y = parseInt(finishMatrix.y, 10);
-	while ((x !== startMatrix.x)  && (y !== startMatrix.y))
+	while (x != startMatrix.x || y != startMatrix.y)
 	{
-		console.log(AstMatr);
 		time = x;
-		x = AstMatr[x][y].roditelX;
+		x = AstMatr[time][y].roditelX;
 		y = AstMatr[time][y].roditelY;
-		console.log(startMatrix.x, startMatrix.y);
-		console.log(x,y);
 		document.querySelector(`td[row = "${x}"][column = "${y}"]`).style.backgroundColor = "#9030b8";
 	}
 }
 
-
-
-function SpacePress() {
-	document.getElementById("228").innerHTML="Нажмите пробел чтобы начать выполнение алгоритма !!!";
-
-
-	document.body.addEventListener("keydown", function(e){
-	if (e.code == "Space") 
-	{
-		Astar();
-		document.getElementById("228").innerHTML="Алгоритм выполнился!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-	}
-	});
-}
 

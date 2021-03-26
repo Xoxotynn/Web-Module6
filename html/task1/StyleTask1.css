@@ -83,6 +83,24 @@ table tr td.elem.finish {
 
 p {
   color: red;
-  background-color: blueviolet;
+  background-color: #7FFFD4;
+}
+
+.zapusk {
+  color: #625772;
+  background-color: #F9A1BC;
+  border: none;
+  border-radius: 10px;
+  padding: 8px;
+  font-size: 18px;
+}
+
+.setmode {
+  color: #625772;
+  background-color: #F9A1BC;
+  border: none;
+  border-radius: 10px;
+  padding: 8px;
+  font-size: 18px;
 }
 /*# sourceMappingURL=StyleTask1.css.map */
