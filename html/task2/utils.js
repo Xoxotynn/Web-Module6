@@ -31,7 +31,7 @@ function chebyshevDist(p1, p2) {
 }
 
 function addUserPoint() {
-    let p = new Point(mouse.x, mouse.y, "blue");
+    let p = new Point(mouse.x, mouse.y, "#ef9a9a");
     points.push(p);
     drawPoint(p);
 }
@@ -85,8 +85,8 @@ function createMouse(element) {
 }
 
 const colors = [
-    "#436436", "#FF1A4B", "#9888A5", "#C84C09", "#420217",
-    "#BCAB79", "#5FBB97", "#1C1D21", "#0081A7", "#7067CF",
-    "#F7A072", "#FF9B42", "#37515F", "#66C7F4", "#BDD358",
-    "#BF0603", "#8D9F87", "#54494B", "#C792DF", "#95B2B8",
+    "#436436", "#FF1A4B", "#9888A5", "#C84C09", "#31E981",
+    "#BCAB79", "#5FBB97", "#F5E5FC", "#0081A7", "#7067CF",
+    "#F7A072", "#FF9B42", "#F4F482", "#66C7F4", "#BDD358",
+    "#BF0603", "#8D9F87", "#99F7AB", "#C792DF", "#95B2B8",
 ];
