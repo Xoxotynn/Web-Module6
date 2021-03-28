@@ -44,11 +44,11 @@ function generateKCenters(centersCount) {
 function clusteringStep(centers) {
     let clusters = createClusters(centers);
     let WPrev;
-    let WTotal = assignPoints(clusters);
+    let WTotal = assignPoints(clusters, euqlidDist);
     while(WTotal != WPrev) {
         WPrev = WTotal;
         calculateCenters(clusters);
-        WTotal = assignPoints(clusters);
+        WTotal = assignPoints(clusters, euqlidDist);
     }
 
     return WTotal;
@@ -82,7 +82,7 @@ function assignPoints(clusters) {
 function findBestCluster(point, clusters) {
     let minDist, minCluster;
     clusters.forEach(cluster => {
-        let dist = euqlidDist(point, cluster.center);
+        let dist = distFunction(point, cluster.center);
         if (dist < minDist || minDist == null) {
             minDist = dist;
             minCluster = cluster;

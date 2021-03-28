@@ -5,29 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кластеризация</title>
-	<link rel="stylesheet" href="StyleTask2.css">
+	<link rel="stylesheet" href="styleTask2.css">
 </head>
 <body>
-    <header>
-		<h1>Кластеризация</h1>
-	</header>
 	<div class="grid">
+		<div class="logoHolder">
+			<a href="../index.html">
+				<img src="../assets/logo.png" alt="logo">
+			</a>
+		</div>
+		<div class="sidenav">
+			<a href="../task1/task1.html">A*</a>
+			<a href="../task2/task2.html" class="current">Кластеризация</a>
+			<a href="../task3/task3.html">Генетический Алгоритм</a>
+			<a href="../task4/task4.html">Муравьиный Алгоритм</a>
+			<a href="../task5/task5.html">Дерево Решений</a>
+			<a href="../task6/task6.html">Нейронная Сеть</a>
+		</div>
 		<canvas class="clustersCanvas"></canvas>
 		<div class="inputK">
 			<label for="kNum">Количество кластеров</label>
 			<input name="kNum" type="number" id="kNum">
-			<input type="checkbox" class="custom-checkbox" id="autoKNum" name="autoKNum" value="true">
-			<label for="autoKNum">Автоматически</label>
 		</div>
-		<div class="inputDist">
-			<button id="dropDown" class="distDropBtn">Метрика</button>
-			<div id="distTypesContent" class="dropDownContent">
-				<button class="distType1">Евклидово расстояние</button>
-				<button class="distType2">Квадрат евклидова расстояния</button>
-				<button class="distType3">Манхэттенское расстояние</button>
-				<button class="distType4">Расстояние Чебышева</button>
-			</div>
+		<div class="distTypes">
+			Метрика
+			<button id="euqlid">Евклидово расстояние</button>
+			<button id="sqrEuqlid">Квадрат евклидова расстояния</button>
+			<button id="manhattan">Манхэттенское расстояние</button>
+			<button id="chebyshev">Расстояние Чебышева</button>
 		</div>
+		<b class="roundedDivider"></b>
 		<div class="generate">
 			<button id="generateBtn" class="generateBtn" type="button">Найти кластеры</button>
 		</div>
@@ -35,6 +42,6 @@
 	
 	<script src="utils.js"></script>
 	<script src="clustering.js"></script>
-	<script src="appTask2.js"></script>
+	<script src="scriptTask2.js"></script>
 </body>
 </html>
