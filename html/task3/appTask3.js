@@ -23,7 +23,7 @@ let colors = ["#C8F4DE",
 "#EAB4F8",
 "#A1DE93"];
 
-var StartPoint;
+var StartPoint = 0;
 let ind = 0;
 function addUserPoint(e) {
     const rect = e.target.getBoundingClientRect();

@@ -1,11 +1,11 @@
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
-canvas.width = 700;
-canvas.height = 500;
+canvas.width = 800;
+canvas.height = 600;
 const canvas1 = document.getElementById("start");
 const context1 = canvas1.getContext("2d");
-canvas1.width = 700;
-canvas1.height = 500;
+canvas1.width = 800;
+canvas1.height = 600;
 let points = [];
 let matrix = [];
 let MassStartPointDist = [];
@@ -16,6 +16,7 @@ function ClearCanvas() {
     context1.clearRect(0, 0, canvas.width, canvas.height);
     context.clearRect(0, 0, canvas.width, canvas.height);
     points.splice(0, points.length);
+    StartPoint = 0;
 }
 let flag = 0;
 const start1 = document.getElementById("startPoint");
@@ -28,6 +29,8 @@ NotStart.addEventListener("click", drawNotStart);
 function drawNotStart() {
     flag = 0;
 }
+const SWAY = document.getElementById("findWayButton");
+SWAY.addEventListener("click", GenAlg);
 
 
 let PercentOf = 15;
@@ -59,6 +62,10 @@ let wayschild = [];
 
 function GenAlg() {
     let ways = [];
+    if (StartPoint == 0) {
+        StartPoint = points[GetRandom(0, points.length)];
+        points.splice(StartPoint.index, StartPoint.index);
+    }
     count = 0, o = 0, wayschild = [];
     genetation = Math.pow(10, points.length);
     //sameBest = 4*points.length;
@@ -247,6 +254,3 @@ function Mutation(SonW) {
     }
     return SonW;
 }
-
-const SWAY = document.getElementById("generateBtn");
-SWAY.addEventListener("click", GenAlg);
