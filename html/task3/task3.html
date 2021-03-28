@@ -8,18 +8,32 @@
 	<link rel="stylesheet" href="StyleTask3.css">
 </head>
 <body>
-    <header>
-		<h1>Генетический алгоритм</h1>
-	</header>
 	<div class="grid">
-		<canvas class="clustersCanvas"></canvas>
-        <canvas class="clustersCanvas" id = "start"></canvas>
+        <div class="logoHolder">
+			<a href="../index.html">
+				<img src="../assets/logo.png" alt="logo">
+			</a>
+		</div>
+		<div class="sidenav">
+			<a href="../task1/task1.html">A*</a>
+			<a href="../task2/task2.html">Кластеризация</a>
+			<a href="../task3/task3.html" class="current">Генетический Алгоритм</a>
+			<a href="../task4/task4.html">Муравьиный Алгоритм</a>
+			<a href="../task5/task5.html">Дерево Решений</a>
+			<a href="../task6/task6.html">Нейронная Сеть</a>
+		</div>
+
+		<canvas class="canvas"></canvas>
+        <canvas class="canvas" id="start"></canvas>
 		
-		<div class="generate">
-			<button id="generateBtn" class="generateBtn" type="button">Найти путь</button>
-            <button id = "startPoint" class="generateBtn" type="button">Начальная точка</button>
-            <button id = "NotStart" class="generateBtn" type="button">Другие точки</button>
-            <button id="clear" class="generateBtn" type="button">Очистить</button>
+		<div class="settings">
+            <button id = "startPoint" class="startBtn" type="button">Начальная точка</button>
+            <button id = "NotStart" class="userPointsBtn" type="button">Другие точки</button>
+            <button id="clear" class="clearBtn" type="button">Очистить</button>
+		</div>
+        <b class="roundedDivider"></b>
+        <div class="findWay">
+			<button id="findWayButton" class="findWayBtn" type="button">Найти путь</button>
 		</div>
 	</div>
 	<script src="appTask3.js"></script>
