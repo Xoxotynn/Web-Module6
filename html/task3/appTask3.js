@@ -12,6 +12,17 @@ const mouse = {
     x: 0,
     y: 0,
 };
+let colors = ["#C8F4DE",
+"#A4E5D9",
+"#66C6BA",
+"#D3D4D8",
+"#FFFFC2",
+"#FFA5A5",
+"#EBD5D5",
+"#FBAC91",
+"#EAB4F8",
+"#A1DE93"];
+
 var StartPoint;
 let ind = 0;
 function addUserPoint(e) {
@@ -19,11 +30,11 @@ function addUserPoint(e) {
     mouse.x = e.clientX - rect.left;
     mouse.y = e.clientY - rect.top;
     if (flag == 1) {
-        StartPoint = new Point(mouse.x, mouse.y, "green", -1);
+        StartPoint = new Point(mouse.x, mouse.y, "#7FAF5C", -1);
         drawStartPoint(StartPoint);
     }
     else {
-        let p = new Point(mouse.x, mouse.y, "blue", ind);
+        let p = new Point(mouse.x, mouse.y, "#62B5BB", ind);
         points.push(p);
         ind++;
         drawPoint(p);
@@ -43,24 +54,54 @@ function drawStartPoint(p) {
     context1.fillStyle = p.color;
     context1.fill();
 }
+function randomColor() {
+
+    return colors[randomInt(0, colors.length)];
+}
+
+function randomInt(min, max) {
+    return min + Math.floor(Math.random() * Math.floor(max));
+}
 
 function DrawBestWay(w) {
     context1.beginPath();
     context1.moveTo(StartPoint.x, StartPoint.y);
     context1.lineTo(w[0].x, w[0].y);
-    context1.strokeStyle = "green";
+    let colorLine = randomColor();
+    context1.strokeStyle = colorLine;
+    context1.lineWidth = 2;
     context1.stroke();
-    for (let i = 1; i < w.length; i++) {
+    for (let i = 1; i < points.length; i++) {
         context1.beginPath();
         context1.moveTo(w[i - 1].x, w[i - 1].y)
         context1.lineTo(w[i].x, w[i].y);
-        context1.strokeStyle = "green";
+        context1.strokeStyle = colorLine;
         context1.stroke();
     }
     context1.beginPath();
     context1.moveTo(StartPoint.x, StartPoint.y);
-    context1.lineTo(w[w.length - 1].x, w[w.length - 1].y);
-    context1.strokeStyle = "green";
+    context1.lineTo(w[points.length - 1].x, w[points.length - 1].y);
+    context1.strokeStyle = colorLine;
     context1.stroke();
-    //await delay(1000);
+}
+function DrawEndWay(w) {
+    context1.beginPath();
+    context1.moveTo(StartPoint.x, StartPoint.y);
+    context1.lineTo(w[0].x, w[0].y);
+    let colorLine = "#62B5BB";
+    context1.strokeStyle = colorLine;
+    context1.lineWidth = 4;
+    context1.stroke();
+    for (let i = 1; i < points.length; i++) {
+        context1.beginPath();
+        context1.moveTo(w[i - 1].x, w[i - 1].y)
+        context1.lineTo(w[i].x, w[i].y);
+        context1.strokeStyle = colorLine;
+        context1.stroke();
+    }
+    context1.beginPath();
+    context1.moveTo(StartPoint.x, StartPoint.y);
+    context1.lineTo(w[points.length - 1].x, w[points.length - 1].y);
+    context1.strokeStyle = colorLine;
+    context1.stroke();
 }

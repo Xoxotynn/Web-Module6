@@ -15,6 +15,7 @@ canvas1.addEventListener("click", addUserPoint);
 function ClearCanvas() {
     context1.clearRect(0, 0, canvas.width, canvas.height);
     context.clearRect(0, 0, canvas.width, canvas.height);
+    points.splice(0, points.length);
 }
 let flag = 0;
 const start1 = document.getElementById("startPoint");
@@ -29,70 +30,56 @@ function drawNotStart() {
 }
 
 
-let PercentOf = 80;
-let genetation = 100;
+let PercentOf = 15;
+let genetation, sameBest;
 
 
-function distSP() {
-    let MassStartPointDist = [];
-    for (let i = 0; i < points.length; i++) {
-        MassStartPointDist[i] = distance(StartPoint, points[i]);
-    }
-    return MassStartPointDist;
-}
-function CreateMatrix(num) {
-    let matrix = [];
-    for (let i = 0; i < num; i++) {
-        let res = []
-        for (let j = 0; j < num; j++) {
-            matrix.push(res);
-            matrix[i][j] = distance(points[i], points[j]);
-        }
-    }
-    return matrix;
+function distSP(p1) {
+    return Math.sqrt(Math.pow(p1.x - StartPoint.x, 2) + Math.pow(p1.y - StartPoint.y, 2));
 }
 
 function distance(p1, p2) {
     return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
-} 
+}
 
 function AllDistance(mass) {
-    let dist = MassStartPointDist[mass[0].index] + MassStartPointDist[mass[mass.length - 1].index];
+    let dist = distSP(mass[0]) + distSP(mass[mass.length - 1]);
     for (let i = 1; i < mass.length; i++) {
-            dist += matrix[mass[i-1].index][mass[i].index];
-        
+        dist += distance(mass[i - 1], mass[i]);
     }
-    //console.log(dist);
     return dist;
 }
 
 //------Начало алгоритма-----
 
+let count = 0;
+let best;
+let o = 0;
+let wayschild = [];
 
 function GenAlg() {
-    MassStartPointDist = distSP();
-    matrix = CreateMatrix(points.length);
     let ways = [];
+    count = 0, o = 0, wayschild = [];
+    genetation = Math.pow(10, points.length);
+    //sameBest = 4*points.length;
     for (let i = 0; i < points.length; i++) {
         let wayi = { arr: [], dist: 0 };
         let temp = shuffle(points).slice();
-        wayi.arr = temp; 
+        wayi.arr = temp;
         let distI = AllDistance(wayi.arr);
         wayi.dist = distI;
         ways.push(wayi);
     }
     SortByDistance(ways);
-    //ways = ways.slice(0, points.length);
-    for (let i = 0; i < genetation; i++) {
-        ways = Crossbreedein(ways);
-        let DistanceI = AllDistance(ways[0].arr);
-        drawStartPoint(StartPoint);
-        DrawBestWay(ways[0].arr);
-    }
-    
-    console.log(ways[0].arr);
-    let BestDistance = AllDistance(ways[0].arr);
-    DrawBestWay(ways[0].arr);
+    best = ways[0].dist;
+    crossingover(ways);
+    // let DistanceI = AllDistance(ways[0].arr);
+
+}
+
+function DrawRes(arr) {
+    drawStartPoint(StartPoint);
+    DrawBestWay(arr);
 }
 
 function shuffle(array) {
@@ -103,66 +90,36 @@ function shuffle(array) {
     return array;
 }
 
-// function shuffle(arr){
-//     arrr = arr.sort((a, b) => 0.5 - Math.random());
-//     return arrr;
-// }
-
 function SortByDistance(arr) {
     arr.sort((a, b) => a.dist > b.dist ? 1 : -1);
 }
 
 //-----Новое поколение----
 
-function NewGenetation(ways, SonW_1, SonW_2) {
-    let wayi = { arr: [], dist: 0 };
-    wayi.arr = SonW_1;
-    wayi.dist = AllDistance(SonW_1);
-    ways.push(wayi);
-    wayi.arr = SonW_2;
-    wayi.dist = AllDistance(SonW_2);
-    ways.push(wayi);
-    SortByDistance(ways);
-    console.log('====+==+==+=+++====+');
-    console.log(points.length);
-    ways = ways.slice(0, points.length);
-    return ways;
-}
 
 function GetRandom(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-
-//-------Функция скрещивания--------
-
-function Crossbreedein(ways) {
-    let father = GetRandom(0, ways.length);
-    let mother = GetRandom(0, ways.length);
-    while (father == mother) {
-        mother = GetRandom(0, ways.length);
-    }
-    let MWay = ways[mother];
-    let FWay = ways[father];
+function createChildren(i, j, ways) {
+    let MWay = ways[i];
+    let FWay = ways[j];
     let len = ways.length;
-    let x = 0;
-    console.log('=======');
-    console.log(ways);
-    while (x < len && MWay.arr[x].index == FWay.arr[x].index) {
-        x++
-    }
+    // let x = 0;
+    // while (x < len && MWay.arr[x].index == FWay.arr[x].index) {
+    //     x++
+    // }
     let SonW_1 = []; let SonW_2 = [];
-    if (x != len)
-    {
-        x++;
-    }
-
+    // if (x != len) {
+    //     x++;
+    // }
+    let x = GetRandom(0, len - 1);
     for (let i = 0; i < x; i++) {
         SonW_1.push(MWay.arr[i]);
         SonW_2.push(FWay.arr[i]);
     }
 
-    for (let i = x ; i < len; i++) {
+    for (let i = x; i < len; i++) {
         let count1 = 0;
         let count2 = 0;
         for (let j = 0; j < x; j++) {
@@ -173,10 +130,10 @@ function Crossbreedein(ways) {
                 count2++;
             }
         }
-        if (count1 == x ) {
+        if (count1 == x) {
             SonW_1.push(FWay.arr[i]);
         }
-        if (count2 == x ) {
+        if (count2 == x) {
             SonW_2.push(MWay.arr[i]);;
         }
     }
@@ -191,28 +148,103 @@ function Crossbreedein(ways) {
     }
     if (SonW_2.length < len) {
         for (let i = 0; i < x; i++) {
-            for (let j = x ; j < len; j++) {
+            for (let j = x; j < len; j++) {
                 if (FWay.arr[j].index == MWay.arr[i].index) {
                     SonW_2.push(MWay.arr[i]);
                 }
             }
         }
     }
-    if (GetRandom(0, 101) < PercentOf) {
-        SonW_1 = Mutation(len, SonW_1)
+    if (GetRandom(0, 101) <= PercentOf) {
+        SonW_1 = Mutation(SonW_1)
+        if (PercentOf < 40) {
+            PercentOf++;
+        }
     }
-    ways = NewGenetation(ways, SonW_1, SonW_2);
-    return ways;
+    if (GetRandom(0, 101) <= PercentOf) {
+        SonW_2 = Mutation(SonW_2)
+        if (PercentOf < 40) {
+            PercentOf++;
+        }
+    }
+    let children = { arr: [], dist: 0 };
+
+    // console.log('=================---=========');
+    // console.log(SonW_1);
+    // console.log(AllDistance(SonW_1));
+    // console.log(SonW_2);
+    // console.log(AllDistance(SonW_2));
+
+    let temp = SonW_1.slice();
+    children.arr = temp;
+    children.dist = AllDistance(temp);
+    wayschild.push(children);
+    children = { arr: [], dist: 0 };
+    let temp1 = SonW_2.slice();
+    children.arr = temp1;
+    children.dist = AllDistance(temp1);
+    wayschild.push(children);
+
+}
+//-------Функция скрещивания--------
+
+function  crossingover(ways) {
+    let DistanceI;
+    setTimeout(function Name() {
+        for (let i = 0; i < points.length; i++) {
+            for (let j = i + 1; j < points.length; j++) {
+                createChildren(i, j, ways);
+                count += 2;
+            }
+        }
+
+        ways = ways.concat(wayschild);
+        SortByDistance(ways);
+        ways.splice(points.length, ways.length - points.length);
+        DistanceI = AllDistance(ways[0].arr);
+        if (best == DistanceI) {
+            o++;
+            //console.log(o);
+        }
+        else if (best > DistanceI) {
+            o = 0;
+            best = DistanceI;
+        }
+        // console.log(count);
+        // console.log(DistanceI);
+        DrawRes(ways[0].arr);
+        if (o < 80 && count < genetation) {
+            setTimeout(Name, 10);
+        }
+        else {
+            console.log('конец');
+            console.log(DistanceI);
+            drawStartPoint(StartPoint);
+            DrawEndWay(ways[0].arr);
+        }
+
+    }, 10);
 }
 
 //----Мутации----
 
-function Mutation(len, SonW) {
-    let index1 = GetRandom(0, len);
-    let index2 = GetRandom(0, len)
-    let t = SonW[index1];
-    SonW[index1] = SonW[index2];
-    SonW[index2] = t;
+function Mutation(SonW) {
+    let index1 = GetRandom(0, SonW.length);
+    let index2 = GetRandom(0, SonW.length);
+    while (index1 == index2) {
+        index2 = GetRandom(0, SonW.length);
+    }
+    if (index1 > index2) {
+        let t = index1;
+        index1 = index2;
+        index2 = t;
+    }
+    let n = Math.floor((Math.abs(index1 - index2) + 1) / 2);
+    for (let i = 0; i < n; i++) {
+        let t = SonW[index1 + i];
+        SonW[index1 + i] = SonW[index2 - i];
+        SonW[index2 - i] = t;
+    }
     return SonW;
 }
 
