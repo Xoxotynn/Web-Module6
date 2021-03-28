@@ -20,6 +20,7 @@ table {
 				display: grid;
 				grid-template-rows: min-content auto;
 				min-height: 100%;
+				max-width: 100%;
 				pointer-events: none;
 
 				.el-top {
@@ -94,3 +95,4 @@ p
 	padding: 8px;
 	font-size: 18px;
 }
+

@@ -27,6 +27,7 @@ table tr td.elem .el-grid {
       grid-template-rows: -webkit-min-content auto;
       grid-template-rows: min-content auto;
   min-height: 100%;
+  max-width: 100%;
   pointer-events: none;
 }
 
