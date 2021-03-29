@@ -85,11 +85,7 @@ function DrawRes(arr) {
 }
 
 function shuffle(array) {
-<<<<<<< HEAD
     for (let k = 0; k < 50; k++) {
-=======
-    for (let v = 0; v < 50; v++) {
->>>>>>> origin/Liza
         for (let i = array.length - 1; i > 0; i--) {
             let j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
