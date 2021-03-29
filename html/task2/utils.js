@@ -68,18 +68,27 @@ function clearCanvas() {
 }
 
 function createMouse(element) {
+    let drawer;
     const mouse = {
 		x: 0,
 		y: 0,
 	};
 
 	element.addEventListener("mousemove", mousemoveHandler);
+    element.addEventListener("mousedown", mouseDownHandler);
+    element.addEventListener("mouseup", mouseUpHandler);
 
 	function mousemoveHandler(event) {
 		const rect = element.getBoundingClientRect();
 		mouse.x = event.clientX - rect.left;
 		mouse.y = event.clientY - rect.top;
 	}
+    function mouseDownHandler(event) {
+        drawer = setInterval(addUserPoint, 50);
+    }
+    function mouseUpHandler(event) {
+        clearInterval(drawer);
+    }
 
 	return mouse;
 }
