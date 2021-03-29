@@ -20,54 +20,6 @@ table tr td.elem {
   cursor: pointer;
 }
 
-table tr td.elem .el-grid {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-rows: min-content auto;
-      grid-template-rows: -webkit-min-content auto;
-      grid-template-rows: min-content auto;
-  min-height: 100%;
-  max-width: 100%;
-  pointer-events: none;
-}
-
-table tr td.elem .el-grid .el-top {
-  display: -ms-grid;
-  display: grid;
-  grid-auto-flow: column;
-}
-
-table tr td.elem .el-grid .el-bottom {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-row-align: end;
-      align-self: end;
-  grid-auto-flow: column;
-}
-
-table tr td.elem .el-grid .el-top, table tr td.elem .el-grid .el-bottom {
-  pointer-events: none;
-}
-
-table tr td.elem .el-grid .el-top .el-left, table tr td.elem .el-grid .el-top .el-right, table tr td.elem .el-grid .el-bottom .el-left, table tr td.elem .el-grid .el-bottom .el-right {
-  padding: 5px;
-  pointer-events: none;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-
-table tr td.elem .el-grid .el-top .el-left, table tr td.elem .el-grid .el-bottom .el-left {
-  -ms-grid-column-align: start;
-      justify-self: start;
-}
-
-table tr td.elem .el-grid .el-top .el-right, table tr td.elem .el-grid .el-bottom .el-right {
-  -ms-grid-column-align: end;
-      justify-self: end;
-}
-
 table tr td.elem.start {
   background-color: #73ff00;
   background-image: linear-gradient(45deg, #d17878 25%, transparent 25%), linear-gradient(-45deg, #d17878 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #d17878 75%), linear-gradient(-45deg, transparent 75%, #d17878 75%);
@@ -80,11 +32,6 @@ table tr td.elem.wall {
 table tr td.elem.finish {
   background-color: #9030b8;
   background-image: linear-gradient(45deg, #d17878 25%, transparent 25%), linear-gradient(-45deg, #d17878 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #d17878 75%), linear-gradient(-45deg, transparent 75%, #d17878 75%);
-}
-
-p {
-  color: red;
-  background-color: #7FFFD4;
 }
 
 .zapusk {
