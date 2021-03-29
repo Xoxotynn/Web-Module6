@@ -64,7 +64,7 @@ function GenAlg() {
     let ways = [];
     if (StartPoint == 0) {
         StartPoint = points[GetRandom(0, points.length)];
-        points.splice(StartPoint.index, StartPoint.index);
+        points.splice(StartPoint.index, 1);
     }
     count = 0, o = 0, wayschild = [];
     genetation = Math.pow(10, points.length);
