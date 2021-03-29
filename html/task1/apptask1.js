@@ -365,6 +365,7 @@ function proverkaOtk(prov)
 
 
 // Обновление значений в визуале FGH
+//Пока не используется
 function updatevalues(dlina1,dlina2)
 {
 	let time;
@@ -809,7 +810,7 @@ function Astar()
 		proverkaSoseddei(save);
 		dlina2 = OtkSpisok.length;
 
-		updatevalues(dlina1,dlina2);
+		//updatevalues(dlina1,dlina2);
 
 		
 			//Проверка если мы запушили наш финиш oxxxx]====> значит нашли путь
