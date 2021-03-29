@@ -64,7 +64,7 @@ function GenAlg() {
     let ways = [];
     if (StartPoint == 0) {
         StartPoint = points[GetRandom(0, points.length)];
-        points.splice(StartPoint.index, StartPoint.index);
+        points.splice(StartPoint.index, 1);
     }
     count = 0, o = 0, wayschild = [];
     genetation = Math.pow(10, points.length);
@@ -90,9 +90,11 @@ function DrawRes(arr) {
 }
 
 function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    for (let k = 0; k < 50; k++) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
     }
     return array;
 }
