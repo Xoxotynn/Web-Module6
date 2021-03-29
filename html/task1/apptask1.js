@@ -188,36 +188,6 @@ function CreateTab() {
 			element.classList.add("wall");
 			element.addEventListener("mousedown", handle);
 
-			let elGrid = document.createElement("div");
-			elGrid.className = "el-grid";
-
-
-			let elTop = document.createElement("div");
-			elTop.className = "el-top";
-
-			let elTopLeft = document.createElement("div");
-			elTopLeft.className = "el-left";
-			elTopLeft.innerText = "F";
-			elTop.appendChild(elTopLeft);
-
-			let elBottom = document.createElement("div");
-			elBottom.className = "el-bottom";
-
-			let elBottomLeft = document.createElement("div");
-			elBottomLeft.className = "el-left";
-			elBottomLeft.innerText = "G";
-			let elBottomRight = document.createElement("div");
-			elBottomRight.className = "el-right";
-			elBottomRight.innerText = "H";
-
-			elBottom.appendChild(elBottomLeft);
-			elBottom.appendChild(elBottomRight);
-
-			elGrid.appendChild(elTop);
-			elGrid.appendChild(elBottom);
-
-			element.appendChild(elGrid);
-
 			rows.append(element);
 		}
 		matrix.append(rows);
@@ -319,15 +289,12 @@ function handle(e) {
 //Функция с которой начинается, после кнопки подтвердить производится алгоритм
 function podgotovka() 
 {
-	document.getElementById("228").innerHTML="Нажмите подтвердить чтобы начать выполнение алгоритма !!!";
 	document.querySelector('.hiddenbut').addEventListener('click', Astar);
-
 }
 
 // Эвристика созданная хорошим человек, но теперь я сделаю для неё новое название. 
 let d1;
-let d2;
-function NewYork(pos0, pos1) 
+function Chebishev(pos0, pos1) 
 {
 	d1 = Math.max(Math.abs(pos0 -finishMatrix.x),Math.abs(pos1 - finishMatrix.x));
 	return d1;
@@ -363,30 +330,6 @@ function proverkaOtk(prov)
 }
 
 
-
-// Обновление значений в визуале FGH
-//Пока не используется
-function updatevalues(dlina1,dlina2)
-{
-	let time;
-	let timex;
-	let timey;
-	for (let i = dlina1-1; i<dlina2; i++)
-	{
-		timex = parseInt(OtkSpisok[i].x,10)
-		timey = parseInt(OtkSpisok[i].y,10)
-		time = document.querySelector(`td[row = "${timex}"][column = "${timey}"]`);
-		time.querySelector(".el-top .el-left").innerText = AstMatr[timex][timey].F;
-		time.querySelector(".el-bottom .el-left").innerText = AstMatr[timex][timey].G;
-		time.querySelector(".el-bottom .el-right").innerText = AstMatr[timex][timey].H;
-	}
-}
-
-
-
-
-
-
 // Функция проверки соседей и всё что с ними связано(сердце алгоритма)
 function proverkaSosedei(tochka)
 {
@@ -412,7 +355,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x - 1][y - 1].roditelX = x;
 			AstMatr[x - 1][y - 1].roditelY = y;
 			AstMatr[x - 1][y - 1].G = 14 + AstMatr[x][y].G;
-			AstMatr[x - 1][y - 1].H = NewYork(x-1,y-1);
+			AstMatr[x - 1][y - 1].H = Chebishev(x-1,y-1);
 			AstMatr[x - 1][y - 1].F = AstMatr[x - 1][y - 1].H + AstMatr[x - 1][y - 1].G;
 			OtkSpisok.push(new strPUSH(x-1,y-1));
 			document.querySelector(`td[row = "${x-1}"][column = "${y-1}"]`).style.backgroundColor = "#f6ff00";
@@ -441,7 +384,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x - 1][y].roditelX = x;
 			AstMatr[x - 1][y].roditelY = y;
 			AstMatr[x - 1][y].G = 10 + AstMatr[x][y].G;
-			AstMatr[x - 1][y].H = NewYork(x-1,y);
+			AstMatr[x - 1][y].H = Chebishev(x-1,y);
 			AstMatr[x - 1][y].F = AstMatr[x - 1][y].H + AstMatr[x - 1][y].G;
 			OtkSpisok.push(new strPUSH(x-1,y));
 			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
@@ -468,7 +411,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x - 1][y + 1].roditelX = x;
 			AstMatr[x - 1][y + 1].roditelY = y;
 			AstMatr[x - 1][y + 1].G = 14 + AstMatr[x][y].G;
-			AstMatr[x - 1][y + 1].H = NewYork(x-1,y+1);
+			AstMatr[x - 1][y + 1].H = Chebishev(x-1,y+1);
 			AstMatr[x - 1][y + 1].F = AstMatr[x - 1][y + 1].H + AstMatr[x - 1][y + 1].G;
 			OtkSpisok.push(new strPUSH(x-1,y+1));
 			document.querySelector(`td[row = "${x-1}"][column = "${y+1}"]`).style.backgroundColor = "#f6ff00";
@@ -495,7 +438,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x][y + 1].roditelX = x;
 			AstMatr[x][y + 1].roditelY = y;
 			AstMatr[x][y + 1].G = 10 + AstMatr[x][y].G;
-			AstMatr[x][y + 1].H = NewYork(x,y+1);
+			AstMatr[x][y + 1].H = Chebishev(x,y+1);
 			AstMatr[x][y + 1].F = AstMatr[x][y + 1].H + AstMatr[x][y + 1].G;
 			OtkSpisok.push(new strPUSH(x,y+1));
 			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).style.backgroundColor = "#f6ff00";
@@ -522,7 +465,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x + 1][y + 1].roditelX = x;
 			AstMatr[x + 1][y + 1].roditelY = y;
 			AstMatr[x + 1][y + 1].G = 14 + AstMatr[x][y].G;
-			AstMatr[x + 1][y + 1].H = NewYork(x+1, y+1);
+			AstMatr[x + 1][y + 1].H = Chebishev(x+1, y+1);
 			AstMatr[x + 1][y + 1].F = AstMatr[x + 1][y + 1].H + AstMatr[x + 1][y + 1].G;
 			OtkSpisok.push(new strPUSH(x+1, y+1));
 			document.querySelector(`td[row = "${x+1}"][column = "${y+1}"]`).style.backgroundColor = "#f6ff00";
@@ -549,7 +492,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x + 1][y].roditelX = x;
 			AstMatr[x + 1][y].roditelY = y;
 			AstMatr[x + 1][y].G = 10 + AstMatr[x][y].G;
-			AstMatr[x + 1][y].H = NewYork(x+1, y);
+			AstMatr[x + 1][y].H = Chebishev(x+1, y);
 			AstMatr[x + 1][y].F = AstMatr[x + 1][y].H + AstMatr[x + 1][y].G;
 			OtkSpisok.push(new strPUSH(x+1, y));
 			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
@@ -576,7 +519,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x + 1][y - 1].roditelX = x;
 			AstMatr[x + 1][y - 1].roditelY = y;
 			AstMatr[x + 1][y - 1].G = 14 + AstMatr[x][y].G;
-			AstMatr[x + 1][y - 1].H = NewYork(x+1, y-1);
+			AstMatr[x + 1][y - 1].H = Chebishev(x+1, y-1);
 			AstMatr[x + 1][y - 1].F = AstMatr[x + 1][y - 1].H + AstMatr[x + 1][y - 1].G;
 			OtkSpisok.push(new strPUSH(x+1, y-1));
 			document.querySelector(`td[row = "${x+1}"][column = "${y-1}"]`).style.backgroundColor = "#f6ff00";
@@ -604,7 +547,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x][y - 1].roditelX = x;
 			AstMatr[x][y - 1].roditelY = y;
 			AstMatr[x][y - 1].G = 10 + AstMatr[x][y].G;
-			AstMatr[x][y - 1].H = NewYork(x, y-1);
+			AstMatr[x][y - 1].H = Chebishev(x, y-1);
 			AstMatr[x][y - 1].F = AstMatr[x][y - 1].H + AstMatr[x][y - 1].G;
 			OtkSpisok.push(new strPUSH(x, y-1));
 			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).style.backgroundColor = "#f6ff00";
@@ -652,7 +595,7 @@ function proverkaSoseddei(tochka)
 			AstMatr[x - 1][y].roditelX = x;
 			AstMatr[x - 1][y].roditelY = y;
 			AstMatr[x - 1][y].G = 10 + AstMatr[x][y].G;
-			AstMatr[x - 1][y].H = NewYork(x-1,y);
+			AstMatr[x - 1][y].H = Chebishev(x-1,y);
 			AstMatr[x - 1][y].F = AstMatr[x - 1][y].H + AstMatr[x - 1][y].G;
 			OtkSpisok.push(new strPUSH(x-1,y));
 			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
@@ -679,7 +622,7 @@ function proverkaSoseddei(tochka)
 			AstMatr[x][y + 1].roditelX = x;
 			AstMatr[x][y + 1].roditelY = y;
 			AstMatr[x][y + 1].G = 10 + AstMatr[x][y].G;
-			AstMatr[x][y + 1].H = NewYork(x,y+1);
+			AstMatr[x][y + 1].H = Chebishev(x,y+1);
 			AstMatr[x][y + 1].F = AstMatr[x][y + 1].H + AstMatr[x][y + 1].G;
 			OtkSpisok.push(new strPUSH(x,y+1));
 			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).style.backgroundColor = "#f6ff00";
@@ -706,7 +649,7 @@ function proverkaSoseddei(tochka)
 			AstMatr[x + 1][y].roditelX = x;
 			AstMatr[x + 1][y].roditelY = y;
 			AstMatr[x + 1][y].G = 10 + AstMatr[x][y].G;
-			AstMatr[x + 1][y].H = NewYork(x+1, y);
+			AstMatr[x + 1][y].H = Chebishev(x+1, y);
 			AstMatr[x + 1][y].F = AstMatr[x + 1][y].H + AstMatr[x + 1][y].G;
 			OtkSpisok.push(new strPUSH(x+1, y));
 			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
@@ -733,7 +676,7 @@ function proverkaSoseddei(tochka)
 			AstMatr[x][y - 1].roditelX = x;
 			AstMatr[x][y - 1].roditelY = y;
 			AstMatr[x][y - 1].G = 10 + AstMatr[x][y].G;
-			AstMatr[x][y - 1].H = NewYork(x, y-1);
+			AstMatr[x][y - 1].H = Chebishev(x, y-1);
 			AstMatr[x][y - 1].F = AstMatr[x][y - 1].H + AstMatr[x][y - 1].G;
 			OtkSpisok.push(new strPUSH(x, y-1));
 			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).style.backgroundColor = "#f6ff00";
@@ -778,13 +721,6 @@ function MINOTK(OtkSpisok) {
 }
 
 
-// Если не нашли то выведем что нибудь другое, это просто тест
-function stop()
-{
-	document.getElementById("228").innerHTML="Алгоритм выполнился!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-}
-
-
 
 
 let dlina1;
@@ -798,11 +734,8 @@ function Astar()
 	AstMatr[startMatrix.x][startMatrix.y].roditelY = "lol";
 	OtkSpisok.push(new strPUSH(startMatrix.x, startMatrix.y));
 
-	setTimeout(function timmee(){
-		//Функция минимума(Возращает переменную с координатами x;y)
-
-		//if (radio1 == true)
-		//else
+	setTimeout(function timmee()
+	{
 
 
 		save = MINOTK(OtkSpisok);
@@ -810,19 +743,15 @@ function Astar()
 		proverkaSoseddei(save);
 		dlina2 = OtkSpisok.length;
 
-		//updatevalues(dlina1,dlina2);
 
 		
-			//Проверка если мы запушили наш финиш oxxxx]====> значит нашли путь
 		if (checkSTOPIND == 1)
 		{
-			stop();
 			risovka();
 			return true;
 		}
 		else if (OtkSpisok.length <= 0)
 		{
-			document.getElementById("228").innerHTML="Путь не найден";
 			return true;
 		}
 		if (OtkSpisok.length > 0)
@@ -853,5 +782,3 @@ function risovka()
 
 // Сделать рандомные грани при генерации лабиринта чётного кол-ва
 // 2.Сделать 2 радио кнопки чтобы можно было выбирать вариант алгоритма. (Диагональный и без диагонаей)
-// 3.Сделать выбор нескольких эвристик 
-// 4.Сделать оформление страницы last

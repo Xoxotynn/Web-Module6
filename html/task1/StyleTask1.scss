@@ -14,45 +14,8 @@ table {
 		}
 
 		&.elem {
-			cursor: pointer;
+			cursor: pointer	;
 
-			.el-grid {
-				display: grid;
-				grid-template-rows: min-content auto;
-				min-height: 100%;
-				max-width: 100%;
-				pointer-events: none;
-
-				.el-top {
-					display: grid;
-					grid-auto-flow: column;
-				}
-
-				.el-bottom {
-					display: grid;
-					align-self: end;
-					grid-auto-flow: column;
-				}
-
-				.el-top, .el-bottom {
-					pointer-events: none;
-
-					.el-left, .el-right {
-						padding: 5px;
-						pointer-events: none;
-						user-select: none;
-					}
-
-					.el-left {
-						justify-self: start;
-					}
-
-					.el-right {
-						justify-self: end;
-					}
-				}
-
-			}
 
 			&.start {
 				background-color: rgb(115, 255, 0);
@@ -71,11 +34,6 @@ table {
 
 		background-color: rgb(41, 87, 87);
 	}
-}
-p 
-{
-	color: rgb(255, 0, 0);
-	background-color: #7FFFD4;
 }
 .zapusk
 {
