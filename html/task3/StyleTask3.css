@@ -96,6 +96,7 @@ body button:hover {
 .sidenav a.current 
 {
   color: black;
+  border-radius: 12px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
   transition: all .5s ease;
 }

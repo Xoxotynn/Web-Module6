@@ -86,6 +86,7 @@ body button:hover {
 }
 .sidenav a.current 
 {
+  border-radius: 12px;
   color: black;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
   transition: all .5s ease;
