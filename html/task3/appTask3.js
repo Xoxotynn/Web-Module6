@@ -1,3 +1,12 @@
+const canvas = document.querySelector("canvas");
+const context = canvas.getContext("2d");
+canvas.width = 800;
+canvas.height = 600;
+const canvas1 = document.getElementById("start");
+const context1 = canvas1.getContext("2d");
+canvas1.width = 800;
+canvas1.height = 600;
+
 
 class Point {
     constructor(x, y, color, index) {
@@ -8,10 +17,7 @@ class Point {
         this.index = index;
     }
 }
-const mouse = {
-    x: 0,
-    y: 0,
-};
+const mouse = createMouse(canvas1);
 let colors = ["#C8F4DE",
 "#A4E5D9",
 "#66C6BA",
@@ -25,10 +31,7 @@ let colors = ["#C8F4DE",
 
 var StartPoint = 0;
 let ind = 0;
-function addUserPoint(e) {
-    const rect = e.target.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
+function addUserPoint() {
     if (flag == 1) {
         StartPoint = new Point(mouse.x, mouse.y, "#7FAF5C", -1);
         drawStartPoint(StartPoint);
@@ -47,6 +50,9 @@ function drawPoint(p) {
     context.fillStyle = p.color;
     context.fill();
 }
+
+
+
 function drawStartPoint(p) {
     context1.clearRect(0, 0, canvas.width, canvas.height);
     context1.beginPath();
@@ -104,4 +110,31 @@ function DrawEndWay(w) {
     context1.lineTo(w[points.length - 1].x, w[points.length - 1].y);
     context1.strokeStyle = colorLine;
     context1.stroke();
+}
+
+
+function createMouse(element) {
+    let drawer;
+    const mouse = {
+        x: 0,
+        y: 0,
+    };
+
+    element.addEventListener("mousemove", mousemoveHandler);
+    element.addEventListener("mousedown", mouseDownHandler);
+    element.addEventListener("mouseup", mouseUpHandler);
+
+    function mousemoveHandler(event) {
+        const rect = element.getBoundingClientRect();
+        mouse.x = event.clientX - rect.left;
+        mouse.y = event.clientY - rect.top;
+    }
+    function mouseDownHandler(event) {
+        drawer = setInterval(addUserPoint, 100);
+    }
+    function mouseUpHandler(event) {
+        clearInterval(drawer);
+    }
+
+    return mouse;
 }
