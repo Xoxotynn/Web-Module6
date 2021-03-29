@@ -32,9 +32,6 @@ let colors = ["#C8F4DE",
 var StartPoint = 0;
 let ind = 0;
 function addUserPoint() {
-    // const rect = e.target.getBoundingClientRect();
-    // mouse.x = e.clientX - rect.left;
-    // mouse.y = e.clientY - rect.top;
     if (flag == 1) {
         StartPoint = new Point(mouse.x, mouse.y, "#7FAF5C", -1);
         drawStartPoint(StartPoint);
