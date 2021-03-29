@@ -1,11 +1,4 @@
-const canvas = document.querySelector("canvas");
-const context = canvas.getContext("2d");
-canvas.width = 800;
-canvas.height = 600;
-const canvas1 = document.getElementById("start");
-const context1 = canvas1.getContext("2d");
-canvas1.width = 800;
-canvas1.height = 600;
+
 let points = [];
 let matrix = [];
 let MassStartPointDist = [];
@@ -31,6 +24,8 @@ function drawNotStart() {
 }
 const SWAY = document.getElementById("findWayButton");
 SWAY.addEventListener("click", GenAlg);
+
+
 
 
 let PercentOf = 15;
@@ -90,7 +85,11 @@ function DrawRes(arr) {
 }
 
 function shuffle(array) {
+<<<<<<< HEAD
     for (let k = 0; k < 50; k++) {
+=======
+    for (let v = 0; v < 50; v++) {
+>>>>>>> origin/Liza
         for (let i = array.length - 1; i > 0; i--) {
             let j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
@@ -197,7 +196,7 @@ function createChildren(i, j, ways) {
 }
 //-------Функция скрещивания--------
 
-function  crossingover(ways) {
+function crossingover(ways) {
     let DistanceI;
     setTimeout(function Name() {
         for (let i = 0; i < points.length; i++) {
@@ -222,8 +221,8 @@ function  crossingover(ways) {
         // console.log(count);
         // console.log(DistanceI);
         DrawRes(ways[0].arr);
-        if (o < 80 && count < genetation) {
-            setTimeout(Name, 10);
+        if (o < 60 && count < genetation) {
+            setTimeout(Name, 1);
         }
         else {
             console.log('конец');
@@ -232,7 +231,7 @@ function  crossingover(ways) {
             DrawEndWay(ways[0].arr);
         }
 
-    }, 10);
+    }, 1);
 }
 
 //----Мутации----
