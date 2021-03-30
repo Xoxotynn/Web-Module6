@@ -1,7 +1,8 @@
 //Переменная матрицы
 const matrix = document.getElementById('matrix')
 
-
+let checkSTART = 0;
+let checkFINISH = 0;
 
 //Ожидание нажатия кнопки 
 let btn = document.querySelector('button');
@@ -12,6 +13,15 @@ var nnum;
 
 //Для клеток в матрице 
 class Info {
+	clear()
+	{
+		this.value = 1;
+		this.F = 0;
+		this.G = 0;
+		this.H = 0;
+		this.roditelX = 0;
+		this.roditelY = 0;
+	}
 	constructor(value, F, G, H, roditelX, roditelY) {
 		this.value = value;
 		this.F = F;
@@ -177,11 +187,6 @@ function CreateTab() {
 	AstMatr[0][0].value = 1;
 	document.querySelector(`td[row = "${0}"][column = "${0}"]`).classList.remove("wall");
 	generateLab();
-<<<<<<< HEAD
-	podgotovka();
-
-=======
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 }
 
 
@@ -205,27 +210,37 @@ function handle(e) {
 	let start = document.querySelector(".elem.start");
 	let finish = document.querySelector(".elem.finish");
 
+
 	if (mode == "start" && e.target != finish && !e.target.classList.contains("wall")) {
+
+		if (gryazno == 1)
+		{
+			poljak("start");
+		}
 
 		if (start && e.target != start) {
 			start.classList.remove("start");
 
-			// Удаляем значение в матрицу 0 по индексам из таблицы
+
 			AstMatr[start.getAttribute("row")][start.getAttribute("column")].value = 1;
 		}
 
 		e.target.classList.add("start");
 
-		//Ставим значение в матрицу -1 по индексам из таблицы
+
 		AstMatr[e.target.getAttribute("row")][e.target.getAttribute("column")].value = -1;
 		startMatrix.x = e.target.getAttribute("row");
 		startMatrix.y = e.target.getAttribute("column");
 	}
 
 	if (mode == "wall" && e.target != start && e.target != finish) {
+		if (gryazno == 1)
+		{
+			poljak("wall");
+		}
 		if (e.target.classList.contains("wall")) {
 			e.target.classList.remove("wall");
-
+			
 			AstMatr[e.target.getAttribute("row")][e.target.getAttribute("column")].value = 1;
 		}
 		else {
@@ -236,6 +251,11 @@ function handle(e) {
 	}
 
 	if (mode == "finish" && e.target != start && !e.target.classList.contains("wall")) {
+
+		if (gryazno == 1)
+		{
+			poljak("finish");
+		}
 
 		if (finish && e.target != finish) {
 			finish.classList.remove("finish");
@@ -253,13 +273,68 @@ function handle(e) {
 
 
 
-// ---------------------------------- Здесь можно сказать начинается алгоритм(РЕАЛЬНАЯ ЖОПА) --------------------------------------;
+// ---------------------------------- Здесь можно сказать начинается алгоритм--------------------------------------;
 
-
+document.querySelector('.hiddenbut').addEventListener('click', preparation);
+var gryazno = 0;
 //Функция с которой начинается, после кнопки подтвердить производится алгоритм
-function podgotovka() {
-	document.querySelector('.hiddenbut').addEventListener('click', Astar);
+function preparation() {
+	for (let i = 0; i <nnum;i++)
+	{
+		for (let j = 0; j < nnum; j++)
+		{
+			if (document.querySelector(`td[row = "${i}"][column = "${j}"]`).classList.contains("start"))
+			{
+				checkSTART = 1;
+			}
+			if (document.querySelector(`td[row = "${i}"][column = "${j}"]`).classList.contains("finish"))
+			{
+				checkFINISH = 1;
+			}
+		}
+	}
+
+	//проверка для того чтобы алгоритм мог запускаться если есть начало и конец. Если нету то ничего не делаем
+	if (checkFINISH == 1 && checkSTART == 1)
+	{
+		Astar();
+		gryazno = 1;
+	}
+
 }
+
+
+
+
+function poljak(type)
+ {
+	AstMatr[finishMatrix.x][finishMatrix.y].clear();
+	AstMatr[startMatrix.x][startMatrix.y].clear();
+	document.querySelectorAll(".elem.notopen").forEach(function (elem) {
+		elem.classList.remove("notopen")
+	});
+
+	document.querySelectorAll(".elem.open").forEach(function (elem) {
+		elem.classList.remove("open")
+	});
+	if (type == "start")
+	{
+		document.querySelector(".start").classList.remove("start");
+	}
+	if (type == "finish")
+	{
+		document.querySelector(".finish").classList.remove("finish");
+	}
+	
+	OtkSpisok.splice(0,OtkSpisok.length);
+	ZakSpisok.splice(0, ZakSpisok.length);
+	gryazno = 0;
+	checkSTOPIND = 0;
+}
+
+
+
+
 
 // Эвристика созданная хорошим человек, но теперь я сделаю для неё новое название. 
 let d1;
@@ -268,8 +343,11 @@ function Chebishev(pos0, pos1) {
 	return d1;
 }
 
+
+
+
 // Проверка закрытого списка используется для того чтобы не пушить клетки которые уже были обработаны
-function proverkaZak(prov) {
+function checkClosed(prov) {
 	for (let i = 0; i < ZakSpisok.length; i++) {
 		if (prov.x == ZakSpisok[i].x && prov.y == ZakSpisok[i].y) {
 			return 1;
@@ -278,8 +356,12 @@ function proverkaZak(prov) {
 	return 0;
 }
 
+
+
+
+
 // Проверка Открытого списка используется для того чтобы не пушить клетки которые уже были обработаны
-function proverkaOtk(prov) {
+function checkOpen(prov) {
 	for (let i = 0; i < OtkSpisok.length; i++) {
 		if (prov.x == OtkSpisok[i].x && prov.y == OtkSpisok[i].y) {
 			return 1;
@@ -288,8 +370,11 @@ function proverkaOtk(prov) {
 	return 0;
 }
 
+
+
+
 // Функция проверки соседей и всё что с ними связано(сердце алгоритма)
-function proverkaSosedei(tochka) {
+function checkNeighborsDiagonal(tochka) {
 
 	// Чтобы JS не творил хуйню с преобразованием типов
 	let x = parseInt(tochka.x, 10);
@@ -303,25 +388,17 @@ function proverkaSosedei(tochka) {
 	// -----------------------------------------Алгоритм всех различных проверок!-------------------------------------------------
 
 
-
 	//Диагональ Вверх - влево
-	if (x - 1 >= 0 && y - 1 >= 0 && AstMatr[x - 1][y - 1].value != 0 && proverkaZak(new strPUSH(x - 1, y - 1)) == 0) {
-		if (proverkaOtk(new strPUSH(x - 1, y - 1)) == 0) // клетка не в открытом списке
+	if (x - 1 >= 0 && y - 1 >= 0 && AstMatr[x - 1][y - 1].value != 0 && checkClosed(new strPUSH(x - 1, y - 1)) == 0) {
+		if (checkOpen(new strPUSH(x - 1, y - 1)) == 0) // клетка не в открытом списке
 		{
 			AstMatr[x - 1][y - 1].roditelX = x;
 			AstMatr[x - 1][y - 1].roditelY = y;
 			AstMatr[x - 1][y - 1].G = 14 + AstMatr[x][y].G;
 			AstMatr[x - 1][y - 1].H = Chebishev(x - 1, y - 1);
 			AstMatr[x - 1][y - 1].F = AstMatr[x - 1][y - 1].H + AstMatr[x - 1][y - 1].G;
-<<<<<<< HEAD
-			OtkSpisok.push(new strPUSH(x - 1, y - 1));
-			document.querySelector(`td[row = "${x - 1}"][column = "${y - 1}"]`).style.backgroundColor = "#f6ff00";
-
-=======
 			OtkSpisok.push(new strPUSH(x-1,y-1));
-			document.querySelector(`td[row = "${x-1}"][column = "${y-1}"]`).style.backgroundColor = "#ffd54f";
-			
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
+			document.querySelector(`td[row = "${x-1}"][column = "${y-1}"]`).classList.add("notopen");
 
 			if (x - 1 == finishMatrix.x && y - 1 == finishMatrix.y) {
 				checkSTOPIND = 1;
@@ -337,23 +414,18 @@ function proverkaSosedei(tochka) {
 	}
 
 	// Вверх
-	if (x - 1 >= 0 && AstMatr[x - 1][y].value != 0 && proverkaZak(new strPUSH(x - 1, y)) == 0) {
-		if (proverkaOtk(new strPUSH(x - 1, y)) == 0) {
+	if (x - 1 >= 0 && AstMatr[x - 1][y].value != 0 && checkClosed(new strPUSH(x - 1, y)) == 0) {
+		if (checkOpen(new strPUSH(x - 1, y)) == 0) {
 			AstMatr[x - 1][y].roditelX = x;
 			AstMatr[x - 1][y].roditelY = y;
 			AstMatr[x - 1][y].G = 10 + AstMatr[x][y].G;
 			AstMatr[x - 1][y].H = Chebishev(x - 1, y);
 			AstMatr[x - 1][y].F = AstMatr[x - 1][y].H + AstMatr[x - 1][y].G;
-<<<<<<< HEAD
-			OtkSpisok.push(new strPUSH(x - 1, y));
-			document.querySelector(`td[row = "${x - 1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
-			if (x - 1 == finishMatrix.x && y == finishMatrix.y) {
-=======
+
 			OtkSpisok.push(new strPUSH(x-1,y));
-			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).classList.add("notopen");
 			if (x-1 == finishMatrix.x && y == finishMatrix.y)
 			{
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -367,23 +439,17 @@ function proverkaSosedei(tochka) {
 	}
 
 	// Диагональ вверх-вправо
-	if (x - 1 >= 0 && y + 1 < nnum && AstMatr[x - 1][y + 1].value != 0 && proverkaZak(new strPUSH(x - 1, y + 1)) == 0) {
-		if (proverkaOtk(new strPUSH(x - 1, y + 1)) == 0) {
+	if (x - 1 >= 0 && y + 1 < nnum && AstMatr[x - 1][y + 1].value != 0 && checkClosed(new strPUSH(x - 1, y + 1)) == 0) {
+		if (checkOpen(new strPUSH(x - 1, y + 1)) == 0) {
 			AstMatr[x - 1][y + 1].roditelX = x;
 			AstMatr[x - 1][y + 1].roditelY = y;
 			AstMatr[x - 1][y + 1].G = 14 + AstMatr[x][y].G;
 			AstMatr[x - 1][y + 1].H = Chebishev(x - 1, y + 1);
 			AstMatr[x - 1][y + 1].F = AstMatr[x - 1][y + 1].H + AstMatr[x - 1][y + 1].G;
-<<<<<<< HEAD
-			OtkSpisok.push(new strPUSH(x - 1, y + 1));
-			document.querySelector(`td[row = "${x - 1}"][column = "${y + 1}"]`).style.backgroundColor = "#f6ff00";
-			if (x - 1 == finishMatrix.x && y + 1 == finishMatrix.y) {
-=======
 			OtkSpisok.push(new strPUSH(x-1,y+1));
-			document.querySelector(`td[row = "${x-1}"][column = "${y+1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x-1}"][column = "${y+1}"]`).classList.add("notopen");
 			if (x-1 == finishMatrix.x && y+1 == finishMatrix.y)
 			{
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -397,23 +463,17 @@ function proverkaSosedei(tochka) {
 	}
 
 	//ВПРАВО
-	if (y + 1 < nnum && AstMatr[x][y + 1].value != 0 && proverkaZak(new strPUSH(x, y + 1)) == 0) {
-		if (proverkaOtk(new strPUSH(x, y + 1)) == 0) {
+	if (y + 1 < nnum && AstMatr[x][y + 1].value != 0 && checkClosed(new strPUSH(x, y + 1)) == 0) {
+		if (checkOpen(new strPUSH(x, y + 1)) == 0) {
 			AstMatr[x][y + 1].roditelX = x;
 			AstMatr[x][y + 1].roditelY = y;
 			AstMatr[x][y + 1].G = 10 + AstMatr[x][y].G;
 			AstMatr[x][y + 1].H = Chebishev(x, y + 1);
 			AstMatr[x][y + 1].F = AstMatr[x][y + 1].H + AstMatr[x][y + 1].G;
-<<<<<<< HEAD
-			OtkSpisok.push(new strPUSH(x, y + 1));
-			document.querySelector(`td[row = "${x}"][column = "${y + 1}"]`).style.backgroundColor = "#f6ff00";
-			if (x == finishMatrix.x && y + 1 == finishMatrix.y) {
-=======
 			OtkSpisok.push(new strPUSH(x,y+1));
-			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).classList.add("notopen");
 			if (x == finishMatrix.x && y+1 == finishMatrix.y)
 			{
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -427,23 +487,17 @@ function proverkaSosedei(tochka) {
 	}
 
 	// Диагональ вниз-право
-	if (x + 1 < nnum && y + 1 < nnum && AstMatr[x + 1][y + 1].value != 0 && proverkaZak(new strPUSH(x + 1, y + 1)) == 0) {
-		if (proverkaOtk(new strPUSH(x + 1, y + 1)) == 0) {
+	if (x + 1 < nnum && y + 1 < nnum && AstMatr[x + 1][y + 1].value != 0 && checkClosed(new strPUSH(x + 1, y + 1)) == 0) {
+		if (checkOpen(new strPUSH(x + 1, y + 1)) == 0) {
 			AstMatr[x + 1][y + 1].roditelX = x;
 			AstMatr[x + 1][y + 1].roditelY = y;
 			AstMatr[x + 1][y + 1].G = 14 + AstMatr[x][y].G;
 			AstMatr[x + 1][y + 1].H = Chebishev(x + 1, y + 1);
 			AstMatr[x + 1][y + 1].F = AstMatr[x + 1][y + 1].H + AstMatr[x + 1][y + 1].G;
-<<<<<<< HEAD
-			OtkSpisok.push(new strPUSH(x + 1, y + 1));
-			document.querySelector(`td[row = "${x + 1}"][column = "${y + 1}"]`).style.backgroundColor = "#f6ff00";
-			if (x + 1 == finishMatrix.x && y + 1 == finishMatrix.y) {
-=======
 			OtkSpisok.push(new strPUSH(x+1, y+1));
-			document.querySelector(`td[row = "${x+1}"][column = "${y+1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x+1}"][column = "${y+1}"]`).classList.add("notopen");
 			if (x+1 == finishMatrix.x && y+1 == finishMatrix.y)
 			{
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -457,23 +511,17 @@ function proverkaSosedei(tochka) {
 	}
 
 	// Вниз
-	if (x + 1 < nnum && AstMatr[x + 1][y].value != 0 && proverkaZak(new strPUSH(x + 1, y)) == 0) {
-		if ((proverkaOtk(new strPUSH(x + 1, y)) == 0)) {
+	if (x + 1 < nnum && AstMatr[x + 1][y].value != 0 && checkClosed(new strPUSH(x + 1, y)) == 0) {
+		if ((checkOpen(new strPUSH(x + 1, y)) == 0)) {
 			AstMatr[x + 1][y].roditelX = x;
 			AstMatr[x + 1][y].roditelY = y;
 			AstMatr[x + 1][y].G = 10 + AstMatr[x][y].G;
 			AstMatr[x + 1][y].H = Chebishev(x + 1, y);
 			AstMatr[x + 1][y].F = AstMatr[x + 1][y].H + AstMatr[x + 1][y].G;
-<<<<<<< HEAD
-			OtkSpisok.push(new strPUSH(x + 1, y));
-			document.querySelector(`td[row = "${x + 1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
-			if (x + 1 == finishMatrix.x && y == finishMatrix.y) {
-=======
 			OtkSpisok.push(new strPUSH(x+1, y));
-			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).classList.add("notopen");;
 			if (x+1 == finishMatrix.x && y == finishMatrix.y)
 			{
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -487,20 +535,15 @@ function proverkaSosedei(tochka) {
 	}
 
 	// Диагональ вниз-влево
-	if (x + 1 < nnum && y - 1 >= 0 && AstMatr[x + 1][y - 1].value != 0 && proverkaZak(new strPUSH(x + 1, y - 1)) == 0) {
-		if (proverkaOtk(new strPUSH(x + 1, y - 1)) == 0) {
+	if (x + 1 < nnum && y - 1 >= 0 && AstMatr[x + 1][y - 1].value != 0 && checkClosed(new strPUSH(x + 1, y - 1)) == 0) {
+		if (checkOpen(new strPUSH(x + 1, y - 1)) == 0) {
 			AstMatr[x + 1][y - 1].roditelX = x;
 			AstMatr[x + 1][y - 1].roditelY = y;
 			AstMatr[x + 1][y - 1].G = 14 + AstMatr[x][y].G;
 			AstMatr[x + 1][y - 1].H = Chebishev(x + 1, y - 1);
 			AstMatr[x + 1][y - 1].F = AstMatr[x + 1][y - 1].H + AstMatr[x + 1][y - 1].G;
-<<<<<<< HEAD
-			OtkSpisok.push(new strPUSH(x + 1, y - 1));
-			document.querySelector(`td[row = "${x + 1}"][column = "${y - 1}"]`).style.backgroundColor = "#f6ff00";
-=======
 			OtkSpisok.push(new strPUSH(x+1, y-1));
-			document.querySelector(`td[row = "${x+1}"][column = "${y-1}"]`).style.backgroundColor = "#ffd54f";
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
+			document.querySelector(`td[row = "${x+1}"][column = "${y-1}"]`).classList.add("notopen");
 
 			if (x + 1 == finishMatrix.x && y - 1 == finishMatrix.y) {
 				checkSTOPIND = 1;
@@ -516,23 +559,17 @@ function proverkaSosedei(tochka) {
 	}
 
 	//Влево
-	if (y - 1 >= 0 && AstMatr[x][y - 1].value != 0 && proverkaZak(new strPUSH(x, y - 1)) == 0) {
-		if (proverkaOtk(new strPUSH(x, y - 1)) == 0) {
+	if (y - 1 >= 0 && AstMatr[x][y - 1].value != 0 && checkClosed(new strPUSH(x, y - 1)) == 0) {
+		if (checkOpen(new strPUSH(x, y - 1)) == 0) {
 			AstMatr[x][y - 1].roditelX = x;
 			AstMatr[x][y - 1].roditelY = y;
 			AstMatr[x][y - 1].G = 10 + AstMatr[x][y].G;
 			AstMatr[x][y - 1].H = Chebishev(x, y - 1);
 			AstMatr[x][y - 1].F = AstMatr[x][y - 1].H + AstMatr[x][y - 1].G;
-<<<<<<< HEAD
-			OtkSpisok.push(new strPUSH(x, y - 1));
-			document.querySelector(`td[row = "${x}"][column = "${y - 1}"]`).style.backgroundColor = "#f6ff00";
-			if (x == finishMatrix.x && y - 1 == finishMatrix.y) {
-=======
 			OtkSpisok.push(new strPUSH(x, y-1));
-			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).classList.add("notopen");
 			if (x == finishMatrix.x && y-1 == finishMatrix.y)
 			{
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -551,12 +588,11 @@ function proverkaSosedei(tochka) {
 
 
 // Функция проверки соседей по вертикали и горизонтали
-function proverkaSoseddei(tochka) {
+function checkNeighborsVertical(tochka) {
 
 	// Чтобы JS не творил хуйню с преобразованием типов
 	let x = parseInt(tochka.x, 10);
 	let y = parseInt(tochka.y, 10);
-	paaaar = 0;
 
 
 	OtkSpisok.splice(index, 1);
@@ -566,23 +602,17 @@ function proverkaSoseddei(tochka) {
 
 
 	// Вверх
-	if (x - 1 >= 0 && AstMatr[x - 1][y].value != 0 && proverkaZak(new strPUSH(x - 1, y)) == 0) {
-		if (proverkaOtk(new strPUSH(x - 1, y)) == 0) {
+	if (x - 1 >= 0 && AstMatr[x - 1][y].value != 0 && checkClosed(new strPUSH(x - 1, y)) == 0) {
+		if (checkOpen(new strPUSH(x - 1, y)) == 0) {
 			AstMatr[x - 1][y].roditelX = x;
 			AstMatr[x - 1][y].roditelY = y;
 			AstMatr[x - 1][y].G = 10 + AstMatr[x][y].G;
 			AstMatr[x - 1][y].H = Chebishev(x - 1, y);
 			AstMatr[x - 1][y].F = AstMatr[x - 1][y].H + AstMatr[x - 1][y].G;
-<<<<<<< HEAD
-			OtkSpisok.push(new strPUSH(x - 1, y));
-			document.querySelector(`td[row = "${x - 1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
-			if (x - 1 == finishMatrix.x && y == finishMatrix.y) {
-=======
 			OtkSpisok.push(new strPUSH(x-1,y));
-			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).classList.add("notopen");
 			if (x-1 == finishMatrix.x && y == finishMatrix.y)
 			{
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -596,23 +626,17 @@ function proverkaSoseddei(tochka) {
 	}
 
 	//ВПРАВО
-	if (y + 1 < nnum && AstMatr[x][y + 1].value != 0 && proverkaZak(new strPUSH(x, y + 1)) == 0) {
-		if (proverkaOtk(new strPUSH(x, y + 1)) == 0) {
+	if (y + 1 < nnum && AstMatr[x][y + 1].value != 0 && checkClosed(new strPUSH(x, y + 1)) == 0) {
+		if (checkOpen(new strPUSH(x, y + 1)) == 0) {
 			AstMatr[x][y + 1].roditelX = x;
 			AstMatr[x][y + 1].roditelY = y;
 			AstMatr[x][y + 1].G = 10 + AstMatr[x][y].G;
 			AstMatr[x][y + 1].H = Chebishev(x, y + 1);
 			AstMatr[x][y + 1].F = AstMatr[x][y + 1].H + AstMatr[x][y + 1].G;
-<<<<<<< HEAD
-			OtkSpisok.push(new strPUSH(x, y + 1));
-			document.querySelector(`td[row = "${x}"][column = "${y + 1}"]`).style.backgroundColor = "#f6ff00";
-			if (x == finishMatrix.x && y + 1 == finishMatrix.y) {
-=======
 			OtkSpisok.push(new strPUSH(x,y+1));
-			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).classList.add("notopen");
 			if (x == finishMatrix.x && y+1 == finishMatrix.y)
 			{
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -626,23 +650,17 @@ function proverkaSoseddei(tochka) {
 	}
 
 	// Вниз
-	if (x + 1 < nnum && AstMatr[x + 1][y].value != 0 && proverkaZak(new strPUSH(x + 1, y)) == 0) {
-		if ((proverkaOtk(new strPUSH(x + 1, y)) == 0)) {
+	if (x + 1 < nnum && AstMatr[x + 1][y].value != 0 && checkClosed(new strPUSH(x + 1, y)) == 0) {
+		if ((checkOpen(new strPUSH(x + 1, y)) == 0)) {
 			AstMatr[x + 1][y].roditelX = x;
 			AstMatr[x + 1][y].roditelY = y;
 			AstMatr[x + 1][y].G = 10 + AstMatr[x][y].G;
 			AstMatr[x + 1][y].H = Chebishev(x + 1, y);
 			AstMatr[x + 1][y].F = AstMatr[x + 1][y].H + AstMatr[x + 1][y].G;
-<<<<<<< HEAD
-			OtkSpisok.push(new strPUSH(x + 1, y));
-			document.querySelector(`td[row = "${x + 1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
-			if (x + 1 == finishMatrix.x && y == finishMatrix.y) {
-=======
 			OtkSpisok.push(new strPUSH(x+1, y));
-			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).classList.add("notopen");
 			if (x+1 == finishMatrix.x && y == finishMatrix.y)
 			{
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -656,23 +674,17 @@ function proverkaSoseddei(tochka) {
 	}
 
 	//Влево
-	if (y - 1 >= 0 && AstMatr[x][y - 1].value != 0 && proverkaZak(new strPUSH(x, y - 1)) == 0) {
-		if (proverkaOtk(new strPUSH(x, y - 1)) == 0) {
+	if (y - 1 >= 0 && AstMatr[x][y - 1].value != 0 && checkClosed(new strPUSH(x, y - 1)) == 0) {
+		if (checkOpen(new strPUSH(x, y - 1)) == 0) {
 			AstMatr[x][y - 1].roditelX = x;
 			AstMatr[x][y - 1].roditelY = y;
 			AstMatr[x][y - 1].G = 10 + AstMatr[x][y].G;
 			AstMatr[x][y - 1].H = Chebishev(x, y - 1);
 			AstMatr[x][y - 1].F = AstMatr[x][y - 1].H + AstMatr[x][y - 1].G;
-<<<<<<< HEAD
-			OtkSpisok.push(new strPUSH(x, y - 1));
-			document.querySelector(`td[row = "${x}"][column = "${y - 1}"]`).style.backgroundColor = "#f6ff00";
-			if (x == finishMatrix.x && y - 1 == finishMatrix.y) {
-=======
 			OtkSpisok.push(new strPUSH(x, y-1));
-			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).classList.add("notopen");
 			if (x == finishMatrix.x && y-1 == finishMatrix.y)
 			{
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -693,6 +705,7 @@ let px;
 let py;
 let min
 var index;
+let save;
 //Достаём мининимум из Открытого списка.
 function MINOTK(OtkSpisok) {
 	min = 999999999;
@@ -710,46 +723,61 @@ function MINOTK(OtkSpisok) {
 
 
 
-let dlina1;
-let dlina2;
 var checkSTOPIND = 0;
 // функция алгоритма A*
 function Astar() {
-	// Установка старта в поля для AST MATR;
-	OtkSpisok.push(new strPUSH(startMatrix.x, startMatrix.y));
+	if (document.querySelector("#vertical").checked)
+	{
+		OtkSpisok.push(new strPUSH(startMatrix.x, startMatrix.y));
 
-	setTimeout(function timmee() {
-
-
-		save = MINOTK(OtkSpisok);
-		dlina1 = OtkSpisok.length;
-		proverkaSoseddei(save);
-		dlina2 = OtkSpisok.length;
+		setTimeout(function timmee() {
 
 
+			save = MINOTK(OtkSpisok);
+			checkNeighborsVertical(save);
 
-		if (checkSTOPIND == 1) {
-			risovka();
-			return true;
-		}
-		else if (OtkSpisok.length <= 0) {
-			return true;
-		}
-<<<<<<< HEAD
-		if (OtkSpisok.length > 0) {
-			setTimeout(timmee, 50);
-		}
 
-	}, 50);
-=======
-		if (OtkSpisok.length > 0)
-		{
-			setTimeout(timmee,20);
-		}
-			
-	},20);
->>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 
+			if (checkSTOPIND == 1) {
+				risovka();
+				return true;
+			}
+			else if (OtkSpisok.length <= 0) {
+				return true;
+			}
+			if (OtkSpisok.length > 0)
+			{
+				setTimeout(timmee,20);
+			}
+				
+		},20);
+	}
+	else if (document.querySelector("#diagonal").checked)
+	{
+		OtkSpisok.push(new strPUSH(startMatrix.x, startMatrix.y));
+
+		setTimeout(function timmee() {
+
+
+			save = MINOTK(OtkSpisok);
+			checkNeighborsDiagonal(save);
+
+
+
+			if (checkSTOPIND == 1) {
+				risovka();
+				return true;
+			}
+			else if (OtkSpisok.length <= 0) {
+				return true;
+			}
+			if (OtkSpisok.length > 0)
+			{
+				setTimeout(timmee,20);
+			}
+				
+		},20);
+	}
 }
 
 
@@ -759,12 +787,18 @@ let time;
 function risovka() {
 	x = parseInt(finishMatrix.x, 10);
 	y = parseInt(finishMatrix.y, 10);
-	while (x != startMatrix.x || y != startMatrix.y) {
+	while (x != startMatrix.x || y != startMatrix.y) 
+	{
 		time = x;
 		x = AstMatr[time][y].roditelX;
 		y = AstMatr[time][y].roditelY;
-		document.querySelector(`td[row = "${x}"][column = "${y}"]`).style.backgroundColor = "#66bb6a";
+		document.querySelector(`td[row = "${x}"][column = "${y}"]`).classList.add("open");
+		
+		
 	}
+	//document.querySelector(`td[row = "${finishMatrix.x}"][column = "${finishMatrix.y}"]`).style.backgroundColor = "#66bb6a";
+	document.querySelector(`td[row = "${startMatrix.x}"][column = "${startMatrix.y}"]`).classList.remove("open");
+	document.querySelector(`td[row = "${finishMatrix.x}"][column = "${finishMatrix.y}"]`).classList.remove("notopen");
 }
 
 // Сделать рандомные грани при генерации лабиринта чётного кол-ва
