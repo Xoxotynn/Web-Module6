@@ -1,8 +1,6 @@
 //Переменная матрицы
 const matrix = document.getElementById('matrix')
 
-// прячем кнопку Подтвердить
-document.querySelector(".hiddenbut").style.display = 'none';
 
 
 //Ожидание нажатия кнопки 
@@ -180,6 +178,7 @@ function CreateTab() {
 	AstMatr[0][0].value = 1;
 	document.querySelector(`td[row = "${0}"][column = "${0}"]`).classList.remove("wall");
 	generateLab();
+	podgotovka();
 
 }
 
@@ -248,10 +247,6 @@ function handle(e) {
 	}
 
 
-
-	// Показываем кнопку Подтвердить
-	document.querySelector(".hiddenbut").style.display = null;
-	podgotovka();
 }
 
 
@@ -638,8 +633,6 @@ var checkSTOPIND = 0;
 // функция алгоритма A*
 function Astar() {
 	// Установка старта в поля для AST MATR;
-	AstMatr[startMatrix.x][startMatrix.y].roditelX = "lol";
-	AstMatr[startMatrix.x][startMatrix.y].roditelY = "lol";
 	OtkSpisok.push(new strPUSH(startMatrix.x, startMatrix.y));
 
 	setTimeout(function timmee() {
