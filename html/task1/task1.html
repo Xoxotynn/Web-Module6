@@ -10,24 +10,40 @@
 </head>
 
 <body>
-    <div>
-        <label for="nnum">Количество строк n =</label>
-        <input name="nnum" type="number" id="nnum"><br>
-        <button class= "zapusk" type="button">Запуск</button><br>
-    </div>
-    <table>
-        <tbody id ="matrix"></tbody>
-    </table>
-	<br>
-    <div>
-        <button mode="start" class="setmode" type="button">Начало</button><br>
-		<br>
-        <button mode="wall" class="setmode" type="button">Стена</button><br>
-		<br>
-        <button mode="finish" class="setmode" type="button">Конец</button><br>
-		<br>
-        <button class = "hiddenbut" type = "button">Подтвердить выбор</button>
-    </div>
+    <div class="grid">
+		<div class="logoHolder">
+			<a href="../index.html">
+				<img src="../assets/logo.png" alt="logo">
+			</a>
+		</div>
+		<div class="sidenav">
+			<a href="../task1/task1.html" class="current">A*</a>
+			<a href="../task2/task2.html">Кластеризация</a>
+			<a href="../task3/task3.html">Генетический Алгоритм</a>
+			<a href="../task4/task4.html">Муравьиный Алгоритм</a>
+			<a href="../task5/task5.html">Дерево Решений</a>
+			<a href="../task6/task6.html">Нейронная Сеть</a>
+		</div>
+        <table class="matrixTable">
+            <tbody id ="matrix"></tbody>
+        </table>
+        <div class="inputN">
+			<label for="nnum">Размер лабиринта</label>
+            <input name="nnum" type="number" id="nnum">
+		</div>
+        <div class="generate">
+            <button class= "zapusk" type="button">Сгенерировать</button>
+		</div>
+        <b class="roundedDivider"></b>
+        <div class="endPoints">
+            <button mode="start" class="setmode" type="button">Вход</button>
+            <button mode="finish" class="setmode" type="button">Выход</button>
+            <button mode="wall" class="setmode" type="button">Стена</button>
+        </div>
+        <div class="findWay">
+            <button class = "hiddenbut" type = "button">Построить маршрут</button>
+		</div>
+	</div>
     <script src="apptask1.js"></script>
 </body>
 
