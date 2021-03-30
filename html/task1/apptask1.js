@@ -143,7 +143,6 @@ function getRandomItem(array) {
 
 
 
-
 //Создание таблицы по клеткам
 function CreateTab() {
 	matrix.innerHTML = '';
@@ -178,8 +177,11 @@ function CreateTab() {
 	AstMatr[0][0].value = 1;
 	document.querySelector(`td[row = "${0}"][column = "${0}"]`).classList.remove("wall");
 	generateLab();
+<<<<<<< HEAD
 	podgotovka();
 
+=======
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 }
 
 
@@ -311,9 +313,15 @@ function proverkaSosedei(tochka) {
 			AstMatr[x - 1][y - 1].G = 14 + AstMatr[x][y].G;
 			AstMatr[x - 1][y - 1].H = Chebishev(x - 1, y - 1);
 			AstMatr[x - 1][y - 1].F = AstMatr[x - 1][y - 1].H + AstMatr[x - 1][y - 1].G;
+<<<<<<< HEAD
 			OtkSpisok.push(new strPUSH(x - 1, y - 1));
 			document.querySelector(`td[row = "${x - 1}"][column = "${y - 1}"]`).style.backgroundColor = "#f6ff00";
 
+=======
+			OtkSpisok.push(new strPUSH(x-1,y-1));
+			document.querySelector(`td[row = "${x-1}"][column = "${y-1}"]`).style.backgroundColor = "#ffd54f";
+			
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 
 			if (x - 1 == finishMatrix.x && y - 1 == finishMatrix.y) {
 				checkSTOPIND = 1;
@@ -336,9 +344,16 @@ function proverkaSosedei(tochka) {
 			AstMatr[x - 1][y].G = 10 + AstMatr[x][y].G;
 			AstMatr[x - 1][y].H = Chebishev(x - 1, y);
 			AstMatr[x - 1][y].F = AstMatr[x - 1][y].H + AstMatr[x - 1][y].G;
+<<<<<<< HEAD
 			OtkSpisok.push(new strPUSH(x - 1, y));
 			document.querySelector(`td[row = "${x - 1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
 			if (x - 1 == finishMatrix.x && y == finishMatrix.y) {
+=======
+			OtkSpisok.push(new strPUSH(x-1,y));
+			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).style.backgroundColor = "#ffd54f";
+			if (x-1 == finishMatrix.x && y == finishMatrix.y)
+			{
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -359,9 +374,16 @@ function proverkaSosedei(tochka) {
 			AstMatr[x - 1][y + 1].G = 14 + AstMatr[x][y].G;
 			AstMatr[x - 1][y + 1].H = Chebishev(x - 1, y + 1);
 			AstMatr[x - 1][y + 1].F = AstMatr[x - 1][y + 1].H + AstMatr[x - 1][y + 1].G;
+<<<<<<< HEAD
 			OtkSpisok.push(new strPUSH(x - 1, y + 1));
 			document.querySelector(`td[row = "${x - 1}"][column = "${y + 1}"]`).style.backgroundColor = "#f6ff00";
 			if (x - 1 == finishMatrix.x && y + 1 == finishMatrix.y) {
+=======
+			OtkSpisok.push(new strPUSH(x-1,y+1));
+			document.querySelector(`td[row = "${x-1}"][column = "${y+1}"]`).style.backgroundColor = "#ffd54f";
+			if (x-1 == finishMatrix.x && y+1 == finishMatrix.y)
+			{
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -382,9 +404,16 @@ function proverkaSosedei(tochka) {
 			AstMatr[x][y + 1].G = 10 + AstMatr[x][y].G;
 			AstMatr[x][y + 1].H = Chebishev(x, y + 1);
 			AstMatr[x][y + 1].F = AstMatr[x][y + 1].H + AstMatr[x][y + 1].G;
+<<<<<<< HEAD
 			OtkSpisok.push(new strPUSH(x, y + 1));
 			document.querySelector(`td[row = "${x}"][column = "${y + 1}"]`).style.backgroundColor = "#f6ff00";
 			if (x == finishMatrix.x && y + 1 == finishMatrix.y) {
+=======
+			OtkSpisok.push(new strPUSH(x,y+1));
+			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).style.backgroundColor = "#ffd54f";
+			if (x == finishMatrix.x && y+1 == finishMatrix.y)
+			{
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -405,9 +434,16 @@ function proverkaSosedei(tochka) {
 			AstMatr[x + 1][y + 1].G = 14 + AstMatr[x][y].G;
 			AstMatr[x + 1][y + 1].H = Chebishev(x + 1, y + 1);
 			AstMatr[x + 1][y + 1].F = AstMatr[x + 1][y + 1].H + AstMatr[x + 1][y + 1].G;
+<<<<<<< HEAD
 			OtkSpisok.push(new strPUSH(x + 1, y + 1));
 			document.querySelector(`td[row = "${x + 1}"][column = "${y + 1}"]`).style.backgroundColor = "#f6ff00";
 			if (x + 1 == finishMatrix.x && y + 1 == finishMatrix.y) {
+=======
+			OtkSpisok.push(new strPUSH(x+1, y+1));
+			document.querySelector(`td[row = "${x+1}"][column = "${y+1}"]`).style.backgroundColor = "#ffd54f";
+			if (x+1 == finishMatrix.x && y+1 == finishMatrix.y)
+			{
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -428,9 +464,16 @@ function proverkaSosedei(tochka) {
 			AstMatr[x + 1][y].G = 10 + AstMatr[x][y].G;
 			AstMatr[x + 1][y].H = Chebishev(x + 1, y);
 			AstMatr[x + 1][y].F = AstMatr[x + 1][y].H + AstMatr[x + 1][y].G;
+<<<<<<< HEAD
 			OtkSpisok.push(new strPUSH(x + 1, y));
 			document.querySelector(`td[row = "${x + 1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
 			if (x + 1 == finishMatrix.x && y == finishMatrix.y) {
+=======
+			OtkSpisok.push(new strPUSH(x+1, y));
+			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).style.backgroundColor = "#ffd54f";
+			if (x+1 == finishMatrix.x && y == finishMatrix.y)
+			{
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -451,8 +494,13 @@ function proverkaSosedei(tochka) {
 			AstMatr[x + 1][y - 1].G = 14 + AstMatr[x][y].G;
 			AstMatr[x + 1][y - 1].H = Chebishev(x + 1, y - 1);
 			AstMatr[x + 1][y - 1].F = AstMatr[x + 1][y - 1].H + AstMatr[x + 1][y - 1].G;
+<<<<<<< HEAD
 			OtkSpisok.push(new strPUSH(x + 1, y - 1));
 			document.querySelector(`td[row = "${x + 1}"][column = "${y - 1}"]`).style.backgroundColor = "#f6ff00";
+=======
+			OtkSpisok.push(new strPUSH(x+1, y-1));
+			document.querySelector(`td[row = "${x+1}"][column = "${y-1}"]`).style.backgroundColor = "#ffd54f";
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 
 			if (x + 1 == finishMatrix.x && y - 1 == finishMatrix.y) {
 				checkSTOPIND = 1;
@@ -475,9 +523,16 @@ function proverkaSosedei(tochka) {
 			AstMatr[x][y - 1].G = 10 + AstMatr[x][y].G;
 			AstMatr[x][y - 1].H = Chebishev(x, y - 1);
 			AstMatr[x][y - 1].F = AstMatr[x][y - 1].H + AstMatr[x][y - 1].G;
+<<<<<<< HEAD
 			OtkSpisok.push(new strPUSH(x, y - 1));
 			document.querySelector(`td[row = "${x}"][column = "${y - 1}"]`).style.backgroundColor = "#f6ff00";
 			if (x == finishMatrix.x && y - 1 == finishMatrix.y) {
+=======
+			OtkSpisok.push(new strPUSH(x, y-1));
+			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).style.backgroundColor = "#ffd54f";
+			if (x == finishMatrix.x && y-1 == finishMatrix.y)
+			{
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -518,9 +573,16 @@ function proverkaSoseddei(tochka) {
 			AstMatr[x - 1][y].G = 10 + AstMatr[x][y].G;
 			AstMatr[x - 1][y].H = Chebishev(x - 1, y);
 			AstMatr[x - 1][y].F = AstMatr[x - 1][y].H + AstMatr[x - 1][y].G;
+<<<<<<< HEAD
 			OtkSpisok.push(new strPUSH(x - 1, y));
 			document.querySelector(`td[row = "${x - 1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
 			if (x - 1 == finishMatrix.x && y == finishMatrix.y) {
+=======
+			OtkSpisok.push(new strPUSH(x-1,y));
+			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).style.backgroundColor = "#ffd54f";
+			if (x-1 == finishMatrix.x && y == finishMatrix.y)
+			{
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -541,9 +603,16 @@ function proverkaSoseddei(tochka) {
 			AstMatr[x][y + 1].G = 10 + AstMatr[x][y].G;
 			AstMatr[x][y + 1].H = Chebishev(x, y + 1);
 			AstMatr[x][y + 1].F = AstMatr[x][y + 1].H + AstMatr[x][y + 1].G;
+<<<<<<< HEAD
 			OtkSpisok.push(new strPUSH(x, y + 1));
 			document.querySelector(`td[row = "${x}"][column = "${y + 1}"]`).style.backgroundColor = "#f6ff00";
 			if (x == finishMatrix.x && y + 1 == finishMatrix.y) {
+=======
+			OtkSpisok.push(new strPUSH(x,y+1));
+			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).style.backgroundColor = "#ffd54f";
+			if (x == finishMatrix.x && y+1 == finishMatrix.y)
+			{
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -564,9 +633,16 @@ function proverkaSoseddei(tochka) {
 			AstMatr[x + 1][y].G = 10 + AstMatr[x][y].G;
 			AstMatr[x + 1][y].H = Chebishev(x + 1, y);
 			AstMatr[x + 1][y].F = AstMatr[x + 1][y].H + AstMatr[x + 1][y].G;
+<<<<<<< HEAD
 			OtkSpisok.push(new strPUSH(x + 1, y));
 			document.querySelector(`td[row = "${x + 1}"][column = "${y}"]`).style.backgroundColor = "#f6ff00";
 			if (x + 1 == finishMatrix.x && y == finishMatrix.y) {
+=======
+			OtkSpisok.push(new strPUSH(x+1, y));
+			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).style.backgroundColor = "#ffd54f";
+			if (x+1 == finishMatrix.x && y == finishMatrix.y)
+			{
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -587,9 +663,16 @@ function proverkaSoseddei(tochka) {
 			AstMatr[x][y - 1].G = 10 + AstMatr[x][y].G;
 			AstMatr[x][y - 1].H = Chebishev(x, y - 1);
 			AstMatr[x][y - 1].F = AstMatr[x][y - 1].H + AstMatr[x][y - 1].G;
+<<<<<<< HEAD
 			OtkSpisok.push(new strPUSH(x, y - 1));
 			document.querySelector(`td[row = "${x}"][column = "${y - 1}"]`).style.backgroundColor = "#f6ff00";
 			if (x == finishMatrix.x && y - 1 == finishMatrix.y) {
+=======
+			OtkSpisok.push(new strPUSH(x, y-1));
+			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).style.backgroundColor = "#ffd54f";
+			if (x == finishMatrix.x && y-1 == finishMatrix.y)
+			{
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 				checkSTOPIND = 1;
 				return 0;
 			}
@@ -652,11 +735,20 @@ function Astar() {
 		else if (OtkSpisok.length <= 0) {
 			return true;
 		}
+<<<<<<< HEAD
 		if (OtkSpisok.length > 0) {
 			setTimeout(timmee, 50);
 		}
 
 	}, 50);
+=======
+		if (OtkSpisok.length > 0)
+		{
+			setTimeout(timmee,20);
+		}
+			
+	},20);
+>>>>>>> b2382d83e06d5bdcd53852b9eb793be468ea0cf3
 
 }
 
@@ -671,7 +763,7 @@ function risovka() {
 		time = x;
 		x = AstMatr[time][y].roditelX;
 		y = AstMatr[time][y].roditelY;
-		document.querySelector(`td[row = "${x}"][column = "${y}"]`).style.backgroundColor = "#9030b8";
+		document.querySelector(`td[row = "${x}"][column = "${y}"]`).style.backgroundColor = "#66bb6a";
 	}
 }
 
