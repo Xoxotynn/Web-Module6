@@ -49,6 +49,7 @@ body button:hover {
   background-color: #484848;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
   border-collapse: collapse;
+  overflow: hidden;
   grid-area: matrix;
 }
 .inputN
@@ -188,17 +189,51 @@ body button:hover {
 .endPoints>button 
 {
   display: inline;
-  background-color: #80cbc4;
-  color: black;
+  background-color: transparent;
+  color: whitesmoke;
   font-size: 1.1em;
   padding: 8px 12px;
   margin: 0 6px;
   width: 40%;
   text-decoration: none;
-  border: none;
+  border: 1px solid #80cbc4;
   border-radius: 10px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
   cursor: pointer;
+  transition: all .3s ease;
+}
+.endPoints>button.choosed 
+{
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+}
+.endPoints>button[mode=start].choosed
+{
+  border: 1px solid #ff7043;
+  background: #ff7043;
+}
+.endPoints>button[mode=start]:hover
+{
+  border: 1px solid #ff8a65;
+  background: #ff8a65;
+}
+.endPoints>button[mode=finish].choosed
+{
+  border: 1px solid #66bb6a;
+  background: #66bb6a;
+}
+.endPoints>button[mode=finish]:hover
+{
+  border: 1px solid #81c784;
+  background: #81c784;
+}
+.endPoints>button[mode=wall].choosed
+{
+  border: 1px solid #484848;
+  background: #484848;
+}
+.endPoints>button[mode=wall]:hover
+{
+  border: 1px solid #757575;
+  background: #757575;
 }
 
 .walkType ul

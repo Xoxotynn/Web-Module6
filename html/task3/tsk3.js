@@ -13,19 +13,33 @@ function ClearCanvas() {
 }
 let flag = 0;
 const start1 = document.getElementById("startPoint");
-start1.addEventListener("click", drawStart);
+start1.addEventListener("click", () => {
+    drawStart();
+    choosePointType(start1);
+});
 function drawStart() {
     flag = 1;
 }
 const notStart = document.getElementById("NotStart");
-NotStart.addEventListener("click", drawNotStart);
+notStart.addEventListener("click", () => {
+    drawNotStart();
+    choosePointType(notStart);
+});
 function drawNotStart() {
     flag = 0;
 }
+
+function choosePointType(pointTypeBtn) {
+    let buttons = document.getElementsByClassName("settings")[0].children;
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("choosed")
+    }
+    pointTypeBtn.classList.add("choosed");
+}
+
+
 const SWAY = document.getElementById("findWayButton");
 SWAY.addEventListener("click", GenAlg);
-
-
 
 
 let PercentOf = 15;

@@ -143,10 +143,12 @@ function getRandomItem(array) {
 var cells;
 //Создание таблицы по клеткам
 function CreateTab() {
+	nnum = document.getElementById('nnum').value > 0 ? document.getElementById('nnum').value : 10;
+
+
 	matrix.innerHTML = '';
 	matrix.hidden = false;
 
-	nnum = document.getElementById('nnum').value;
 	// Создание матрицы для алгоритма(не визуальная)
 	Matr();
 
@@ -185,7 +187,9 @@ var buttons = document.querySelectorAll("button.setmode");
 //Проходим все кпопки и присваиваем значения mode при нажатии
 buttons.forEach(function (button) {
 	button.addEventListener("mousedown", function (e) {
-		mode = e.target.getAttribute("mode");
+		mode = button.getAttribute("mode");
+		buttons.forEach(button => button.classList.remove("choosed"));
+		button.classList.add("choosed");
 	});
 });
 
