@@ -165,32 +165,45 @@ body button:hover {
 .distTypes>button 
 {
   display: block;
-  background-color: #80cbc4;
-  color: black;
+  background: transparent;
+  color: whitesmoke;
   padding: 12px 16px;
-  margin: 16px 0px 0px 0px;
+  margin-top: 16px;
   width: 100%;
   font-size: 0.75em;
+  font-weight: 500;
   text-decoration: none;
-  border: none;
+  border: 1px solid #80cbc4;
   border-radius: 10px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
   cursor: pointer;
+  transition: all .3s ease;
+}
+.distTypes>button.choosed
+{
+  background: #80cbc4;
+  color: black;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+}
+.distTypes>button:hover 
+{
+  background: #b2dfdb;
+  color: black;
 }
 
-.generateBtn
+.generateBtn, .clearBtn
 {
   width: 100%;
   color: black;
-  font-size: 1.5em;
+  font-size: 1.3em;
   background-color: #80cbc4;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.6);
+  margin-bottom: 16px;
   padding: 8px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   transition: all 0.1s ease;
 }
-.generateBtn:active {
+.generateBtn:active, .clearBtn:active {
   transform: scale(0.98);
 }

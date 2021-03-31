@@ -1,4 +1,5 @@
 const generateButton = document.getElementById("generateBtn");
+const clearButton = document.getElementById("clearBtn");
 const euqlidButton = document.getElementById("euqlid");
 const sqrEuqlidButton = document.getElementById("sqrEuqlid");
 const manhattanButton = document.getElementById("manhattan");
@@ -10,14 +11,25 @@ canvas.width = 800;
 canvas.height = 600;
 
 const mouse = createMouse(canvas);
-const points = [];
+let points = [];
 var distFunction = euqlidDist;
 
-euqlidButton.addEventListener("click", () => distType = euqlidDist);
-sqrEuqlidButton.addEventListener("click", () => distType = sqrEuqlidDist);
-manhattanButton.addEventListener("click", () => distType = manhattanDist);
-chebyshevButton.addEventListener("click", () => distType = chebyshevDist);
+euqlidButton.addEventListener("click", () => chooseDistType(euqlidButton, euqlidDist));
+sqrEuqlidButton.addEventListener("click", () => chooseDistType(sqrEuqlidButton, sqrEuqlidDist));
+manhattanButton.addEventListener("click", () => chooseDistType(manhattanButton, manhattanDist));
+chebyshevButton.addEventListener("click", () => chooseDistType(chebyshevButton, chebyshevDist));
 
+function chooseDistType(distBtn, distTypeFunc) {
+    distFunction = distTypeFunc;
+    let buttons = document.querySelectorAll("button.dType");
+    buttons.forEach(button => button.classList.remove("choosed"));
+    distBtn.classList.add("choosed");
+}
+
+clearButton.addEventListener("click", () => {
+    clearCanvas();
+    points = [];
+});
 generateButton.addEventListener("click", function() {
     let clustersCount = document.getElementById("kNum").value;
     clustersCount > 0 ? kClustering(clustersCount) : clustering();
