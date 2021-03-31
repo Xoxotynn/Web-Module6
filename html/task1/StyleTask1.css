@@ -254,3 +254,13 @@ table tr td.elem.wall {
 table tr td.elem.finish {
   background-color: #66bb6a;
 }
+
+.notopen
+{
+  background-color: #ffd54f;
+}
+
+.open
+{
+  background-color: #00E0FF
+}
