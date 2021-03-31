@@ -10,7 +10,6 @@ btn.addEventListener('click', CreateTab);
 
 var nnum;
 
-
 //Для клеток в матрице 
 class Info {
 	clear()
@@ -40,21 +39,19 @@ class strPUSH {
 	}
 }
 
-
 //переменная отвечающая за координаты Начала
 var startMatrix = new strPUSH(0, 0);
 var finishMatrix = new strPUSH(0, 0);
-
 
 var AstMatr = [];
 var OtkSpisok = [];
 var ZakSpisok = [];
 function Matr() {
+	AstMatr = [];
 	for (var i = 0; i < nnum; i++) {
 		AstMatr[i] = [];
 		for (var j = 0; j < nnum; j++) {
 			AstMatr[i][j] = new Info(0, 0, 0, 0, 0, 0);
-
 		}
 	}
 
@@ -72,8 +69,6 @@ function isValidMaze() {
 	}
 	return true;
 }
-
-
 
 
 var tractor = new strPUSH(0, 0);
@@ -145,14 +140,7 @@ function getRandomItem(array) {
 }
 
 
-
-
-
-
-
-
 var cells;
-
 //Создание таблицы по клеткам
 function CreateTab() {
 	matrix.innerHTML = '';
@@ -161,7 +149,6 @@ function CreateTab() {
 	nnum = document.getElementById('nnum').value;
 	// Создание матрицы для алгоритма(не визуальная)
 	Matr();
-
 
 
 
@@ -235,8 +222,6 @@ function setCellHoverAction(cells) {
 }
 
 
-
-
 // Покраска тем блокам таблицы на которые нажали кнопкой мыши после кнопки "Начало", "Стена", "Конец".
 function handle(e) {
 	let start = document.querySelector(".elem.start");
@@ -304,7 +289,6 @@ function handle(e) {
 }
 
 
-
 // ---------------------------------- Здесь можно сказать начинается алгоритм--------------------------------------;
 
 document.querySelector('.hiddenbut').addEventListener('click', preparation);
@@ -336,8 +320,6 @@ function preparation() {
 }
 
 
-
-
 function poljak(type)
  {
 	AstMatr[finishMatrix.x][finishMatrix.y].clear();
@@ -364,19 +346,12 @@ function poljak(type)
 	checkSTOPIND = 0;
 }
 
-
-
-
-
 // Эвристика созданная хорошим человек, но теперь я сделаю для неё новое название. 
 let d1;
 function Chebishev(pos0, pos1) {
 	d1 = Math.max(Math.abs(pos0 - finishMatrix.x), Math.abs(pos1 - finishMatrix.x));
 	return d1;
 }
-
-
-
 
 // Проверка закрытого списка используется для того чтобы не пушить клетки которые уже были обработаны
 function checkClosed(prov) {
@@ -388,10 +363,6 @@ function checkClosed(prov) {
 	return 0;
 }
 
-
-
-
-
 // Проверка Открытого списка используется для того чтобы не пушить клетки которые уже были обработаны
 function checkOpen(prov) {
 	for (let i = 0; i < OtkSpisok.length; i++) {
@@ -402,13 +373,10 @@ function checkOpen(prov) {
 	return 0;
 }
 
-
-
-
 // Функция проверки соседей и всё что с ними связано(сердце алгоритма)
 function checkNeighborsDiagonal(tochka) {
 
-	// Чтобы JS не творил хуйню с преобразованием типов
+	// Чтобы JS не творил непотребства с преобразованием типов
 	let x = parseInt(tochka.x, 10);
 	let y = parseInt(tochka.y, 10);
 
@@ -416,9 +384,7 @@ function checkNeighborsDiagonal(tochka) {
 	OtkSpisok.splice(index, 1);
 	ZakSpisok.push(new strPUSH(x, y));
 
-
 	// -----------------------------------------Алгоритм всех различных проверок!-------------------------------------------------
-
 
 	//Диагональ Вверх - влево
 	if (x - 1 >= 0 && y - 1 >= 0 && AstMatr[x - 1][y - 1].value != 0 && checkClosed(new strPUSH(x - 1, y - 1)) == 0) {
@@ -617,8 +583,6 @@ function checkNeighborsDiagonal(tochka) {
 	return 0;
 }
 
-
-
 // Функция проверки соседей по вертикали и горизонтали
 function checkNeighborsVertical(tochka) {
 
@@ -630,8 +594,6 @@ function checkNeighborsVertical(tochka) {
 	OtkSpisok.splice(index, 1);
 	ZakSpisok.push(new strPUSH(x, y));
 	// Алгоритм всех различных проверок!
-
-
 
 	// Вверх
 	if (x - 1 >= 0 && AstMatr[x - 1][y].value != 0 && checkClosed(new strPUSH(x - 1, y)) == 0) {
@@ -752,7 +714,6 @@ function MINOTK(OtkSpisok) {
 	}
 	return (save);
 }
-
 
 
 var checkSTOPIND = 0;
