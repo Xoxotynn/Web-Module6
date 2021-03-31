@@ -151,7 +151,7 @@ function getRandomItem(array) {
 
 
 
-var cells;
+
 
 //Создание таблицы по клеткам
 function CreateTab() {
@@ -183,8 +183,6 @@ function CreateTab() {
 		matrix.append(rows);
 	}
 
-	cells = document.querySelectorAll("td.elem");
-	setCellHoverAction(cells);
 	//для создания лабиринта
 	AstMatr[0][0].value = 1;
 	document.querySelector(`td[row = "${0}"][column = "${0}"]`).classList.remove("wall");
@@ -203,36 +201,6 @@ buttons.forEach(function (button) {
 });
 
 
-var currentColor;
-function setCellHoverAction(cells) {
-	cells.forEach(function (cell) {
-		cell.onmouseover = cell.onmouseout = cellHoverHandler;
-	});
-
-	function cellHoverHandler(event) {
-		if (event.type == 'mouseover') {
-			currentColor = event.target.style.background;
-			let hoverColor;
-			switch (mode) {
-				case "start":
-					hoverColor = "#ff7043";
-					break;
-				case "finish":
-					hoverColor = "#66bb6a";
-					break;
-				case "wall":
-					hoverColor = "#484848";
-					break;
-				default:
-					break;
-			}
-			event.target.style.background = hoverColor;
-		}
-		if (event.type == 'mouseout') {
-			event.target.style.background = currentColor;
-		}
-	}
-}
 
 
 

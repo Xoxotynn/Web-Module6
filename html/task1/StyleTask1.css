@@ -215,7 +215,7 @@ body button:hover {
 {
   width: 100%;
   color: black;
-  font-size: 1.4em;
+  font-size: 1.5em;
   background-color: #80cbc4;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.6);
   padding: 8px;
@@ -232,11 +232,11 @@ table tr td {
   border-color: black;
   border-style: solid;
   border-width: 1px;
-  background: #b0bec5;
+  background-color: #b0bec5;
 }
 
 table tr td:hover {
-  background: #ffd54f;
+  background-color: #ffd54f;
 }
 
 table tr td.elem {
@@ -244,23 +244,23 @@ table tr td.elem {
 }
 
 table tr td.elem.start {
-  background: #ff7043;
+  background-color: #ff7043;
 }
 
 table tr td.elem.wall {
-  background: #484848;
+  background-color: #484848;
 }
 
 table tr td.elem.finish {
-  background: #66bb6a;
+  background-color: #66bb6a;
 }
 
 .notopen
 {
-  background: #ffd54f;
+  background-color: #ffd54f;
 }
 
 .open
 {
-  background: #00E0FF
+  background-color: #00E0FF
 }
