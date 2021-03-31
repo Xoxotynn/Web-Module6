@@ -160,7 +160,7 @@ function getRandomItem(array)
 
 
 
-
+var cells;
 
 //Создание таблицы по клеткам
 function CreateTab() {
@@ -192,6 +192,8 @@ function CreateTab() {
 		matrix.append(rows);
 	}
 
+	cells = document.querySelectorAll("td.elem");
+	setCellHoverAction(cells);
 	//для создания лабиринта
 	AstMatr[0][0].value = 1;
 	document.querySelector(`td[row = "${0}"][column = "${0}"]`).classList.remove("wall");
@@ -210,6 +212,36 @@ buttons.forEach(function (button) {
 });
 
 
+var currentColor;
+function setCellHoverAction(cells) {
+	cells.forEach(function (cell) {
+		cell.onmouseover = cell.onmouseout = cellHoverHandler;
+	});
+
+	function cellHoverHandler(event) {
+		if (event.type == 'mouseover') {
+			currentColor = event.target.style.background;
+			let hoverColor;
+			switch (mode) {
+				case "start":
+					hoverColor = "#ff7043";
+					break;
+				case "finish":
+					hoverColor = "#66bb6a";
+					break;
+				case "wall":
+					hoverColor = "#484848";
+					break;
+				default:
+					break;
+			}
+			event.target.style.background = hoverColor;
+		}
+		if (event.type == 'mouseout') {
+			event.target.style.background = currentColor;
+		}
+	}
+}
 
 
 
@@ -356,7 +388,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x - 1][y - 1].H = Chebishev(x-1,y-1);
 			AstMatr[x - 1][y - 1].F = AstMatr[x - 1][y - 1].H + AstMatr[x - 1][y - 1].G;
 			OtkSpisok.push(new strPUSH(x-1,y-1));
-			document.querySelector(`td[row = "${x-1}"][column = "${y-1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x-1}"][column = "${y-1}"]`).style.background = "#ffd54f";
 			
 
 			if (x-1 == finishMatrix.x && y-1 == finishMatrix.y)
@@ -385,7 +417,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x - 1][y].H = Chebishev(x-1,y);
 			AstMatr[x - 1][y].F = AstMatr[x - 1][y].H + AstMatr[x - 1][y].G;
 			OtkSpisok.push(new strPUSH(x-1,y));
-			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).style.background = "#ffd54f";
 			if (x-1 == finishMatrix.x && y == finishMatrix.y)
 			{
 				checkSTOPIND = 1;
@@ -412,7 +444,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x - 1][y + 1].H = Chebishev(x-1,y+1);
 			AstMatr[x - 1][y + 1].F = AstMatr[x - 1][y + 1].H + AstMatr[x - 1][y + 1].G;
 			OtkSpisok.push(new strPUSH(x-1,y+1));
-			document.querySelector(`td[row = "${x-1}"][column = "${y+1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x-1}"][column = "${y+1}"]`).style.background = "#ffd54f";
 			if (x-1 == finishMatrix.x && y+1 == finishMatrix.y)
 			{
 				checkSTOPIND = 1;
@@ -439,7 +471,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x][y + 1].H = Chebishev(x,y+1);
 			AstMatr[x][y + 1].F = AstMatr[x][y + 1].H + AstMatr[x][y + 1].G;
 			OtkSpisok.push(new strPUSH(x,y+1));
-			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).style.background = "#ffd54f";
 			if (x == finishMatrix.x && y+1 == finishMatrix.y)
 			{
 				checkSTOPIND = 1;
@@ -466,7 +498,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x + 1][y + 1].H = Chebishev(x+1, y+1);
 			AstMatr[x + 1][y + 1].F = AstMatr[x + 1][y + 1].H + AstMatr[x + 1][y + 1].G;
 			OtkSpisok.push(new strPUSH(x+1, y+1));
-			document.querySelector(`td[row = "${x+1}"][column = "${y+1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x+1}"][column = "${y+1}"]`).style.background = "#ffd54f";
 			if (x+1 == finishMatrix.x && y+1 == finishMatrix.y)
 			{
 				checkSTOPIND = 1;
@@ -493,7 +525,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x + 1][y].H = Chebishev(x+1, y);
 			AstMatr[x + 1][y].F = AstMatr[x + 1][y].H + AstMatr[x + 1][y].G;
 			OtkSpisok.push(new strPUSH(x+1, y));
-			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).style.background = "#ffd54f";
 			if (x+1 == finishMatrix.x && y == finishMatrix.y)
 			{
 				checkSTOPIND = 1;
@@ -520,7 +552,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x + 1][y - 1].H = Chebishev(x+1, y-1);
 			AstMatr[x + 1][y - 1].F = AstMatr[x + 1][y - 1].H + AstMatr[x + 1][y - 1].G;
 			OtkSpisok.push(new strPUSH(x+1, y-1));
-			document.querySelector(`td[row = "${x+1}"][column = "${y-1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x+1}"][column = "${y-1}"]`).style.background = "#ffd54f";
 
 			if (x+1 == finishMatrix.x && y-1 == finishMatrix.y)
 			{
@@ -548,7 +580,7 @@ function proverkaSosedei(tochka)
 			AstMatr[x][y - 1].H = Chebishev(x, y-1);
 			AstMatr[x][y - 1].F = AstMatr[x][y - 1].H + AstMatr[x][y - 1].G;
 			OtkSpisok.push(new strPUSH(x, y-1));
-			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).style.background = "#ffd54f";
 			if (x == finishMatrix.x && y-1 == finishMatrix.y)
 			{
 				checkSTOPIND = 1;
@@ -596,7 +628,7 @@ function proverkaSoseddei(tochka)
 			AstMatr[x - 1][y].H = Chebishev(x-1,y);
 			AstMatr[x - 1][y].F = AstMatr[x - 1][y].H + AstMatr[x - 1][y].G;
 			OtkSpisok.push(new strPUSH(x-1,y));
-			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x-1}"][column = "${y}"]`).style.background = "#ffd54f";
 			if (x-1 == finishMatrix.x && y == finishMatrix.y)
 			{
 				checkSTOPIND = 1;
@@ -623,7 +655,7 @@ function proverkaSoseddei(tochka)
 			AstMatr[x][y + 1].H = Chebishev(x,y+1);
 			AstMatr[x][y + 1].F = AstMatr[x][y + 1].H + AstMatr[x][y + 1].G;
 			OtkSpisok.push(new strPUSH(x,y+1));
-			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x}"][column = "${y+1}"]`).style.background = "#ffd54f";
 			if (x == finishMatrix.x && y+1 == finishMatrix.y)
 			{
 				checkSTOPIND = 1;
@@ -650,7 +682,7 @@ function proverkaSoseddei(tochka)
 			AstMatr[x + 1][y].H = Chebishev(x+1, y);
 			AstMatr[x + 1][y].F = AstMatr[x + 1][y].H + AstMatr[x + 1][y].G;
 			OtkSpisok.push(new strPUSH(x+1, y));
-			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x+1}"][column = "${y}"]`).style.background = "#ffd54f";
 			if (x+1 == finishMatrix.x && y == finishMatrix.y)
 			{
 				checkSTOPIND = 1;
@@ -677,7 +709,7 @@ function proverkaSoseddei(tochka)
 			AstMatr[x][y - 1].H = Chebishev(x, y-1);
 			AstMatr[x][y - 1].F = AstMatr[x][y - 1].H + AstMatr[x][y - 1].G;
 			OtkSpisok.push(new strPUSH(x, y-1));
-			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).style.backgroundColor = "#ffd54f";
+			document.querySelector(`td[row = "${x}"][column = "${y-1}"]`).style.background = "#ffd54f";
 			if (x == finishMatrix.x && y-1 == finishMatrix.y)
 			{
 				checkSTOPIND = 1;
@@ -774,7 +806,7 @@ function risovka()
 		time = x;
 		x = AstMatr[time][y].roditelX;
 		y = AstMatr[time][y].roditelY;
-		document.querySelector(`td[row = "${x}"][column = "${y}"]`).style.backgroundColor = "#66bb6a";
+		document.querySelector(`td[row = "${x}"][column = "${y}"]`).style.background = "#66bb6a";
 	}
 }
 
