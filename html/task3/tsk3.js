@@ -77,7 +77,6 @@ function GenAlg() {
     }
     count = 0, o = 0, wayschild = [];
     genetation = Math.pow(10, points.length);
-    //sameBest = 4*points.length;
     for (let i = 0; i < points.length; i++) {
         let wayi = { arr: [], dist: 0 };
         let temp = shuffle(points).slice();
@@ -89,7 +88,6 @@ function GenAlg() {
     SortByDistance(ways);
     best = ways[0].dist;
     crossingover(ways);
-    // let DistanceI = AllDistance(ways[0].arr);
 
 }
 
@@ -123,14 +121,7 @@ function createChildren(i, j, ways) {
     let MWay = ways[i];
     let FWay = ways[j];
     let len = ways.length;
-    // let x = 0;
-    // while (x < len && MWay.arr[x].index == FWay.arr[x].index) {
-    //     x++
-    // }
     let SonW_1 = []; let SonW_2 = [];
-    // if (x != len) {
-    //     x++;
-    // }
     let x = GetRandom(0, len - 1);
     for (let i = 0; i < x; i++) {
         SonW_1.push(MWay.arr[i]);
@@ -187,12 +178,6 @@ function createChildren(i, j, ways) {
     }
     let children = { arr: [], dist: 0 };
 
-    // console.log('=================---=========');
-    // console.log(SonW_1);
-    // console.log(AllDistance(SonW_1));
-    // console.log(SonW_2);
-    // console.log(AllDistance(SonW_2));
-
     let temp = SonW_1.slice();
     children.arr = temp;
     children.dist = AllDistance(temp);
@@ -222,14 +207,11 @@ function crossingover(ways) {
         DistanceI = AllDistance(ways[0].arr);
         if (best == DistanceI) {
             o++;
-            //console.log(o);
         }
         else if (best > DistanceI) {
             o = 0;
             best = DistanceI;
         }
-        // console.log(count);
-        // console.log(DistanceI);
         DrawRes(ways[0].arr);
         if (o < 60 && count < genetation) {
             setTimeout(Name, 1);

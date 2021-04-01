@@ -20,11 +20,11 @@ body button:hover {
   row-gap: 6%;
   column-gap: 2%;
   grid-template-areas:
-    "logo logo"
-    "sidenav canvas"
-    "sidenav canvas"
-    "sidenav canvas"
-    "sidenav canvas";
+    "logo logo ."
+    "sidenav canvas input"
+    "sidenav canvas settings"
+    "sidenav canvas result"
+    "sidenav canvas findNum";
 }
 .logoHolder
 {
@@ -113,4 +113,89 @@ body button:hover {
 {
   width: 0;
   color: whitesmoke;
+}
+.settings >button 
+{
+  display: block;
+  background-color: #80cbc4;
+  color: black;
+  padding: 12px 16px;
+  margin: 16px 0px 0px 0px;
+  width: 100%;
+  font-size: 0.75em;
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+  cursor: pointer;
+}
+.settings 
+{
+  width: 100%;
+  height: min-content;
+  color: white;
+  font-size: 1.3em;
+  align-content: center;
+  text-align: center;
+}
+
+.input
+{
+  place-self: center;
+  width: max-content;
+  color: black;
+  background-color: #80cbc4;
+  border: none;
+  border-radius: 10px;
+  padding: 4%;
+  text-align: center;
+  font-size: 1.2em;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+}
+#find
+{
+  width: 100%;
+  color: black;
+  font-size: 1.5em;
+  background-color: #80cbc4;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.6);
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+#find:active {
+  transform: scale(0.98);
+}
+
+#RNum
+{
+  width: max-content;
+  display: block;
+  border: 1px solid #484848;
+  border-radius: 8px;
+  padding: 4px;
+  margin: 4px 0px;
+}
+#RNum:disabled
+{
+  background-color: #808e95;
+}
+
+.input {grid-area: input;}
+.settings{grid-area: settings;}
+.findNum{grid-area: findNum;}
+.result {
+  display: flex;
+  grid-area: result;
+  border-radius: 50%;
+  border: 1px solid white;
+  height: 200px;
+  width: 200px;
+  justify-self:center;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 4em;
 }
