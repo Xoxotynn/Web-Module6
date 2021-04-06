@@ -211,7 +211,6 @@ function trainingAgain() {
         let count = 0;
         for (let i = 0; i < 100; i++) {
             let index = GetIntRandom(0, 100);
-            //console.log(index);
             neuronInput = mass[index][0];
             correctN = mass[index][1];
             determine();
