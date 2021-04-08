@@ -119,7 +119,7 @@ class Tree {
     
     giniIndex(recordGroups) {
         let classes = this.getUniqueClasses(recordGroups);
-        let instanceCount = this.countInstances(recordGroups);
+        let recordsCount = this.countRecords(recordGroups);
         let gini = 0;
         
         recordGroups.forEach(group => {
@@ -131,7 +131,7 @@ class Tree {
                 score += Math.pow(proportion, 2);
             });
     
-            gini += (1 - score) * (group.length / instanceCount);
+            gini += (1 - score) * (group.length / recordsCount);
         });
     
         return gini;
@@ -149,7 +149,7 @@ class Tree {
         return records.map(record => record.classValue);
     }
     
-    countInstances(groups) {
+    countRecords(groups) {
         return groups.reduce((count, group) => count + group.length, 0);
     }
     

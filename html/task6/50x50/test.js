@@ -205,7 +205,7 @@ st.addEventListener('click', trainingAgain);
 
 let mass;
 function trainingAgain() {
-    for (let j = 0; j < 50; j++) {
+    for (let j = 0; j < 100; j++) {
         let count = 0;
         for (let i = 0; i < 300; i++) {
             let index = GetIntRandom(0, 300);
@@ -216,6 +216,9 @@ function trainingAgain() {
             determine();
             training();
             count += trueOrFalse();
+        }
+        if (j % 5 == 0) {
+            console.log(count, E);
         }
     }
     console.log('end');
