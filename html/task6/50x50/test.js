@@ -135,21 +135,20 @@ function mistake() {
 }
 
 function createDw() {
-    //console.log(lenInput);
-    for (let i = 0; i < lenInput; i++) {
-        for (let j = 0; j < hiddenNeu; j++) {
-            dw[0][i][j] = -nu * mis[1][j] * neuronInput[i];
-            bias[0][j] += -nu * mis[1][j]; //непонятно
+    for (let j = 0; j < hiddenNeu; j++) {
+        for (let i = 0; i < lenInput; i++) {
+            dw[0][i][j] =  -nu* mis[1][j] * neuronInput[i];
+             //непонятно
             w[0][i][j] += dw[0][i][j];
-            //console.log("+++++")
         }
+        bias[0][j] += -nu * mis[1][j];
     }
-    for (let i = 0; i < hiddenNeu; i++) {
-        for (let j = 0; j < neuronOutput; j++) {
+    for (let j = 0; j < neuronOutput; j++) {
+        for (let i = 0; i < hiddenNeu; i++) {
             dw[1][i][j] = -nu * mis[0][j] * funcY[0][i];
-            bias[1][j] += -nu * mis[0][j];
             w[1][i][j] += dw[1][i][j];
         }
+        bias[1][j] += -nu * mis[0][j];
     }
 }
 
@@ -169,7 +168,6 @@ function determine() {
     dw = [];
     sum = [];
     createDwfirst();
-
     let answerStr = JSON.stringify(summ());
     divRes.innerHTML = answerStr;
 }
@@ -207,15 +205,17 @@ let mass;
 function trainingAgain() {
     for (let j = 0; j < 50; j++) {
         let count = 0;
-        for (let i = 0; i < 300; i++) {
-            let index = GetIntRandom(0, 300);
-            //console.log(index);
+        for (let i = 0; i < 400; i++) {
+            let index = GetIntRandom(0, 400);
             neuronInput = mass[index][0];
             correctN = mass[index][1];
          
             determine();
             training();
             count += trueOrFalse();
+        }
+        if (j%10 == 0){
+            console.log(count);
         }
     }
     console.log('end');

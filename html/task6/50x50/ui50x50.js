@@ -7,7 +7,7 @@ let hiddenNeu2 = 17;
 let neuronOutput = 10;
 let sum = [];
 let lenInput = 2500;
-let nu = 0.15;
+let nu = 0.05;
 let correctN;
 let y = [];
 let funcY = [];
