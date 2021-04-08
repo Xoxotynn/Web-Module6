@@ -203,7 +203,7 @@ st.addEventListener('click', trainingAgain);
 
 let mass;
 function trainingAgain() {
-    for (let j = 0; j < 50; j++) {
+    for (let j = 0; j < 100; j++) {
         let count = 0;
         for (let i = 0; i < 400; i++) {
             let index = GetIntRandom(0, 400);

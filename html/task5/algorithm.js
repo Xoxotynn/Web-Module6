@@ -24,4 +24,5 @@ for (let i = 0; i < predictRecords.length; i++) {
 }
 
 var accuracy = score / predictRecords.length * 100;
+tree.logTree();
 console.log(`Accuracy: ${accuracy}`);
