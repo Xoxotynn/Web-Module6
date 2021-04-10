@@ -10,7 +10,6 @@ btn.addEventListener('click', CreateTab);
 
 var nnum;
 
-
 //Для клеток в матрице 
 class Info {
 	clear()
@@ -40,21 +39,19 @@ class strPUSH {
 	}
 }
 
-
 //переменная отвечающая за координаты Начала
 var startMatrix = new strPUSH(0, 0);
 var finishMatrix = new strPUSH(0, 0);
-
 
 var AstMatr = [];
 var OtkSpisok = [];
 var ZakSpisok = [];
 function Matr() {
+	AstMatr = [];
 	for (var i = 0; i < nnum; i++) {
 		AstMatr[i] = [];
 		for (var j = 0; j < nnum; j++) {
 			AstMatr[i][j] = new Info(0, 0, 0, 0, 0, 0);
-
 		}
 	}
 
@@ -72,8 +69,6 @@ function isValidMaze() {
 	}
 	return true;
 }
-
-
 
 
 var tractor = new strPUSH(0, 0);
@@ -145,23 +140,17 @@ function getRandomItem(array) {
 }
 
 
-
-
-
-
-
-
-
-
+var cells;
 //Создание таблицы по клеткам
 function CreateTab() {
+	nnum = document.getElementById('nnum').value > 0 ? document.getElementById('nnum').value : 10;
+
+
 	matrix.innerHTML = '';
 	matrix.hidden = false;
 
-	nnum = document.getElementById('nnum').value;
 	// Создание матрицы для алгоритма(не визуальная)
 	Matr();
-
 
 
 
@@ -196,11 +185,11 @@ var buttons = document.querySelectorAll("button.setmode");
 //Проходим все кпопки и присваиваем значения mode при нажатии
 buttons.forEach(function (button) {
 	button.addEventListener("mousedown", function (e) {
-		mode = e.target.getAttribute("mode");
+		mode = button.getAttribute("mode");
+		buttons.forEach(button => button.classList.remove("choosed"));
+		button.classList.add("choosed");
 	});
 });
-
-
 
 
 
@@ -213,9 +202,9 @@ function handle(e) {
 
 	if (mode == "start" && e.target != finish && !e.target.classList.contains("wall")) {
 
-		if (gryazno == 1)
+		if (checkINDBUTTON == 1)
 		{
-			poljak("start");
+			discharge("start");
 		}
 
 		if (start && e.target != start) {
@@ -234,9 +223,9 @@ function handle(e) {
 	}
 
 	if (mode == "wall" && e.target != start && e.target != finish) {
-		if (gryazno == 1)
+		if (checkINDBUTTON == 1)
 		{
-			poljak("wall");
+			discharge("wall");
 		}
 		if (e.target.classList.contains("wall")) {
 			e.target.classList.remove("wall");
@@ -252,9 +241,9 @@ function handle(e) {
 
 	if (mode == "finish" && e.target != start && !e.target.classList.contains("wall")) {
 
-		if (gryazno == 1)
+		if (checkINDBUTTON == 1)
 		{
-			poljak("finish");
+			discharge("finish");
 		}
 
 		if (finish && e.target != finish) {
@@ -272,11 +261,10 @@ function handle(e) {
 }
 
 
-
 // ---------------------------------- Здесь можно сказать начинается алгоритм--------------------------------------;
 
 document.querySelector('.hiddenbut').addEventListener('click', preparation);
-var gryazno = 0;
+var checkINDBUTTON = 0;
 //Функция с которой начинается, после кнопки подтвердить производится алгоритм
 function preparation() {
 	for (let i = 0; i <nnum;i++)
@@ -298,15 +286,13 @@ function preparation() {
 	if (checkFINISH == 1 && checkSTART == 1)
 	{
 		Astar();
-		gryazno = 1;
+		checkINDBUTTON = 1;
 	}
 
 }
 
 
-
-
-function poljak(type)
+function discharge(type)
  {
 	AstMatr[finishMatrix.x][finishMatrix.y].clear();
 	AstMatr[startMatrix.x][startMatrix.y].clear();
@@ -328,13 +314,9 @@ function poljak(type)
 	
 	OtkSpisok.splice(0,OtkSpisok.length);
 	ZakSpisok.splice(0, ZakSpisok.length);
-	gryazno = 0;
+	checkINDBUTTON = 0;
 	checkSTOPIND = 0;
 }
-
-
-
-
 
 // Эвристика созданная хорошим человек, но теперь я сделаю для неё новое название. 
 let d1;
@@ -342,9 +324,6 @@ function Chebishev(pos0, pos1) {
 	d1 = Math.max(Math.abs(pos0 - finishMatrix.x), Math.abs(pos1 - finishMatrix.x));
 	return d1;
 }
-
-
-
 
 // Проверка закрытого списка используется для того чтобы не пушить клетки которые уже были обработаны
 function checkClosed(prov) {
@@ -356,10 +335,6 @@ function checkClosed(prov) {
 	return 0;
 }
 
-
-
-
-
 // Проверка Открытого списка используется для того чтобы не пушить клетки которые уже были обработаны
 function checkOpen(prov) {
 	for (let i = 0; i < OtkSpisok.length; i++) {
@@ -370,13 +345,10 @@ function checkOpen(prov) {
 	return 0;
 }
 
-
-
-
 // Функция проверки соседей и всё что с ними связано(сердце алгоритма)
 function checkNeighborsDiagonal(tochka) {
 
-	// Чтобы JS не творил хуйню с преобразованием типов
+	// Чтобы JS не творил непотребства с преобразованием типов
 	let x = parseInt(tochka.x, 10);
 	let y = parseInt(tochka.y, 10);
 
@@ -384,9 +356,7 @@ function checkNeighborsDiagonal(tochka) {
 	OtkSpisok.splice(index, 1);
 	ZakSpisok.push(new strPUSH(x, y));
 
-
 	// -----------------------------------------Алгоритм всех различных проверок!-------------------------------------------------
-
 
 	//Диагональ Вверх - влево
 	if (x - 1 >= 0 && y - 1 >= 0 && AstMatr[x - 1][y - 1].value != 0 && checkClosed(new strPUSH(x - 1, y - 1)) == 0) {
@@ -585,8 +555,6 @@ function checkNeighborsDiagonal(tochka) {
 	return 0;
 }
 
-
-
 // Функция проверки соседей по вертикали и горизонтали
 function checkNeighborsVertical(tochka) {
 
@@ -598,8 +566,6 @@ function checkNeighborsVertical(tochka) {
 	OtkSpisok.splice(index, 1);
 	ZakSpisok.push(new strPUSH(x, y));
 	// Алгоритм всех различных проверок!
-
-
 
 	// Вверх
 	if (x - 1 >= 0 && AstMatr[x - 1][y].value != 0 && checkClosed(new strPUSH(x - 1, y)) == 0) {
@@ -722,7 +688,6 @@ function MINOTK(OtkSpisok) {
 }
 
 
-
 var checkSTOPIND = 0;
 // функция алгоритма A*
 function Astar() {
@@ -800,6 +765,3 @@ function risovka() {
 	document.querySelector(`td[row = "${startMatrix.x}"][column = "${startMatrix.y}"]`).classList.remove("open");
 	document.querySelector(`td[row = "${finishMatrix.x}"][column = "${finishMatrix.y}"]`).classList.remove("notopen");
 }
-
-// Сделать рандомные грани при генерации лабиринта чётного кол-ва
-// 2.Сделать 2 радио кнопки чтобы можно было выбирать вариант алгоритма. (Диагональный и без диагонаей)

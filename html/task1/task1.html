@@ -25,7 +25,7 @@
 			<a href="../task6/task6.html">Нейронная Сеть</a>
 		</div>
         <table class="matrixTable">
-            <tbody id ="matrix"></tbody>
+            <tbody id ="matrix"><td style="visibility: hidden;"></td></tbody>
         </table>
         <div class="inputN">
 			<label for="nnum">Размер лабиринта</label>
@@ -40,15 +40,24 @@
             <button mode="finish" class="setmode" type="button">Выход</button>
             <button mode="wall" class="setmode" type="button">Стена</button>
         </div>
+        <div class="walkType">
+            <ul>
+                <li>
+                    <input type="radio" name="radioselector" id = "vertical" checked>
+                    <label for="vertical">Ортогональный обход</label>
+                    <div class="check"></div>
+                </li>
+                <li>
+                    <input type="radio" name="radioselector" id = "diagonal">
+                    <label for="diagonal">Диагональный обход</label>
+                    <div class="check"></div>
+                </li>
+            </ul>
+        </div>
         <div class="findWay">
             <button class = "hiddenbut" type = "button">Построить маршрут</button>
 		</div>
 	</div>
-    <br><br><br><br>   <!-- надо сделать стиль-->
-    <input type="radio" name="radioselector" id = "vertical" checked>
-    <label for="louie">Ортогональный обход</label>
-    <input type="radio" name="radioselector" id = "diagonal">
-    <label for="dewey">Диагональный обход</label>
     <script src="apptask1.js"></script>
 </body>
 
