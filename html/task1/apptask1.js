@@ -1,16 +1,22 @@
 //Переменная матрицы
 const matrix = document.getElementById('matrix')
 
+// Используем для того чтобы если нет начало и конца, то алгоритм не выполняется.(Нужно поставить начало и конец, чтобы алгоритм заработал)
 let checkSTART = 0;
 let checkFINISH = 0;
+
+// Кол-во нажатий кнопки сгенерировать. Используется для того чтобы кнопки начало и конец работали коректно если генерация лабиринта идёт более одного раза.
+var buttonspush = 0;
 
 //Ожидание нажатия кнопки 
 let btn = document.querySelector('button');
 btn.addEventListener('click', CreateTab);
 
+
+//Кол-во ячеек
 var nnum;
 
-//Для клеток в матрице 
+// Всяческая информация для клеток в матрице. 
 class Info {
 	clear()
 	{
@@ -143,7 +149,8 @@ function getRandomItem(array) {
 var cells;
 //Создание таблицы по клеткам
 function CreateTab() {
-	nnum = document.getElementById('nnum').value > 0 ? document.getElementById('nnum').value : 10;
+	buttonspush += 1;
+	nnum = document.getElementById('nnum').value;
 
 
 	matrix.innerHTML = '';
@@ -176,6 +183,7 @@ function CreateTab() {
 	AstMatr[0][0].value = 1;
 	document.querySelector(`td[row = "${0}"][column = "${0}"]`).classList.remove("wall");
 	generateLab();
+	
 }
 
 
@@ -265,7 +273,7 @@ function handle(e) {
 
 document.querySelector('.hiddenbut').addEventListener('click', preparation);
 var checkINDBUTTON = 0;
-//Функция с которой начинается, после кнопки подтвердить производится алгоритм
+//Функция с которой всё начинается, после кнопки подтвердить выполняется алгоритм
 function preparation() {
 	for (let i = 0; i <nnum;i++)
 	{
@@ -303,11 +311,11 @@ function discharge(type)
 	document.querySelectorAll(".elem.open").forEach(function (elem) {
 		elem.classList.remove("open")
 	});
-	if (type == "start")
+	if (type == "start" && buttonspush == 1)
 	{
 		document.querySelector(".start").classList.remove("start");
 	}
-	if (type == "finish")
+	if (type == "finish" && buttonspush == 1)
 	{
 		document.querySelector(".finish").classList.remove("finish");
 	}

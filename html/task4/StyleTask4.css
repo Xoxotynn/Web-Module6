@@ -128,7 +128,7 @@ body button:hover {
   transform: scale(0.98);
 }
 
-.bundle
+.clear
 {
   width: 100%;
   color: black;
@@ -141,7 +141,7 @@ body button:hover {
   cursor: pointer;
   transition: all 0.1s ease;
 }
-.bundle:active {
+.clear:active {
   transform: scale(0.98);
 }
 

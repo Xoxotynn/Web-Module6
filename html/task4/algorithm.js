@@ -1,42 +1,27 @@
-// Массив маршрута для каждого муравья
-var way;
-
-// кол-во итераций 
-var amountIteration;
-
 //Коэффиценты
-const A = 1;
-const B = 2;
-
-// массив муравьёв
-var ants;
+var A = 1;
+var B = 3;
 
 // переменная сохранения индекса
 let current;
 
-// Переменная всех вероятностей для дальнейшего деления
-var summ = 0;
-
-// Кол-во муравьёв. БУДЕМ БРАТЬ КАК КоЛ_ВО ВЕРШИН
-var antsAmount; //= tops;
+var ants;
 
 // константа высыхания
-const dryingOut = 0.9;
+const dryingOut = 0.7;
 
 // Константа Q
-const Qfordrying = 7;
+const Qfordrying = 240;
 
-// Массив который будет использоваться для обозначеня вершин которые мы прошли.
-let visited;
 
-// Функция обновления феромонов
+var antsAmount;
 
 let testtime;
 let best;
-let min = 999999999;
+let min = 999999999999;
 function updatePheromons()
 {
-    testtime =0 ;
+    testtime = 0;
     for (let i = 0; i < tops; i++)
     {
         for (let j = 0; j < tops; j++)
@@ -90,29 +75,38 @@ class wayfor{
     }
 }
 
-function visual()
-{
-    for (let i = 0; i < tops; i++)
-    {
-        for (let j = 0; j < tops; j++)
-        {
-            AstMatr
 
-        }
+// Рисование пути
+function drawWay()
+{
+    let colorLine = "#62B5BB";
+    context.lineWidth = 2;
+    context.stroke();
+    for (let i = 1; i < points.length; i++) {
+        context.beginPath();
+        context.moveTo(points[best[i-1]].x, points[best[i-1]].y);
+        context.lineTo(points[best[i]].x, points[best[i]].y);
+        context.strokeStyle = colorLine;
+        context.stroke();
     }
+    context.beginPath();
+    context.moveTo(points[best[best.length-1]].x, points[best[best.length-1]].y);
+    context.lineTo(points[best[best.length-2]].x, points[best[best.length-2]].y);
+    context.strokeStyle = colorLine;
+    context.stroke();
 }
 
 // Функция итераций в данном случае Отталкиваемся от кол-ва вершин. Можно будет сделать статику, но не желательно.
 function ant()
 {
-    amountIteration = tops * 3;
+    let amountIteration = tops * 6;
     for (let kolvo = 0; kolvo < amountIteration; kolvo++)
     {
         bundle();  
         updatePheromons();  
        // visual();
     }
-    console.log(best);
+    drawWay();
 }
 
 
@@ -138,12 +132,12 @@ function random(visited)
 function bundle()
 {
     ants = [];
-    antsAmount = tops + 1;
+    antsAmount = tops * 3;
     for (let i = 0; i < antsAmount; i++)
     {
-        visited = [];
-        way = [];
-        current = Math.floor(Math.random() * (tops));
+        let visited = [];
+        let way = [];
+        let current = Math.floor(Math.random() * (tops));
         way.push(current);
         for (let p = 0; p <tops; p++)
         {
@@ -154,7 +148,7 @@ function bundle()
 
         while (visited.length !=0)
         {
-            summ = 0
+            let summ = 0
 
             for (let j = 0; j<visited.length; j++)
             {

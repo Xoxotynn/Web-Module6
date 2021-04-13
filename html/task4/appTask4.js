@@ -4,12 +4,18 @@ canvas.addEventListener("click", addUserPoint);
 canvas.width = 800;
 canvas.height = 600;
 
-
-
-
-
-
-
+let clearbut = document.querySelector(".clear")
+clearbut.addEventListener("click", function clear(){
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    best = [];
+    AstMatr = [];
+    A = 1;
+    B = 3;
+    min = 99999999;
+    antsAmount = 0;
+    points = [];
+    ants;
+});
 
 
 
@@ -38,7 +44,6 @@ function drawPoint(p) {
     context.beginPath();
     context.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
     context.fillStyle = p.color;
-    context.fillText("123213",p.x,p.y);
     context.fill();
 }
 
@@ -74,8 +79,7 @@ function createMouse(element) {
 
 
 
-
-let AstMatr = [];
+var AstMatr;
 var tops;
 let btn = document.querySelector(".zapusk");
 btn.addEventListener('click', createMatrix);
@@ -105,7 +109,7 @@ function createMatrix() {
 	for (let i = 0; i < tops; i++) {
 		AstMatr[i] = [];
 		for (let j = 0; j < tops; j++) {
-			AstMatr[i][j] = new Info(0.400, 0,0);
+			AstMatr[i][j] = new Info(0.100, 0,0);
             AstMatr[i][j].distance = distance(points[i], points[j]);
             AstMatr[i][j].vlech = 1 / AstMatr[i][j].distance;
         }
