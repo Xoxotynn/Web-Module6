@@ -4,6 +4,23 @@ canvas.addEventListener("click", addUserPoint);
 canvas.width = 800;
 canvas.height = 600;
 
+
+// Массив точек.
+let points = [];
+
+// Индекс(испольуем чтобы присвоить индекс при добавлении точки на канвасе)
+let ind = 0;
+
+// Переменная матрицы
+let AstMatr;
+
+// Кол-во наших вершин
+let tops;
+
+// Переменная чтобы хранить кол-во нажатий на кнопку "Найти путь"
+let pushbuttons;
+
+// Переменная + функция для обновления канваса и переменных по нажатию кнопки "Удалить узлы"
 let clearbut = document.querySelector(".clear")
 clearbut.addEventListener("click", function clear(){
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -15,10 +32,12 @@ clearbut.addEventListener("click", function clear(){
     antsAmount = 0;
     points = [];
     ants;
+    ind = 0;
+    pushbuttons = 0;
 });
 
 
-
+// Информация об следущих добавленных точках
 class Point {
     constructor(x, y, color, index) {
         this.x = x;
@@ -29,9 +48,31 @@ class Point {
     }
 }
 
+
+// Обновление канваса и переменных если мы добавили новые точки на канвас после уже найденного пути.
+function updateCanvas()
+{
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    best = [];
+    AstMatr = [];
+    A = 1;
+    B = 3;
+    min = 99999999;
+    antsAmount = 0;
+    ants;
+    
+    for (let i = 0; i<points.length; i++)
+    {
+        context.beginPath();
+        context.arc(points[i].x, points[i].y, 13, 0, Math.PI * 2);
+        context.fillStyle = "#62B5BB";
+        context.fill();
+    }
+}
+
+
+// Добавление в массив точек поставленных на канвасе
 const mouse = createMouse(canvas);
-let points = [];
-let ind = 0;
 function addUserPoint() {
     
     let p = new Point(mouse.x, mouse.y, "#62B5BB", ind);
@@ -40,6 +81,8 @@ function addUserPoint() {
     drawPoint(p);
 }
 
+
+// Рисование поставленных точек на канвасе
 function drawPoint(p) {
     context.beginPath();
     context.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -48,7 +91,7 @@ function drawPoint(p) {
 }
 
 
-
+// Функция считывающая где находится указатель.
 function createMouse(element) {
     let drawer;
     const mouse = {
@@ -76,25 +119,12 @@ function createMouse(element) {
 }
 
 
-
-
-
-var AstMatr;
-var tops;
+// Кнопка запуск и выполнение алгоритма
 let btn = document.querySelector(".zapusk");
 btn.addEventListener('click', createMatrix);
 
-// Переменная отвечающая за получение кол-ва вершин графа.
-
-// Матрица для того чтобы выполнять алгоритм.
-
-
+// Класс информации для матрицы
 class Info {
-	clear()
-	{
-		this.pheromons = 0;
-		this.distance = 0;
-	}
 	constructor(pheromons, distance,vlech) {
 		this.pheromons = pheromons;
 		this.distance = distance;
@@ -103,7 +133,13 @@ class Info {
 }
 
 
+// Создание матрицы которая используется во всём алгоритме
 function createMatrix() {
+    if (pushbuttons !=0 && points.length != tops)
+    {
+        updateCanvas();
+    }
+    pushbuttons += 1;
 	tops = points.length;
 	AstMatr = [];
 	for (let i = 0; i < tops; i++) {
@@ -111,17 +147,15 @@ function createMatrix() {
 		for (let j = 0; j < tops; j++) {
 			AstMatr[i][j] = new Info(0.100, 0,0);
             AstMatr[i][j].distance = distance(points[i], points[j]);
-            AstMatr[i][j].vlech = 1 / AstMatr[i][j].distance;
+            AstMatr[i][j].vlech = 101 / AstMatr[i][j].distance;
         }
 	}
     ant();
-    
-    
 }
 
 
+// Функция вычисления дистанции между точками.
 function distance(p1,p2)
 {
    return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 }
-

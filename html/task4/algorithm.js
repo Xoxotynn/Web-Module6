@@ -81,7 +81,10 @@ function drawWay()
 {
     let colorLine = "#62B5BB";
     context.lineWidth = 2;
-    context.stroke();
+    if (points.length != 0)
+    {
+        context.stroke();
+    }
     for (let i = 1; i < points.length; i++) {
         context.beginPath();
         context.moveTo(points[best[i-1]].x, points[best[i-1]].y);
@@ -89,11 +92,14 @@ function drawWay()
         context.strokeStyle = colorLine;
         context.stroke();
     }
-    context.beginPath();
-    context.moveTo(points[best[best.length-1]].x, points[best[best.length-1]].y);
-    context.lineTo(points[best[best.length-2]].x, points[best[best.length-2]].y);
-    context.strokeStyle = colorLine;
-    context.stroke();
+    if (points.length != 0)
+    {
+        context.beginPath();
+        context.moveTo(points[best[best.length-1]].x, points[best[best.length-1]].y);
+        context.lineTo(points[best[best.length-2]].x, points[best[best.length-2]].y);
+        context.strokeStyle = colorLine;
+        context.stroke();
+    }
 }
 
 // Функция итераций в данном случае Отталкиваемся от кол-ва вершин. Можно будет сделать статику, но не желательно.
