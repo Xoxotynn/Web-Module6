@@ -16,26 +16,10 @@ canvas.addEventListener("mousemove", function(e){
 canvas.addEventListener("mouseup", function(){
     drawer = false;
 });
+canvas.addEventListener("mouseout", function(){
+    drawer = false;
+});
 
-
-function drawLine(x1, y1, x2, y2) {
-    context.beginPath();
-    context.strokeStyle = '#b0bec5';
-    context.lineJoin = 'miter';
-    context.lineWidth = 1;
-    context.moveTo(x1, y1);
-    context.lineTo(x2, y2);
-    context.stroke();
-}
-function drawCell(x, y) {
-    context.beginPath();
-    context.fillStyle = '#b0bec5';
-    context.strokeStyle = '#b0bec5';
-    context.lineJoin = 'miter';
-    context.lineWidth = 1;
-    context.rect(x, y, cellSize, cellSize);
-    context.fill();
-}
 function clearAll() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid();
@@ -92,10 +76,25 @@ function calculate(e) {
         matrix[coefY][coefX] = 1;
         drawCell(coefX * cellSize, coefY * cellSize);
     }
-    // else {
-    //     matrix[coefY][coefX] = 0;
-    //     clearR();
-    // }
+}
+
+function drawLine(x1, y1, x2, y2) {
+    context.beginPath();
+    context.strokeStyle = '#b0bec5';
+    context.lineJoin = 'miter';
+    context.lineWidth = 1;
+    context.moveTo(x1, y1);
+    context.lineTo(x2, y2);
+    context.stroke();
+}
+function drawCell(x, y) {
+    context.beginPath();
+    context.fillStyle = '#b0bec5';
+    context.strokeStyle = '#b0bec5';
+    context.lineJoin = 'miter';
+    context.lineWidth = 1;
+    context.rect(x, y, cellSize, cellSize);
+    context.fill();
 }
 canvas.addEventListener('click',function(e){
     calculate(e)

@@ -13,12 +13,7 @@ let bias = [];
 let mis = [];
 
 let divRes = document.getElementsByClassName('res')[0];
-
-let train = document.getElementById('train');
-train.addEventListener("click", function () {
-    correctN = document.getElementById("RNum").value;
-    training();
-});
+let fileName = document.getElementById('fileName');
 
 let findN = document.getElementById('find');
 findN.addEventListener('click', function () {
@@ -31,10 +26,11 @@ clearA.addEventListener('click', clearAll);
 
 let testsArr = [];
 let downloadTestBtn = document.getElementById('downloadTestBtn');
-let upload = document.getElementById('upload');
+var upload = document.getElementById('upload');
 
 upload.onchange = function(){
     let file = upload.files[0];
+    fileName.innerHTML = file.name;
     let reader = new FileReader;
     reader.readAsText(file);
     reader.onload = function(){
@@ -42,7 +38,6 @@ upload.onchange = function(){
         w = testsArr[0];
         bias = testsArr[1];
     }
-   
 }
 downloadTestBtn.onclick = function(){
     let newTxt = JSON.stringify(testsArr);
@@ -50,8 +45,8 @@ downloadTestBtn.onclick = function(){
     downloadTestBtn.href = URL.createObjectURL(file);
     downloadTestBtn.download = "test.json";
 }
-let uploadTEST = document.getElementById('uploadTEST');
 
+let uploadTEST = document.getElementById('uploadTEST');
 uploadTEST.onchange = function(){
     let file = uploadTEST.files[0];
     let reader = new FileReader;

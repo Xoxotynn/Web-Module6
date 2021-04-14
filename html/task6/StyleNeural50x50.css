@@ -21,7 +21,6 @@ body button:hover {
   column-gap: 2%;
   grid-template-areas:
     "logo logo ."
-    "sidenav canvas input"
     "sidenav canvas settings"
     "sidenav canvas result"
     "sidenav canvas findNum";
@@ -113,44 +112,68 @@ body button:hover {
   width: 0;
   color: whitesmoke;
 }
-.settings >button 
-{
-  display: block;
-  background-color: #80cbc4;
-  color: black;
-  padding: 12px 16px;
-  margin: 16px 0px 0px 0px;
-  width: 100%;
-  font-size: 0.75em;
-  text-decoration: none;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
-  cursor: pointer;
-}
+
 .settings 
 {
   width: 100%;
   height: min-content;
   color: white;
   font-size: 1.3em;
-  align-content: center;
-  text-align: center;
+  text-align: start;
 }
-
-.input
+.settings>button 
 {
-  place-self: center;
-  width: max-content;
+  display: block;
+  background: #80cbc4;
   color: black;
-  background-color: #80cbc4;
+  padding: 8px 16px;
+  margin-top: 16px;
+  width: 100%;
+  font-size: 0.9em;
+  text-decoration: none;
   border: none;
   border-radius: 10px;
-  padding: 4%;
-  text-align: center;
-  font-size: 1.2em;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
+.settings>.uploadLabel
+{
+  display: block;
+  color: black;
+  background: #80cbc4;
+  margin-bottom: 16px;
+  padding: 8px 0;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 1em;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.6);
+  transition: all 0.25s ease;
+}
+.settings>.uploadLabel:hover
+{
+  background: #4f9a94;
+}
+#fileName 
+{
+  min-width: 100px;
+  min-height: 20px;
+  display: inline-block;
+  color: whitesmoke;
+  font-size: 1.2em;
+  text-align: center;
+  padding: 4px 16px;
+  border-radius: 10px;
+  border: 1px dashed #80cbc4;
+}
+.settings>#upload
+{
+  display: none;
+}
+
 #find
 {
   width: 100%;
@@ -168,21 +191,6 @@ body button:hover {
   transform: scale(0.98);
 }
 
-#RNum
-{
-  width: max-content;
-  display: block;
-  border: 1px solid #484848;
-  border-radius: 8px;
-  padding: 4px;
-  margin: 4px 0px;
-}
-#RNum:disabled
-{
-  background-color: #808e95;
-}
-
-.input {grid-area: input;}
 .settings{grid-area: settings;}
 .findNum{grid-area: findNum;}
 .result {

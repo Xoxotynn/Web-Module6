@@ -44,11 +44,11 @@ function generateKCenters(centersCount) {
 function clusteringStep(centers) {
     let clusters = createClusters(centers);
     let WPrev;
-    let WTotal = assignPoints(clusters, euqlidDist);
+    let WTotal = assignPoints(clusters);
     while(WTotal != WPrev) {
         WPrev = WTotal;
         calculateCenters(clusters);
-        WTotal = assignPoints(clusters, euqlidDist);
+        WTotal = assignPoints(clusters);
     }
 
     return WTotal;

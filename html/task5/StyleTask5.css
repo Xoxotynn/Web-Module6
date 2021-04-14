@@ -158,6 +158,7 @@ body button:hover {
   background: transparent;
   border: 2px dashed #757575;
 }
+#upload{display: none;}
 
 #fileName 
 {
@@ -169,7 +170,7 @@ body button:hover {
   text-align: center;
   padding: 4px 16px;
   border-radius: 10px;
-  border: 1px solid #80cbc4;
+  border: 1px dashed #80cbc4;
 }
 
 .tree,

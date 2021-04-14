@@ -14,10 +14,32 @@ const mouse = createMouse(canvas);
 let points = [];
 var distFunction = euqlidDist;
 
-euqlidButton.addEventListener("click", () => chooseDistType(euqlidButton, euqlidDist));
-sqrEuqlidButton.addEventListener("click", () => chooseDistType(sqrEuqlidButton, sqrEuqlidDist));
-manhattanButton.addEventListener("click", () => chooseDistType(manhattanButton, manhattanDist));
-chebyshevButton.addEventListener("click", () => chooseDistType(chebyshevButton, chebyshevDist));
+
+euqlidButton.addEventListener("click", function() { 
+    drawClustersByChosenDistType(euqlidButton, euqlidDist);
+});
+sqrEuqlidButton.addEventListener("click", function() { 
+    drawClustersByChosenDistType(sqrEuqlidButton, sqrEuqlidDist);
+});
+manhattanButton.addEventListener("click", function() { 
+    drawClustersByChosenDistType(manhattanButton, manhattanDist);
+});
+chebyshevButton.addEventListener("click", function() { 
+    drawClustersByChosenDistType(chebyshevButton, chebyshevDist);
+});
+
+
+clearButton.addEventListener("click", () => {
+    clearCanvas();
+    points = [];
+});
+generateButton.addEventListener("click", findAndDrawClusters);
+
+
+function drawClustersByChosenDistType(distBtn, distTypeFunc) {
+    chooseDistType(distBtn, distTypeFunc);
+    findAndDrawClusters();
+}
 
 function chooseDistType(distBtn, distTypeFunc) {
     distFunction = distTypeFunc;
@@ -26,20 +48,16 @@ function chooseDistType(distBtn, distTypeFunc) {
     distBtn.classList.add("choosed");
 }
 
-clearButton.addEventListener("click", () => {
-    clearCanvas();
-    points = [];
-});
-generateButton.addEventListener("click", function() {
+function findAndDrawClusters() {
     let clustersCount = document.getElementById("kNum").value;
     clustersCount > 0 ? kClustering(clustersCount) : clustering();
 
     clearCanvas();
     drawPoints(points);
-});
+}
 
 
-canvas.addEventListener("click", addUserPoint);
+//canvas.addEventListener("click", addUserPoint);
 canvas.addEventListener("contextmenu", ev => {
     ev.preventDefault();
     deleteUserPoint();
