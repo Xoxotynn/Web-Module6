@@ -1,16 +1,22 @@
 //Переменная матрицы
 const matrix = document.getElementById('matrix')
 
+// Используем для того чтобы если нет начало и конца, то алгоритм не выполняется.(Нужно поставить начало и конец, чтобы алгоритм заработал)
 let checkSTART = 0;
 let checkFINISH = 0;
+
+// Кол-во нажатий кнопки сгенерировать. Используется для того чтобы кнопки начало и конец работали коректно если генерация лабиринта идёт более одного раза.
+var buttonspush = 0;
 
 //Ожидание нажатия кнопки 
 let btn = document.querySelector('button');
 btn.addEventListener('click', CreateTab);
 
+
+//Кол-во ячеек
 var nnum;
 
-//Для клеток в матрице 
+// Всяческая информация для клеток в матрице. 
 class Info {
 	clear()
 	{
@@ -143,7 +149,8 @@ function getRandomItem(array) {
 var cells;
 //Создание таблицы по клеткам
 function CreateTab() {
-	nnum = document.getElementById('nnum').value > 0 ? document.getElementById('nnum').value : 10;
+	buttonspush += 1;
+	nnum = document.getElementById('nnum').value;
 
 
 	matrix.innerHTML = '';
@@ -172,12 +179,11 @@ function CreateTab() {
 		matrix.append(rows);
 	}
 
-	cells = document.querySelectorAll("td.elem");
-	setCellHoverAction(cells);
 	//для создания лабиринта
 	AstMatr[0][0].value = 1;
 	document.querySelector(`td[row = "${0}"][column = "${0}"]`).classList.remove("wall");
 	generateLab();
+	
 }
 
 
@@ -194,36 +200,6 @@ buttons.forEach(function (button) {
 });
 
 
-var currentColor;
-function setCellHoverAction(cells) {
-	cells.forEach(function (cell) {
-		cell.onmouseover = cell.onmouseout = cellHoverHandler;
-	});
-
-	function cellHoverHandler(event) {
-		if (event.type == 'mouseover') {
-			currentColor = event.target.style.background;
-			let hoverColor;
-			switch (mode) {
-				case "start":
-					hoverColor = "#ff7043";
-					break;
-				case "finish":
-					hoverColor = "#66bb6a";
-					break;
-				case "wall":
-					hoverColor = "#484848";
-					break;
-				default:
-					break;
-			}
-			event.target.style.background = hoverColor;
-		}
-		if (event.type == 'mouseout') {
-			event.target.style.background = currentColor;
-		}
-	}
-}
 
 
 // Покраска тем блокам таблицы на которые нажали кнопкой мыши после кнопки "Начало", "Стена", "Конец".
@@ -234,9 +210,9 @@ function handle(e) {
 
 	if (mode == "start" && e.target != finish && !e.target.classList.contains("wall")) {
 
-		if (gryazno == 1)
+		if (checkINDBUTTON == 1)
 		{
-			poljak("start");
+			discharge("start");
 		}
 
 		if (start && e.target != start) {
@@ -255,9 +231,9 @@ function handle(e) {
 	}
 
 	if (mode == "wall" && e.target != start && e.target != finish) {
-		if (gryazno == 1)
+		if (checkINDBUTTON == 1)
 		{
-			poljak("wall");
+			discharge("wall");
 		}
 		if (e.target.classList.contains("wall")) {
 			e.target.classList.remove("wall");
@@ -273,9 +249,9 @@ function handle(e) {
 
 	if (mode == "finish" && e.target != start && !e.target.classList.contains("wall")) {
 
-		if (gryazno == 1)
+		if (checkINDBUTTON == 1)
 		{
-			poljak("finish");
+			discharge("finish");
 		}
 
 		if (finish && e.target != finish) {
@@ -296,8 +272,8 @@ function handle(e) {
 // ---------------------------------- Здесь можно сказать начинается алгоритм--------------------------------------;
 
 document.querySelector('.hiddenbut').addEventListener('click', preparation);
-var gryazno = 0;
-//Функция с которой начинается, после кнопки подтвердить производится алгоритм
+var checkINDBUTTON = 0;
+//Функция с которой всё начинается, после кнопки подтвердить выполняется алгоритм
 function preparation() {
 	for (let i = 0; i <nnum;i++)
 	{
@@ -318,13 +294,13 @@ function preparation() {
 	if (checkFINISH == 1 && checkSTART == 1)
 	{
 		Astar();
-		gryazno = 1;
+		checkINDBUTTON = 1;
 	}
 
 }
 
 
-function poljak(type)
+function discharge(type)
  {
 	AstMatr[finishMatrix.x][finishMatrix.y].clear();
 	AstMatr[startMatrix.x][startMatrix.y].clear();
@@ -335,18 +311,18 @@ function poljak(type)
 	document.querySelectorAll(".elem.open").forEach(function (elem) {
 		elem.classList.remove("open")
 	});
-	if (type == "start")
+	if (type == "start" && buttonspush == 1)
 	{
 		document.querySelector(".start").classList.remove("start");
 	}
-	if (type == "finish")
+	if (type == "finish" && buttonspush == 1)
 	{
 		document.querySelector(".finish").classList.remove("finish");
 	}
 	
 	OtkSpisok.splice(0,OtkSpisok.length);
 	ZakSpisok.splice(0, ZakSpisok.length);
-	gryazno = 0;
+	checkINDBUTTON = 0;
 	checkSTOPIND = 0;
 }
 
@@ -797,6 +773,3 @@ function risovka() {
 	document.querySelector(`td[row = "${startMatrix.x}"][column = "${startMatrix.y}"]`).classList.remove("open");
 	document.querySelector(`td[row = "${finishMatrix.x}"][column = "${finishMatrix.y}"]`).classList.remove("notopen");
 }
-
-// Сделать рандомные грани при генерации лабиринта чётного кол-ва
-// 2.Сделать 2 радио кнопки чтобы можно было выбирать вариант алгоритма. (Диагональный и без диагонаей)
