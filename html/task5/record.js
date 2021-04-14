@@ -11,12 +11,16 @@ class Record {
     }
 
     parseNums(strArray) {
-        return strArray.map(str => parseFloat(str));
+        return strArray.map(str => {
+            let parsed = parseFloat(str);
+            return isNaN(parsed) ? str.trim() : parsed;
+        });
     }
 }
 
 function convertCsvToRecords(csvData, isTraining) {
-    let stringRecords = csvData.split("\n");
+    let stringRecords = csvData.replaceAll('\r', '');
+    stringRecords = stringRecords.split("\n");
     let records = stringRecords.map(rec => new Record(rec, isTraining));
     return records;
 }

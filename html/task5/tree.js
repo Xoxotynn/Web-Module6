@@ -4,6 +4,8 @@ class Node {
         this.value = value;
         this.left = left;
         this.right = right;
+        this.domElement = null;
+        this.terminalValue = null;
     }
 }
 
@@ -12,26 +14,49 @@ class Tree {
         this.root = this.getBestSingleSplit(trainingRecords);
         this.maxDepth = maxDepth;
         this.minSize = minSize;
-        this.splitData(this.root);
+        this.splitData();
+        this.optimizeTerminals();
     }
 
-    predict(record, node=this.root) {
-        if (record.values[node.index] < node.value) {
-            if (node.left instanceof Node) {
-                return this.predict(record, node.left);
+    predict(record, node=this.root, path=[]) {
+        path.push(node);
+        if (this.match(record.values[node.index], node.value)) {
+            if (this.isTerminal(node.left)) {
+                return path.concat(node.left);
             } else {
-                return node.left;
+                return this.predict(record, node.left, path);
             }
         } else {
-            if (node.right instanceof Node) {
-                return this.predict(record, node.right);
+            if (this.isTerminal(node.right)) {
+                return path.concat(node.right);
             } else {
-                return node.right;
+                return this.predict(record, node.right, path);
             }
         }
     }
 
-    splitData(node, depth=1) {
+    optimizeTerminals(node=this.root) {
+        if (this.isTerminal(node)) {
+            return node;
+        }
+
+        node.left = this.optimizeTerminals(node.left);
+        node.right = this.optimizeTerminals(node.right);
+
+        if (this.terminalsEqual(node)) {
+            return node.left;
+        }
+
+        return node;
+    }
+
+    terminalsEqual(node) {
+        return this.isTerminal(node.left) &&
+         this.isTerminal(node.right) &&
+         node.left.terminalValue == node.right.terminalValue;
+    }
+
+    splitData(node=this.root, depth=1) {
         let left = node.left, right = node.right;
     
         if (left.length == 0 || right.length == 0) {
@@ -51,7 +76,7 @@ class Tree {
             node.left = this.makeTerminal(left);
         } else {
             node.left = this.getBestSingleSplit(left);
-            this.splitData(node.left, depth+1);
+            this.splitData(node.left, depth+1); 
         }
     
         if (right.length <= this.minSize) {
@@ -69,16 +94,16 @@ class Tree {
     }
     
     findBestOutcome(outcome, classes) {
-        let best = 0, bestClass;
+        let bestScore = 0, best = new Node();
         classes.forEach(classVal => {
             let cur = this.classOutcome(outcome, classVal);
-            if (cur > best) {
-                best = cur;
-                bestClass = classVal;
+            if (cur > bestScore) {
+                bestScore = cur;
+                best.terminalValue = classVal;
             }
         });
     
-        return bestClass;
+        return best;
     }
 
     classOutcome(outcome, classVal) {
@@ -89,12 +114,14 @@ class Tree {
         let bestIndex, bestValue, bestScore, bestGroups;
         
         for (let index = 0; index < records[0].values.length; index++) {
-            records.forEach(record => {
-                let groups = this.singleSplit(index, record.values[index], records);
+            let uniqueValues = this.getUniqueValues(records, index);
+            
+            uniqueValues.forEach(value => {
+                let groups = this.singleSplit(index, value, records);
                 let gini = this.giniIndex(groups);
                 if (gini < bestScore || bestScore == null) {
                     bestIndex = index;
-                    bestValue = record.values[index];
+                    bestValue = value;
                     bestScore = gini;
                     bestGroups = groups;
                 }
@@ -107,7 +134,7 @@ class Tree {
     singleSplit(attrIndex, attrValue, records) {
         let left = [], right = [];
         records.forEach(record => {
-            if (record.values[attrIndex] < attrValue) {
+            if (this.match(record.values[attrIndex], attrValue)) {
                 left.push(record);
             } else {
                 right.push(record);
@@ -115,6 +142,14 @@ class Tree {
         });
     
         return [left, right];
+    }
+
+    match(actualValue, trueValue) {
+        if (isString(trueValue)) {
+            return actualValue == trueValue;
+        } else {
+            return actualValue < trueValue;
+        }
     }
     
     giniIndex(recordGroups) {
@@ -136,6 +171,11 @@ class Tree {
     
         return gini;
     }
+
+    getUniqueValues(records, index) {
+        let values = records.map(record => record.values[index]);
+        return [...new Set(values)];
+    }
     
     getUniqueClasses(groups) {
         let classes = [];
@@ -148,7 +188,7 @@ class Tree {
     getClassesArray(records) {
         return records.map(record => record.classValue);
     }
-    
+
     countRecords(groups) {
         return groups.reduce((count, group) => count + group.length, 0);
     }
@@ -157,13 +197,22 @@ class Tree {
         return records.filter(rec => rec.classValue == classVal).length / records.length;
     }
 
+    isTerminal(node) {
+        return node.terminalValue != null;
+    }
+
     logTree(decision='', node=this.root, depth=0) {
-        if (node.index != undefined) {
-            console.log(`${' '.repeat(depth)}${decision} if X${node.index+1} < ${node.value}`)
-            this.logTree('then', node.left, depth+1);
-            this.logTree('else', node.right, depth+1);
+        if (!this.isTerminal(node)) {
+            let sign = isString(node.value) ? '=' : '<';
+            console.log(`${'.'.repeat(depth)}${decision} X${node.index+1} ${sign} ${node.value}`);
+            this.logTree(' yes:', node.left, depth+1);
+            this.logTree(' no:', node.right, depth+1);
         } else {
-            console.log(`${' '.repeat(depth)}${decision} ${node}`);
+            console.log(`${'.'.repeat(depth)}${decision} ${node}`);
         }
     }
+}
+
+function isString(value) {
+    return typeof value == "string";
 }
