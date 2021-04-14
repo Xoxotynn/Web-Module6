@@ -15,16 +15,13 @@ body button:hover {
   display: grid;
   margin-top: 1%;
   justify-content: start;
-  grid-template-columns: 0.5fr auto max-content;
-  grid-template-rows: 100px repeat(3, max-content) auto;
+  grid-template-columns: 0.5fr auto;
+  grid-template-rows: 100px auto;
   row-gap: 6%;
   column-gap: 2%;
   grid-template-areas:
-    "logo"
-    "sidenav"
-    "sidenav"
-    "sidenav"
-    "sidenav";
+    "logo logo ."
+    "sidenav canvas submit";
 }
 .logoHolder
 {
@@ -39,6 +36,14 @@ body button:hover {
   font-size: 1.2em;
   grid-area: sidenav;
 }
+.canvas
+{
+  background-color: #484848;
+  border-radius: 20px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6);
+  grid-area: canvas;
+}
+.submit{grid-area: submit;}
 
 .logoHolder img
 {
@@ -109,46 +114,22 @@ body button:hover {
 }
 
 
-
-
-.zapusk
+.submit>button
 {
   width: 100%;
   color: black;
   font-size: 1.3em;
   background-color: #80cbc4;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.6);
-  padding: 8px;
-  border-radius: 8px;
+  padding: 8px 0;
+  margin-bottom: 16px;
+  margin-top: 4px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
-  transition: all 0.1s ease;
+  transition: all 0.25s ease;
 }
-.zapusk:active {
-  transform: scale(0.98);
-}
-
-.clear
-{
-  width: 100%;
-  color: black;
-  font-size: 1.3em;
-  background-color: #80cbc4;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.6);
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.1s ease;
-}
+.zapusk:active,
 .clear:active {
   transform: scale(0.98);
-}
-
-
-.canvas
-{
-  background-color: #484848;
-  border-radius: 20px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
 }

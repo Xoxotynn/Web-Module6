@@ -18,7 +18,7 @@ var antsAmount;
 
 let testtime;
 let best;
-let min = 999999999999;
+let min = Number.MAX_VALUE;
 function updatePheromons()
 {
     testtime = 0;
@@ -76,6 +76,18 @@ class wayfor{
 }
 
 
+// Функция итераций в данном случае Отталкиваемся от кол-ва вершин. Можно будет сделать статику, но не желательно.
+function ant()
+{
+    let amountIteration = tops * 6;
+    for (let kolvo = 0; kolvo < amountIteration; kolvo++)
+    {
+        bundle();  
+        updatePheromons();
+    }
+    drawWay();
+}
+
 // Рисование пути
 function drawWay()
 {
@@ -102,26 +114,13 @@ function drawWay()
     }
 }
 
-// Функция итераций в данном случае Отталкиваемся от кол-ва вершин. Можно будет сделать статику, но не желательно.
-function ant()
-{
-    let amountIteration = tops * 6;
-    for (let kolvo = 0; kolvo < amountIteration; kolvo++)
-    {
-        bundle();  
-        updatePheromons();  
-       // visual();
-    }
-    drawWay();
-}
-
 
 //Рулетка с возвращением индекса
 function random(visited)
 {
     rand = Math.random();
     sum = 0;
-    for (let eb = 0; eb< visited.length; eb++)
+    for (let eb = 0; eb < visited.length; eb++)
     {
         sum += visited[eb].ver;
         
@@ -131,8 +130,8 @@ function random(visited)
         }
 
     }
+    return visited.length-1;
 }
-
 
 // формирование различных маршрутов
 function bundle()
@@ -145,9 +144,9 @@ function bundle()
         let way = [];
         let current = Math.floor(Math.random() * (tops));
         way.push(current);
-        for (let p = 0; p <tops; p++)
+        for (let p = 0; p < tops; p++)
         {
-            visited.push(new wayfor(p, AstMatr[current][p].distance,AstMatr[current][p].pheromons, AstMatr[current][p].vlech));
+            visited.push(new wayfor(p, AstMatr[current][p].distance, AstMatr[current][p].pheromons, AstMatr[current][p].vlech));
         }
         
         visited.splice(current, 1);
@@ -164,7 +163,8 @@ function bundle()
 
             for (let pol = 0; pol< visited.length; pol++)
             {
-                visited[pol].ver = Math.pow(AstMatr[current][visited[pol].indexInMatr].pheromons, A) * Math.pow(AstMatr[current][visited[pol].indexInMatr].vlech, B) / summ;
+                visited[pol].ver = Math.pow(AstMatr[current][visited[pol].indexInMatr].pheromons, A)
+                                 * Math.pow(AstMatr[current][visited[pol].indexInMatr].vlech, B) / summ;
             }
             ind = random(visited);
             current = visited[ind].indexInMatr;

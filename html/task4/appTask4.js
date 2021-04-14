@@ -43,38 +43,14 @@ class Point {
         this.x = x;
         this.y = y;
         this.color = color;
-        this.radius = 13;
+        this.radius = 7;
         this.index = index;
     }
 }
 
-
-// Обновление канваса и переменных если мы добавили новые точки на канвас после уже найденного пути.
-function updateCanvas()
-{
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    best = [];
-    AstMatr = [];
-    A = 1;
-    B = 3;
-    min = 99999999;
-    antsAmount = 0;
-    ants;
-    
-    for (let i = 0; i<points.length; i++)
-    {
-        context.beginPath();
-        context.arc(points[i].x, points[i].y, 13, 0, Math.PI * 2);
-        context.fillStyle = "#62B5BB";
-        context.fill();
-    }
-}
-
-
 // Добавление в массив точек поставленных на канвасе
 const mouse = createMouse(canvas);
 function addUserPoint() {
-    
     let p = new Point(mouse.x, mouse.y, "#62B5BB", ind);
     points.push(p);
     ind++;
@@ -101,7 +77,8 @@ function createMouse(element) {
 
     element.addEventListener("mousemove", mousemoveHandler);
     element.addEventListener("mousedown", mouseDownHandler);
-    element.addEventListener("mouseup", mouseUpHandler);
+    element.addEventListener("mouseup", mouseClearHandler);
+    element.addEventListener("mouseout", mouseClearHandler);
 
     function mousemoveHandler(event) {
         const rect = element.getBoundingClientRect();
@@ -111,7 +88,7 @@ function createMouse(element) {
     function mouseDownHandler(event) {
         drawer = setInterval(addUserPoint, 200);
     }
-    function mouseUpHandler(event) {
+    function mouseClearHandler(event) {
         clearInterval(drawer);
     }
 
@@ -151,6 +128,27 @@ function createMatrix() {
         }
 	}
     ant();
+}
+
+// Обновление канваса и переменных если мы добавили новые точки на канвас после уже найденного пути.
+function updateCanvas()
+{
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    best = [];
+    AstMatr = [];
+    A = 1;
+    B = 3;
+    min = 99999999;
+    antsAmount = 0;
+    ants;
+    
+    for (let i = 0; i<points.length; i++)
+    {
+        context.beginPath();
+        context.arc(points[i].x, points[i].y, points[i].radius, 0, Math.PI * 2);
+        context.fillStyle = "#62B5BB";
+        context.fill();
+    }
 }
 
 
