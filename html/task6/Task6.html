@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styleTask6.css">
+    <link rel="stylesheet" href="StyleNeural50x50.css">
     <title>Нейронная Сеть</title>
 </head>
 <body>
     <div class="grid">
 		<div class="logoHolder">
 			<a href="../index.html">
-				<img src="../assets/logo.png" alt="logo">
+				<img src="../../assets/logo.png" alt="logo">
 			</a>
 		</div>
 		<div class="sidenav">
@@ -32,6 +32,7 @@
 			<button id="train">Обучить</button>
 			<button id="clear">Очистить</button>			
 		</div>
+        
 		<div class = 'result'>
 			<span class ='res'></span>
 		</div>
@@ -42,10 +43,19 @@
 			<button id="example">запомнить пример</button>
 			<button id="selftr">Авто.обучение</button>
 		</div>
+        <div>
+			<input type="file" id = 'upload'>;
+            <a id="downloadTestBtn">скачать файл</a>
+		</div>
+        <div>
+			<input type="file" id = 'uploadTEST'>;
+            <a id="downloadTest">скачать файл</a>
+		</div>
+        
 	</div>
 
-	<script src="appTask6.js"></script>
-	<script src="ui.js"></script>
-	<script src="Neural.js"></script>
+	<script src="draw50x50.js"></script>
+	<script src="ui50x50.js"></script>
+	<script src="Neural50x50.js"></script>
 </body>
 </html>
