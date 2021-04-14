@@ -1,0 +1,8 @@
+higher,home,visitation,1
+higher,home,visitation,0
+higher,home,pass,0
+below,home,pass,0
+below,visit,pass,0
+below,home,pass,1
+higher,visit,visitation,1
+below,visit,visitation,0
