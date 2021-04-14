@@ -8,7 +8,6 @@ var csvString;
 var tree;
 var predictRunning;
 
-upload.style.opacity = 0;
 upload.addEventListener('change', tryParseFile);
 
 createTreeBtn.addEventListener('click', createTree);

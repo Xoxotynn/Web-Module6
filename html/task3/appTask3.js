@@ -122,7 +122,8 @@ function createMouse(element) {
 
     element.addEventListener("mousemove", mousemoveHandler);
     element.addEventListener("mousedown", mouseDownHandler);
-    element.addEventListener("mouseup", mouseUpHandler);
+    element.addEventListener("mouseup", mouseClearHandler);
+    element.addEventListener("mouseout", mouseClearHandler);
 
     function mousemoveHandler(event) {
         const rect = element.getBoundingClientRect();
@@ -132,7 +133,7 @@ function createMouse(element) {
     function mouseDownHandler(event) {
         drawer = setInterval(addUserPoint, 100);
     }
-    function mouseUpHandler(event) {
+    function mouseClearHandler(event) {
         clearInterval(drawer);
     }
 

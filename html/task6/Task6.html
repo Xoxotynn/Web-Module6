@@ -24,12 +24,10 @@
 		</div>
 
 		<canvas class="canvas"></canvas>
-		<div class="input">
-			<label for="RNum">Правильное число</label>
-			<input name="RNum" type="number" id="RNum">
-		</div>
 		<div class="settings">
-			<button id="train">Обучить</button>
+			<input type="file" id = 'upload'>
+			<label for="upload" class="uploadLabel">Выбрать файл с весами</label>
+			<span id="fileName">Файл не выбран</span>
 			<button id="clear">Очистить</button>			
 		</div>
         
@@ -44,11 +42,10 @@
 			<button id="selftr">Авто.обучение</button>
 		</div>
         <div>
-			<input type="file" id = 'upload'>;
             <a id="downloadTestBtn">скачать файл</a>
 		</div>
         <div>
-			<input type="file" id = 'uploadTEST'>;
+			<input type="file" id = 'uploadTEST'>
             <a id="downloadTest">скачать файл</a>
 		</div>
         
