@@ -3,7 +3,7 @@ function clustering() {
         clustersCountMax = 20,
         maxWRatio, clustersCount;
 
-    for (let i = 2; i < clustersCountMax; i++) {
+    for (let i = 2; i <= clustersCountMax; i++) {
         WTotals.push(kClustering(i));
         let ratio = WTotals[i-2] / WTotals[i-1];
         if(ratio > maxWRatio || maxWRatio == null) {
@@ -18,7 +18,7 @@ function clustering() {
 function kClustering(clustersCount) {
     let centers = generateKCenters(clustersCount), minCenters = centers;
     let WTotal = clusteringStep(centers), WMin = WTotal;
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 70; i++) {
         centers = generateKCenters(clustersCount);
         WTotal = clusteringStep(centers);
         if (WTotal < WMin) {
@@ -50,6 +50,12 @@ function clusteringStep(centers) {
         calculateCenters(clusters);
         WTotal = assignPoints(clusters);
     }
+
+    clusters.sort((c1, c2) => c1.center.x - c2.center.x);
+    for(let i = 0; i < clusters.length; i++) {
+        clusters[i].center.color = colors[i];
+    }
+    WTotal = assignPoints(clusters);
 
     return WTotal;
 }
@@ -90,7 +96,7 @@ function findBestCluster(point, clusters) {
     });
 
     minCluster.points.push(point);
-    point.color = minCluster.center.color;
+    point.clusterColors[currentClusterIndex] = minCluster.center.color;
 
     return Math.pow(minDist, 2);
 }

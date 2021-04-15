@@ -1,9 +1,7 @@
 const generateButton = document.getElementById("generateBtn");
 const clearButton = document.getElementById("clearBtn");
-const euqlidButton = document.getElementById("euqlid");
-const sqrEuqlidButton = document.getElementById("sqrEuqlid");
-const manhattanButton = document.getElementById("manhattan");
-const chebyshevButton = document.getElementById("chebyshev");
+const distButtons = document.querySelectorAll('button.dType');
+const distFunctions = [euqlidDist, sqrEuqlidDist, manhattanDist, chebyshevDist];
 
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
@@ -11,54 +9,62 @@ canvas.width = 800;
 canvas.height = 600;
 
 const mouse = createMouse(canvas);
-let points = [];
+var points = [];
 var distFunction = euqlidDist;
+var currentClusterIndex = 0;
 
 
-euqlidButton.addEventListener("click", function() { 
-    drawClustersByChosenDistType(euqlidButton, euqlidDist);
+canvas.addEventListener("contextmenu", ev => {
+    ev.preventDefault();
 });
-sqrEuqlidButton.addEventListener("click", function() { 
-    drawClustersByChosenDistType(sqrEuqlidButton, sqrEuqlidDist);
-});
-manhattanButton.addEventListener("click", function() { 
-    drawClustersByChosenDistType(manhattanButton, manhattanDist);
-});
-chebyshevButton.addEventListener("click", function() { 
-    drawClustersByChosenDistType(chebyshevButton, chebyshevDist);
-});
+
+
+for (let i = 0; i < distButtons.length; i++) {
+    distButtons[i].addEventListener('click', function() {
+        drawClustersByChosenDistType(this, i);
+    });
+}
 
 
 clearButton.addEventListener("click", () => {
     clearCanvas();
     points = [];
 });
-generateButton.addEventListener("click", findAndDrawClusters);
+generateButton.addEventListener("click", findClusters);
 
 
-function drawClustersByChosenDistType(distBtn, distTypeFunc) {
-    chooseDistType(distBtn, distTypeFunc);
-    findAndDrawClusters();
+function drawClustersByChosenDistType(distBtn, index) {
+    chooseDistType(distBtn, index);
+    updatePoints();
 }
 
-function chooseDistType(distBtn, distTypeFunc) {
-    distFunction = distTypeFunc;
+function chooseDistType(distBtn, index) {
+    currentClusterIndex = index;
+
     let buttons = document.querySelectorAll("button.dType");
     buttons.forEach(button => button.classList.remove("choosed"));
     distBtn.classList.add("choosed");
 }
 
-function findAndDrawClusters() {
+function findClusters() {
     let clustersCount = document.getElementById("kNum").value;
-    clustersCount > 0 ? kClustering(clustersCount) : clustering();
+    for (let i = 0; i < distFunctions.length; i++) {
+        findClustersByDistType(distFunctions[i], i, clustersCount);
+    }
 
-    clearCanvas();
-    drawPoints(points);
+    updatePoints();
 }
 
+function findClustersByDistType(distTypeFunc, index=0, k=0) {
+    distFunction = distTypeFunc;
+    currentClusterIndex = index;
+    k > 0 ? kClustering(k) : clustering();
+}
 
-//canvas.addEventListener("click", addUserPoint);
-canvas.addEventListener("contextmenu", ev => {
-    ev.preventDefault();
-    deleteUserPoint();
-});
+function updatePoints() {
+    points.forEach(p => {
+        p.color = p.clusterColors[currentClusterIndex];
+    });
+
+    updateCanvas(points);
+}
