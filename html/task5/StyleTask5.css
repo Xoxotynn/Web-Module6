@@ -17,14 +17,14 @@ body button:hover {
   display: grid;
   margin-top: 1%;
   justify-content: start;
-  grid-template-columns: 0.2fr max-content 0.5fr;
+  grid-template-columns: 0.2fr auto auto 1.5fr;
   grid-template-rows: 100px max-content auto;
   row-gap: 6%;
   column-gap: 2%;
   grid-template-areas:
-    "logo logo ."
-    "sidenav tree tree"
-    "sidenav data input";
+    "logo logo . ."
+    "sidenav tree tree paths"
+    "sidenav data input paths";
 }
 .logoHolder
 {
@@ -50,6 +50,10 @@ body button:hover {
   border-radius: 20px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
   grid-area: tree;
+}
+.pathsContainer
+{
+  grid-area: paths;
 }
 .inputContainer {grid-area: input;}
 .dataContainer {grid-area: data;}

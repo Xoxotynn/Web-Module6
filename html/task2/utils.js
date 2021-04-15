@@ -3,6 +3,7 @@ class Point {
         this.x = x;
         this.y = y;
         this.color = color;
+        this.clusterColors = [];
         this.radius = 7;
     }
 
@@ -50,6 +51,11 @@ function randomInt(min, max) {
 
 
 //UI
+function updateCanvas(pts) {
+    clearCanvas();
+    drawPoints(pts);
+}
+
 function drawPoints(pts) {
     pts.forEach(p => {
         drawPoint(p);
