@@ -78,6 +78,18 @@ function clearAlgorithmData() {
     antsAmount = 0;
 }
 
+function estLI(target)
+{
+    for (let i = 0; i<points.length;i++)
+    {
+        if (points[i].x == target.x && points[i].y == target.y)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 
 function distance(p1,p2)
 {
@@ -115,8 +127,11 @@ function createMouse(element) {
 // Добавление в массив точек поставленных на канвасе
 function addUserPoint() {
     let p = new Point(mouse.x, mouse.y, "#62B5BB");
-    points.push(p);
-    drawPoint(p);
+    if (estLI(p) == 0)
+    {
+        points.push(p);
+        drawPoint(p);
+    }
 }
 
 // Рисование поставленных точек на канвасе

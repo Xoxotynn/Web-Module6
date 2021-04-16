@@ -22,7 +22,6 @@ let current;
 
 var ants;
 var antsAmount;
-
 let testtime;
 let best;
 let min = Number.MAX_VALUE;
@@ -148,18 +147,17 @@ function drawWay()
 //Рулетка с возвращением индекса
 function random(visited)
 {
+
     rand = Math.random();
     sum = 0;
-    for (let eb = 0; eb < visited.length; eb++)
+    for (let returnourValue = 0; returnourValue< visited.length; returnourValue++)
     {
-        sum += visited[eb].ver;
+        sum += visited[returnourValue].ver;
         
         if (sum >= rand)
         {
-            return eb;
+            return returnourValue;
         }
-
     }
     return visited.length-1;
 }
-
