@@ -1,11 +1,15 @@
 body
 {
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
   background-color: #212121;
 }
 *:focus
 {
   outline: none;
+}
+body button {
+  font-family: 'Montserrat', sans-serif;
 }
 body button:hover {
   background-color: #4f9a94;

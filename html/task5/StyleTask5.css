@@ -1,5 +1,6 @@
 body
 {
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
   margin-bottom: 7%;
   margin-right: 1%;
@@ -9,6 +10,9 @@ body
 *:active
 {
   outline: none;
+}
+body button {
+  font-family: 'Montserrat', sans-serif;
 }
 body button:hover {
   background-color: #4f9a94;
