@@ -119,16 +119,7 @@ buttons.forEach(function (button) {
 
 function discharge(type)
  {
-	 if ((finishMatrix.x <= nnum) || (finishMatrix.y <= nnum) || (startMatrix.x <= nnum) || (startMatrix.x <= nnum))
-	 {
-		 finishMatrix.x = 0;
-		 startMatrix.x = 0;
-		 startMatrix.y = 0;
-		 finishMatrix.y = 0;
-		 AstMatr[finishMatrix.x][finishMatrix.y].clear();
-		 AstMatr[startMatrix.x][startMatrix.y].clear();
-	 }
-	 else {
+	 if (!((finishMatrix.x <= nnum) || (finishMatrix.y <= nnum) || (startMatrix.x <= nnum) || (startMatrix.x <= nnum))) {
 		AstMatr[finishMatrix.x][finishMatrix.y].clear();
 		AstMatr[startMatrix.x][startMatrix.y].clear();
 	 }
@@ -247,6 +238,7 @@ function preparation() {
 	//проверка для того чтобы алгоритм мог запускаться если есть начало и конец. Если нету то ничего не делаем
 	if (checkFINISH == 1 && checkSTART == 1)
 	{
+		//btn.disabled = true;
 		Astar();
 		checkINDBUTTON = 1;
 	}
@@ -306,12 +298,8 @@ function Astar() {
 		OtkSpisok.push(new strPUSH(startMatrix.x, startMatrix.y));
 
 		setTimeout(function timmee() {
-
-
 			save = MINOTK(OtkSpisok);
 			checkNeighborsVertical(save);
-
-
 
 			if (checkSTOPIND == 1) {
 				risovka();
@@ -332,12 +320,8 @@ function Astar() {
 		OtkSpisok.push(new strPUSH(startMatrix.x, startMatrix.y));
 
 		setTimeout(function timmee() {
-
-
 			save = MINOTK(OtkSpisok);
 			checkNeighborsDiagonal(save);
-
-
 
 			if (checkSTOPIND == 1) {
 				risovka();
@@ -353,6 +337,9 @@ function Astar() {
 				
 		},20);
 	}
+
+	checkSTART = 0;
+	checkFINISH = 0;
 }
 
 function risovka() {

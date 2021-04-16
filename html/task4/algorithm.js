@@ -147,7 +147,6 @@ function drawWay()
 //Рулетка с возвращением индекса
 function random(visited)
 {
-
     rand = Math.random();
     sum = 0;
     for (let returnourValue = 0; returnourValue< visited.length; returnourValue++)
@@ -159,5 +158,4 @@ function random(visited)
             return returnourValue;
         }
     }
-    return visited.length-1;
 }

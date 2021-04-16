@@ -168,25 +168,10 @@ function training() {
     testsArr = [w, bias];
 }
 
-//для обучения
+//самообучение
 
-//вводить примеры
-let ex = document.getElementById('example');
-ex.addEventListener('click', examples);
-let example = []
-function examples() {
-    correctN = document.getElementById("RNum").value;
-    neuronInput = matrix.flat();
-    let obj = [neuronInput, correctN];
-    example.push(obj)
-
-    let stringA = JSON.stringify(example);
-    localStorage.setItem('answers1', stringA);
-}
-
-//само обучение
-let st = document.getElementById('selftr');
-st.addEventListener('click', trainingAgain);
+// let st = document.getElementById('selftr');
+// st.addEventListener('click', trainingAgain);
 
 let mass;
 function trainingAgain() {

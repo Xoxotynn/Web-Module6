@@ -13,12 +13,7 @@ let bias = [];
 let mis = [];
 
 let divRes = document.getElementsByClassName('res')[0];
-
-let train = document.getElementById('train');
-train.addEventListener("click", function () {
-    correctN = document.getElementById("RNum").value;
-    training();
-});
+let fileName = document.getElementById('fileName');
 
 let findN = document.getElementById('find');
 findN.addEventListener('click', function () {
@@ -30,22 +25,20 @@ let clearA = document.getElementById('clear');
 clearA.addEventListener('click', clearAll);
 
 let testsArr = [];
-let downloadTestBtn = document.getElementById('downloadTestBtn');
 let upload = document.getElementById('upload');
 
 upload.onchange = function(){
     let file = upload.files[0];
-    let reader = new FileReader;
-    reader.readAsText(file);
-    reader.onload = function(){
-        testsArr = JSON.parse(reader.result);
-        w = testsArr[0];
-        bias = testsArr[1];
+    try {
+        fileName.innerHTML = file.name;
+        let reader = new FileReader;
+        reader.readAsText(file);
+        reader.onload = function(){
+            testsArr = JSON.parse(reader.result);
+            w = testsArr[0];
+            bias = testsArr[1];
+        }
+    } catch (e) {
+        fileName.innerHTML = 'Файл не выбран';
     }
-}
-downloadTestBtn.onclick = function(){
-    let newTxt = JSON.stringify(testsArr);
-    let file = new Blob([newTxt], {type: 'application/json'});
-    downloadTestBtn.href = URL.createObjectURL(file);
-    downloadTestBtn.download = "test.json";
 }

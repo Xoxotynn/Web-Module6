@@ -185,6 +185,13 @@ body button:hover {
 .zapusk:active {
   transform: scale(0.98);
 }
+.zapusk:disabled
+{
+  cursor: default;
+  color: #757575;
+  background: transparent;
+  border: 2px dashed #757575;
+}
 
 .endPoints>button 
 {
@@ -327,7 +334,7 @@ input[type=radio]:checked ~ label
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  transition: all 0.1s ease;
+  transition: all 0.2s ease;
 }
 .hiddenbut:active {
   transform: scale(0.98);
