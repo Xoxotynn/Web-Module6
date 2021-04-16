@@ -15,10 +15,10 @@ const Qfordrying = 240;
 
 
 var antsAmount;
-
 let testtime;
 let best;
 let min = 999999999999;
+let summ;
 function updatePheromons()
 {
     testtime = 0;
@@ -110,7 +110,6 @@ function ant()
     {
         bundle();  
         updatePheromons();  
-       // visual();
     }
     drawWay();
 }
@@ -119,17 +118,17 @@ function ant()
 //Рулетка с возвращением индекса
 function random(visited)
 {
+
     rand = Math.random();
     sum = 0;
-    for (let eb = 0; eb< visited.length; eb++)
+    for (let returnourValue = 0; returnourValue< visited.length; returnourValue++)
     {
-        sum += visited[eb].ver;
+        sum += visited[returnourValue].ver;
         
         if (sum >= rand)
         {
-            return eb;
+            return returnourValue;
         }
-
     }
 }
 
@@ -151,14 +150,13 @@ function bundle()
         }
         
         visited.splice(current, 1);
-
         while (visited.length !=0)
         {
-            let summ = 0
+            summ = 0;
 
             for (let j = 0; j<visited.length; j++)
             {
-                summ += Math.pow(AstMatr[current][visited[j].indexInMatr].pheromons, A) * Math.pow(AstMatr[current][visited[j].indexInMatr].vlech, B);
+                summ = Math.pow(AstMatr[current][visited[j].indexInMatr].pheromons, A) * Math.pow(AstMatr[current][visited[j].indexInMatr].vlech, B);
             }
 
 
@@ -166,10 +164,10 @@ function bundle()
             {
                 visited[pol].ver = Math.pow(AstMatr[current][visited[pol].indexInMatr].pheromons, A) * Math.pow(AstMatr[current][visited[pol].indexInMatr].vlech, B) / summ;
             }
-            ind = random(visited);
-            current = visited[ind].indexInMatr;
+            let ind1 = random(visited);
+            current = visited[ind1].indexInMatr;
             way.push(current);
-            visited.splice(ind,1);
+            visited.splice(ind1,1);
         }
         way.push(way[0]);
         ants.push(way);
