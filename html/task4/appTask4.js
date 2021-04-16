@@ -26,8 +26,6 @@ clearbut.addEventListener("click", function clear(){
     context.clearRect(0, 0, canvas.width, canvas.height);
     best = [];
     AstMatr = [];
-    A = 1;
-    B = 3;
     min = 99999999;
     antsAmount = 0;
     points = [];
@@ -55,8 +53,6 @@ function updateCanvas()
     context.clearRect(0, 0, canvas.width, canvas.height);
     best = [];
     AstMatr = [];
-    A = 1;
-    B = 3;
     min = 99999999;
     antsAmount = 0;
     ants;
@@ -70,15 +66,29 @@ function updateCanvas()
     }
 }
 
+function estLI(target)
+{
+    for (let i = 0; i<points.length;i++)
+    {
+        if (points[i].x == target.x && points[i].y == target.y)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 // Добавление в массив точек поставленных на канвасе
 const mouse = createMouse(canvas);
 function addUserPoint() {
     
     let p = new Point(mouse.x, mouse.y, "#62B5BB", ind);
-    points.push(p);
-    ind++;
-    drawPoint(p);
+    if (estLI(p) == 0)
+    {
+        points.push(p);
+        ind++;
+        drawPoint(p);
+    }
 }
 
 
