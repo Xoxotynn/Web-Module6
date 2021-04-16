@@ -2,6 +2,7 @@ body
 {
   margin: 0;
   margin-bottom: 7%;
+  margin-right: 1%;
   background-color: #212121;
 }
 *:focus,
@@ -17,14 +18,14 @@ body button:hover {
   display: grid;
   margin-top: 1%;
   justify-content: start;
-  grid-template-columns: 0.2fr auto auto 1.5fr;
+  grid-template-columns: 0.2fr repeat(2, auto) max-content 1.5fr;
   grid-template-rows: 100px max-content auto;
   row-gap: 6%;
   column-gap: 2%;
   grid-template-areas:
-    "logo logo . ."
-    "sidenav tree tree paths"
-    "sidenav data input paths";
+    "logo logo . . ."
+    "sidenav tree tree tree paths"
+    "sidenav data input . .";
 }
 .logoHolder
 {
@@ -46,13 +47,24 @@ body button:hover {
   min-width: 800px;
   height: max-content;
   min-height: 400px;
-  background-color: #484848;
+  background: #484848;
   border-radius: 20px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
   grid-area: tree;
 }
 .pathsContainer
 {
+  max-height: 400px;
+  max-width: 250px;
+  color: whitesmoke;
+  background: rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
+  backdrop-filter: blur(5px);
+  text-align: center;
+  overflow: hidden;
+  box-shadow: 10px 10px 24px rgba(0, 0, 0, 0.5);
   grid-area: paths;
 }
 .inputContainer {grid-area: input;}
@@ -124,6 +136,36 @@ body button:hover {
 {
   width: 0;
   color: whitesmoke;
+}
+
+.pathsList
+{
+  height: 80%;
+  list-style: none;
+  text-align: start;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding: 0;
+  margin-bottom: 10%;
+  font-size: 1.4em;
+}
+.pathsList::-webkit-scrollbar
+{
+  display: none;
+}
+.pathsList>li
+{
+  padding: 6% 8%;
+  border-top: 2px solid #484848;
+  transition: all .3s ease;
+}
+.pathsList>li:last-child
+{
+  border-bottom: 2px solid #484848;
+}
+.pathsList>li:hover
+{
+  background: #484848;
 }
 
 #treeBtn,

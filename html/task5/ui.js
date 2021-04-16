@@ -8,6 +8,7 @@ function calculateAccuracy(trainRecs, predictRecords) {
     return score / predictRecords.length * 100;
 }
 
+
 function showFileMessage(msg) {
     let fileName = document.getElementById('fileName');
     fileName.innerHTML = msg;
@@ -45,6 +46,9 @@ function drawTree(node, ulParent) {
     }
 }
 
+function showPredictionResults(paths) {
+    
+}
 
 async function animatePrediction(paths) {
     predictBtn.disabled = true;
