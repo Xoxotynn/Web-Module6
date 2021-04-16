@@ -60,8 +60,6 @@ function Matr() {
 			AstMatr[i][j] = new Info(0, 0, 0, 0, 0, 0);
 		}
 	}
-
-
 }
 
 
@@ -119,19 +117,7 @@ buttons.forEach(function (button) {
 
 function discharge(type)
  {
-	 if ((finishMatrix.x <= nnum) || (finishMatrix.y <= nnum) || (startMatrix.x <= nnum) || (startMatrix.x <= nnum))
-	 {
-		 finishMatrix.x = 0;
-		 startMatrix.x = 0;
-		 startMatrix.y = 0;
-		 finishMatrix.y = 0;
-		 AstMatr[finishMatrix.x][finishMatrix.y].clear();
-		 AstMatr[startMatrix.x][startMatrix.y].clear();
-	 }
-	 else {
-		AstMatr[finishMatrix.x][finishMatrix.y].clear();
-		AstMatr[startMatrix.x][startMatrix.y].clear();
-	 }
+
 	document.querySelectorAll(".elem.notopen").forEach(function (elem) {
 		elem.classList.remove("notopen")
 	});
@@ -250,7 +236,6 @@ function preparation() {
 		Astar();
 		checkINDBUTTON = 1;
 	}
-
 }
 
 
@@ -353,6 +338,8 @@ function Astar() {
 				
 		},20);
 	}
+	checkSTART = 0;
+	checkFINISH = 0;
 }
 
 function risovka() {

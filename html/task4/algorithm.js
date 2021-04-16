@@ -159,5 +159,4 @@ function random(visited)
             return returnourValue;
         }
     }
-    return visited.length-1;
 }
