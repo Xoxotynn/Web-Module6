@@ -29,3 +29,23 @@ findN.addEventListener('click', function () {
 let clearA = document.getElementById('clear');
 clearA.addEventListener('click', clearAll);
 
+let testsArr = [];
+let downloadTestBtn = document.getElementById('downloadTestBtn');
+let upload = document.getElementById('upload');
+
+upload.onchange = function(){
+    let file = upload.files[0];
+    let reader = new FileReader;
+    reader.readAsText(file);
+    reader.onload = function(){
+        testsArr = JSON.parse(reader.result);
+        w = testsArr[0];
+        bias = testsArr[1];
+    }
+}
+downloadTestBtn.onclick = function(){
+    let newTxt = JSON.stringify(testsArr);
+    let file = new Blob([newTxt], {type: 'application/json'});
+    downloadTestBtn.href = URL.createObjectURL(file);
+    downloadTestBtn.download = "test.json";
+}

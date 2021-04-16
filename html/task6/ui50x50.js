@@ -42,7 +42,6 @@ upload.onchange = function(){
         w = testsArr[0];
         bias = testsArr[1];
     }
-   
 }
 downloadTestBtn.onclick = function(){
     let newTxt = JSON.stringify(testsArr);
@@ -50,8 +49,8 @@ downloadTestBtn.onclick = function(){
     downloadTestBtn.href = URL.createObjectURL(file);
     downloadTestBtn.download = "test.json";
 }
-let uploadTEST = document.getElementById('uploadTEST');
 
+let uploadTEST = document.getElementById('uploadTEST');
 uploadTEST.onchange = function(){
     let file = uploadTEST.files[0];
     let reader = new FileReader;

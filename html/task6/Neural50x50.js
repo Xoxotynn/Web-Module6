@@ -201,13 +201,12 @@ function trainingAgain() {
             training();
             count += trueOrFalse();
         }
-        if (j%10 == 0){
-            console.log(count);
-        }
+        // if (j%10 == 0){
+        //     console.log(count);
+        // }
     }
-    console.log('end');
+    //console.log('end');
 }
-
 
 init();
 biasMass();
