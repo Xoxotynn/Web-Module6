@@ -25,7 +25,6 @@ function convertCsvToRecords(csvData, isTraining) {
     if (records[records.length-1].values[0] == "") {
         records.pop();
     }
-    console.log(records);
 
     for (let i = 0; i < records[0].values.length; i++) {
         let allNums = true;
