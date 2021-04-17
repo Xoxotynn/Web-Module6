@@ -145,10 +145,10 @@ class Tree {
     }
 
     match(actualValue, trueValue) {
-        if (isString(trueValue)) {
-            return actualValue == trueValue;
-        } else {
+        if (!isString(trueValue) && !isString(actualValue)) {
             return actualValue < trueValue;
+        } else {
+            return actualValue == trueValue;
         }
     }
     

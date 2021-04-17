@@ -1,4 +1,4 @@
-const maxDepth = 12;
+const maxDepth = 7;
 const minSize = 1;
 
 const inputSwitch = document.getElementById('inputTypeSwitch');
