@@ -22,5 +22,30 @@ function convertCsvToRecords(csvData, isTraining) {
     let stringRecords = csvData.replaceAll('\r', '');
     stringRecords = stringRecords.split("\n");
     let records = stringRecords.map(rec => new Record(rec, isTraining));
+    if (records[records.length-1].values[0] == "") {
+        records.pop();
+    }
+    console.log(records);
+
+    for (let i = 0; i < records[0].values.length; i++) {
+        let allNums = true;
+        records.forEach(record => {
+            if (isString(record.values[i])) {
+                allNums = false;
+                return;
+            }
+        });
+
+        if (!allNums) {
+            records.forEach(record => {
+                record.values[i] = record.values[i].toString();
+            });
+        }
+    }
+
     return records;
+}
+
+function isString(value) {
+    return typeof value == "string";
 }
