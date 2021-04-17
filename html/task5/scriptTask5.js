@@ -1,17 +1,78 @@
 const maxDepth = 12;
 const minSize = 1;
 
-var upload = document.getElementById('upload');
-var createTreeBtn = document.getElementById('treeBtn');
-var predictBtn = document.getElementById('predictBtn');
+const inputSwitch = document.getElementById('inputTypeSwitch');
+const upload = document.getElementById('upload');
+const textInput = document.getElementById('textInput');
+const createTreeBtn = document.getElementById('treeBtn');
+const predictBtn = document.getElementById('predictBtn');
+const resultList = document.getElementsByClassName('pathsList')[0];
+
 var csvString;
 var tree;
-var predictRunning;
-
-upload.addEventListener('change', tryParseFile);
+var predictedResults = [];
+var currentChosenElement = null;
+var isAnimating = false;
 
 createTreeBtn.addEventListener('click', createTree);
 predictBtn.addEventListener('click', predict);
+inputSwitch.addEventListener('change', changeInputType);
+upload.addEventListener('change', tryParseFile);
+textInput.addEventListener('change', updateStringData);
+
+
+function createTree() {
+    if (invalidData(csvString)) return;
+
+    let trainingRecords = convertCsvToRecords(csvString, true);
+    tree = new Tree(trainingRecords, maxDepth, minSize);
+    var uiTree = document.getElementsByClassName('tree')[0];
+
+    clearTree(uiTree);
+    refreshList(resultList);
+    drawTree(tree.root, uiTree);
+}
+
+function predict() {
+    if (invalidData(csvString)) return;
+
+    if (typeof(tree) == undefined || tree == null) {
+        showFileMessage('Отсутствует дерево решений')
+        return;
+    }
+
+    let records = convertCsvToRecords(csvString);
+    updateResults(records);
+    updateResultsUiList(resultList, predictedResults);
+
+    currentChosenElement = predictedResults[0].domElement;
+    currentChosenElement.classList.add('chosen');
+
+    animatePrediction([predictedResults[0]]);
+}
+
+function updateResults(records) {
+    predictedResults = [];
+    for (let i = 0; i < records.length; i++) {
+        const result = {
+            domElement: document.createElement('li'),
+            path: tree.predict(records[i]),
+        };
+        predictedResults.push(result);
+    }
+}
+
+function changeInputType() {
+    toggleInputUi(inputSwitch.checked);
+    csvString = textInput.value;
+}
+
+function updateStringData() {
+    csvString = textInput.value;
+    let message = csvString.slice(0, Math.min(10, csvString.length));
+    message += csvString.length > 10 ? "..." : "";
+    showFileMessage(message);
+}
 
 function tryParseFile() {
     let files = upload.files;
@@ -26,33 +87,6 @@ function tryParseFile() {
     showFileMessage(files[0].name);
     parseFile(files[0]);
 }
-
-function createTree() {
-    if (invalidData(csvString)) return;
-
-    let trainingRecords = convertCsvToRecords(csvString, true);
-    tree = new Tree(trainingRecords, maxDepth, minSize);
-    var uiTree = document.getElementsByClassName('tree')[0];
-    clearTree(uiTree);
-    drawTree(tree.root, uiTree);
-}
-
-function predict() {
-    if (invalidData(csvString)) return;
-
-    if (typeof(tree) == undefined || tree == null) {
-        console.log('no tree to predict');
-        return;
-    }
-
-    let records = convertCsvToRecords(csvString);
-    let predictedPaths = [];
-    for (let i = 0; i < records.length; i++) {
-        predictedPaths.push(tree.predict(records[i]));
-    }
-    animatePrediction(predictedPaths);
-}
-
 
 function parseFile(file) {
     let reader = new FileReader;
@@ -75,7 +109,7 @@ function validFileType(file) {
 
 function invalidData(data) {
     if (typeof(data) == undefined || data == null || data.length == 0) {
-        console.log('no data');
+        showFileMessage('Недостаточно данных');
         return true;
     }
 }

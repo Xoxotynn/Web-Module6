@@ -1,17 +1,20 @@
-function calculateAccuracy(trainRecs, predictRecords) {
-    var score = 0;
-    for (let i = 0; i < predictRecords.length; i++) {
-        let predictedPath = tree.predict(predictRecords[i]);
-        let actualClass = trainRecs[i].classValue;
-        if (predictedPath[predictedPath.length-1].terminalValue == actualClass) score++;
+function showFileMessage(msg) {
+    let dataInfos = document.getElementsByClassName('dataInfo');
+    for (let i = 0; i < dataInfos.length; i++) {
+        dataInfos[i].innerHTML = msg; 
     }
-    return score / predictRecords.length * 100;
 }
 
-
-function showFileMessage(msg) {
-    let fileName = document.getElementById('fileName');
-    fileName.innerHTML = msg;
+function toggleInputUi(isChecked) {
+    let fileInput = document.getElementsByClassName('fileInputContainer')[0];
+    let textInput = document.getElementsByClassName('textInputContainer')[0];
+    if (isChecked) {
+        fileInput.style.display = 'none';
+        textInput.style.display = 'block';
+    } else {
+        fileInput.style.display = 'block';
+        textInput.style.display = 'none';
+    }
 }
 
 
@@ -48,21 +51,53 @@ function drawTree(node, ulParent) {
     }
 }
 
-function showPredictionResults(paths) {
-    
+
+function updateResultsUiList(uiList, results) {
+    refreshList(uiList);
+    for (let i = 0; i < results.length; i++) {
+        const result = results[i];
+        updateDom(result);
+        uiList.appendChild(result.domElement);
+    }    
 }
 
-async function animatePrediction(paths) {
-    predictBtn.disabled = true;
+function refreshList(uiList) {
+    uiList.innerHTML = '';
+    let h2 = document.createElement('h2');
+    h2.innerHTML = 'Результаты';
+    uiList.appendChild(h2);
+}
+
+function updateDom(result) {
+    const li = result.domElement;
+
+    li.innerHTML = result.path[result.path.length - 1].terminalValue;
+    li.addEventListener('click', () => chooseResultCallback(result));
+}
+
+function chooseResultCallback(result) {
+    const li = result.domElement;
+
+    if (isAnimating == false) {
+        currentChosenElement.classList.remove('chosen');
+        li.classList.add('chosen');
+        currentChosenElement = li;
+        animatePrediction([result]);
+    }
+}
+
+
+async function animatePrediction(results) {
+    toggleAnimationFlags();
 
     clearUiNodesColors();
-    await drawPredictedPath(paths[0]);
-    for (let i = 1; i < paths.length; i++) {
-        clearPathBackgrounds(paths[i-1]);
-        await drawPredictedPath(paths[i]);
+    await drawPredictedPath(results[0].path);
+    for (let i = 1; i < results.length; i++) {
+        clearPathBackgrounds(results[i-1].path);
+        await drawPredictedPath(results[i].path);
     }
 
-    predictBtn.disabled = false;
+    toggleAnimationFlags();
 }
 
 async function drawPredictedPath(path) {
@@ -103,4 +138,9 @@ function clearPathBackgrounds(nodes) {
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function toggleAnimationFlags() {
+    predictBtn.disabled = !predictBtn.disabled;
+    isAnimating = !isAnimating;
 }
