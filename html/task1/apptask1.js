@@ -9,7 +9,7 @@ let checkFINISH = 0;
 let buttonspush = 0;
 
 //Ожидание нажатия кнопки 
-let btn = document.querySelector('button');
+let btn = document.querySelector('.zapusk');
 btn.addEventListener('click', CreateTab);
 
 
@@ -117,7 +117,10 @@ buttons.forEach(function (button) {
 
 function discharge(type)
  {
-
+	 if (!((finishMatrix.x <= nnum) || (finishMatrix.y <= nnum) || (startMatrix.x <= nnum) || (startMatrix.x <= nnum))) {
+		AstMatr[finishMatrix.x][finishMatrix.y].clear();
+		AstMatr[startMatrix.x][startMatrix.y].clear();
+	 }
 	document.querySelectorAll(".elem.notopen").forEach(function (elem) {
 		elem.classList.remove("notopen")
 	});
@@ -135,7 +138,7 @@ function discharge(type)
 	}
 	
 	OtkSpisok.splice(0,OtkSpisok.length);
-	ZakSpisok.splice(0, ZakSpisok.length);
+	ZakSpisok.splice(0,ZakSpisok.length);
 	checkINDBUTTON = 0;
 	checkSTOPIND = 0;
 }
@@ -213,7 +216,7 @@ function handle(e) {
 
 document.querySelector('.hiddenbut').addEventListener('click', preparation);
 let checkINDBUTTON = 0;
-//Функция с которой всё начинается, после кнопки подтвердить выполняется алгоритм
+
 function preparation() {
 	for (let i = 0; i <nnum;i++)
 	{
@@ -291,12 +294,8 @@ function Astar() {
 		OtkSpisok.push(new strPUSH(startMatrix.x, startMatrix.y));
 
 		setTimeout(function timmee() {
-
-
 			save = MINOTK(OtkSpisok);
 			checkNeighborsVertical(save);
-
-
 
 			if (checkSTOPIND == 1) {
 				risovka();
@@ -317,12 +316,8 @@ function Astar() {
 		OtkSpisok.push(new strPUSH(startMatrix.x, startMatrix.y));
 
 		setTimeout(function timmee() {
-
-
 			save = MINOTK(OtkSpisok);
 			checkNeighborsDiagonal(save);
-
-
 
 			if (checkSTOPIND == 1) {
 				risovka();
@@ -354,7 +349,6 @@ function risovka() {
 		
 		
 	}
-	//document.querySelector(`td[row = "${finishMatrix.x}"][column = "${finishMatrix.y}"]`).style.backgroundColor = "#66bb6a";
 	document.querySelector(`td[row = "${startMatrix.x}"][column = "${startMatrix.y}"]`).classList.remove("open");
 	document.querySelector(`td[row = "${finishMatrix.x}"][column = "${finishMatrix.y}"]`).classList.remove("notopen");
 }

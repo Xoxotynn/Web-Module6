@@ -20,6 +20,8 @@ function clearTree(uiTree) {
 }
 
 function drawTree(node, ulParent) {
+    predictBtn.disabled = false;
+    
     let li = document.createElement('li');
     let span = document.createElement('span');
 

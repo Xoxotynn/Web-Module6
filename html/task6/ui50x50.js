@@ -30,28 +30,16 @@ var upload = document.getElementById('upload');
 
 upload.onchange = function(){
     let file = upload.files[0];
-    fileName.innerHTML = file.name;
-    let reader = new FileReader;
-    reader.readAsText(file);
-    reader.onload = function(){
-        testsArr = JSON.parse(reader.result);
-        w = testsArr[0];
-        bias = testsArr[1];
-    }
-}
-downloadTestBtn.onclick = function(){
-    let newTxt = JSON.stringify(testsArr);
-    let file = new Blob([newTxt], {type: 'application/json'});
-    downloadTestBtn.href = URL.createObjectURL(file);
-    downloadTestBtn.download = "test.json";
-}
-
-let uploadTEST = document.getElementById('uploadTEST');
-uploadTEST.onchange = function(){
-    let file = uploadTEST.files[0];
-    let reader = new FileReader;
-    reader.readAsText(file);
-    reader.onload = function(){
-    mass = JSON.parse(reader.result);
+    try {
+        fileName.innerHTML = file.name;
+        let reader = new FileReader;
+        reader.readAsText(file);
+        reader.onload = function(){
+            testsArr = JSON.parse(reader.result);
+            w = testsArr[0];
+            bias = testsArr[1];
+        }
+    } catch (e) {
+        fileName.innerHTML = 'Файл не выбран';
     }
 }
