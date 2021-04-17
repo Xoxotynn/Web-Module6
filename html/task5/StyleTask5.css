@@ -253,16 +253,13 @@ input:checked + .slider:before {
 }
 #textInput
 {
-  width: 350px;
-  height: 150px;
-  min-width: 300px;
-  max-width: 450px;
-  min-height: 50px;
-  max-height: 150px;
+  width: 375px;
+  height: 200px;
   padding: 4px 8px;
   font-family: 'Montserrat', sans-serif;
   font-size: 1.25em;
   border-radius: 12px;
+  resize: none;
 }
 
 #treeBtn,

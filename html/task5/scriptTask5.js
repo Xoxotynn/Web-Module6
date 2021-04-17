@@ -64,13 +64,26 @@ function updateResults(records) {
 
 function changeInputType() {
     toggleInputUi(inputSwitch.checked);
-    csvString = textInput.value;
+    toggleInputData(inputSwitch.checked);
+}
+
+function toggleInputData(isChecked) {
+    if (isChecked) {
+        updateStringData();
+    } else {
+        tryParseFile();
+    }
 }
 
 function updateStringData() {
     csvString = textInput.value;
-    let message = csvString.slice(0, Math.min(10, csvString.length));
-    message += csvString.length > 10 ? "..." : "";
+    let message = "";
+    if (csvString.length == 0) {
+        message = "Нет данных";
+    } else {
+        message = csvString.slice(0, Math.min(10, csvString.length));
+        message += csvString.length > 10 ? "..." : "";
+    }
     showFileMessage(message);
 }
 
