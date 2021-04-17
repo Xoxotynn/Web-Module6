@@ -178,7 +178,7 @@ function examples() {
     correctN = document.getElementById("RNum").value;
     neuronInput = matrix.flat();
     let obj = [neuronInput, correctN];
-    example.push(obj)
+    example.push(obj);
 
     let stringA = JSON.stringify(example);
     localStorage.setItem('answers1', stringA);
