@@ -29,20 +29,34 @@
 			<ul class="tree"></ul>
 		</div>
 		<div class="pathsContainer">
-			<h2>Результаты</h2>
 			<ul class="pathsList">
-				<li>q</li>
-				<li>q</li>
+				<h2>Результаты</h2>
 			</ul>
 		</div>
-		<div class="dataContainer">
-			<button id="treeBtn">Построить дерево</button>
-			<button id="predictBtn">Показать решение</button>
-		</div>
 		<div class="inputContainer">
-			<label for="upload" class="uploadLabel">Выбрать файл</label>
-			<span id="fileName">Файл не выбран</span>
-			<input type="file" id='upload' name="upload" accept=".csv, .txt">
+			<div class="switchContainer">
+				<label class="switch">
+					<input type="checkbox" id="inputTypeSwitch">
+					<span class="slider round"></span>
+				</label>
+				<span>Ручной ввод</span>
+			</div>
+			<div class="fileInputContainer">
+				<label for="upload" class="uploadLabel">Выбрать файл</label>
+				<span class="dataInfo">Файл не выбран</span>
+				<input type="file" id='upload' name="upload" accept=".csv, .txt">
+			</div>
+			<div class="textInputContainer">
+				<div>
+					<textarea id="textInput"></textarea>
+				</div>
+				<span class="dataInfo">Файл не выбран</span>
+			</div>
+		</div>
+		<div class="algorithmBtnsContainer">
+			<div style="height: 34px;"></div>
+			<button id="treeBtn">Построить дерево</button>
+			<button id="predictBtn">Показать результаты</button>
 		</div>
 	</div>
 
